@@ -1,14 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MovieDetailComponent } from './core/components/movie-detail/movie-detail.component';
-import { MovieShelfComponent } from './core/components/movie-shelf/movie-shelf.component';
+import { HomeComponent } from './core/components/home/home.component';
+import { MoviesOfTypeComponent } from './core/components/movies-of-type/movies-of-type.component';
 
 const routes: Routes = [
   {
-    path: '', component: MovieShelfComponent
+    path: '', component: HomeComponent
   },
   {
-    path: ':id', component: MovieDetailComponent
+    path: 'movie/:id', component: MovieDetailComponent
+  },
+
+  {
+    path: 'movies/:type_of_movie', component: MoviesOfTypeComponent
   }
 
 ];

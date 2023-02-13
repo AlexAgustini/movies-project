@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Movie } from '../../models/movie.model';
-import { SliderImages } from '../../models/slider-images.model';
-import { MoviesService } from '../../services/movies-service';
+import { SliderImages } from './../../models/slider-images.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Movie } from './../../models/movie.model';
+import { MoviesService } from './../../services/movies-service';
 
 @Component({
   selector: 'app-movie-shelf',
@@ -11,47 +10,68 @@ import { MoviesService } from '../../services/movies-service';
 })
 export class MovieShelfComponent implements OnInit{
 
-  constructor(private moviesService: MoviesService, private router: Router) {}
+  @Input()
+  public typeOfMovies?: string;
 
-  popularMovies!: Movie[];
-  latestMovies!: Movie[];
-  topRatedMovies!: Movie[];
-  upcomingMovies!: Movie[];
+  @Input()
+  public mode?: string;
 
-  popularsImageObject: SliderImages[] = [];
-  latestsImageObject: SliderImages[] = [];
-  topRatedsImageObject: SliderImages[] = [];
-  upcomingsImageObject: SliderImages[] = [];
+  @Output()
+  public onClick: EventEmitter<string> = new EventEmitter<string>();
+
+  public isLoading: boolean = false;
+
+  public hasError: boolean = false;
+
+  constructor(private moviesService: MoviesService) {};
 
   ngOnInit() {
-    this.moviesService.getMovies().subscribe(({ popular, latest, topRated, upcoming }) => {
+    this.mode = this.mode != null ? this.mode : "carousel";
 
-      this.popularMovies = popular;
-      this.latestMovies = latest;
-      this.topRatedMovies = topRated;
-      this.upcomingMovies = upcoming;
+    this.getTypeOfMovie();
+  };
 
-      this.getImages(this.popularMovies, this.popularsImageObject);
-      this.getImages(this.latestMovies, this.latestsImageObject);
-      this.getImages(this.upcomingMovies, this.upcomingsImageObject);
-      this.getImages(this.topRatedMovies, this.topRatedsImageObject);
+  ngOnChanges() {
+    this.getTypeOfMovie();
+  }
 
+
+  moviesList!: Movie[];
+
+  carouselImages!: SliderImages[];
+
+  internalClick(id: number) {
+    console.log(id);
+    this.onClick.emit(String(id));
+  }
+
+  getTypeOfMovie() {
+
+    if (!this.typeOfMovies) {
+      return;
+    }
+    this.isLoading = true;
+    this.hasError = false;
+    this.moviesService.getTypeOfMovie(this.typeOfMovies).subscribe({
+        next: (response) => {
+          if (!Array.isArray(response)) {
+            this.hasError = true;
+            this.isLoading = false;
+            return;
+          }
+          this.moviesList = response;
+          this.carouselImages = this.moviesList.map((movie) => { return {
+            image: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
+            thumbImage: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
+            id: movie.id
+          }})
+          this.isLoading = false;
+        },
+        error: () => {
+          this.isLoading = false;
+          this.hasError = true;
+        }
     });
-  }
-
-  getImages(moviesArray: Movie[], imagesArray: SliderImages[]) {
-    moviesArray.map(movie => {
-      imagesArray.push({
-        image: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
-        thumbImage: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
-        id: movie.id
-      })
-    });
-  }
-
-  goToMovieDetails(index: number, array: SliderImages[]) {
-      const imageSelectedId = array[index].id;
-      this.router.navigate([imageSelectedId])
-  }
+  };
 
 }

@@ -17,7 +17,6 @@ export class MovieDetailComponent implements OnInit {
   getMovieId() {
     const id: number =  this.activatedRoute.snapshot.params['id'];
     this.moviesService.getMovie(id).subscribe(response => {
-      console.log(response, 'response')
       this.currentMovie = response;
     })
   };
