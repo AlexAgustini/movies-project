@@ -1,0 +1,23 @@
+<div class="carousels-home-container">
+  <div class="carousel-container">
+    <h1 class="shelf-title">Popular Movies</h1>
+    <ng-image-slider (imageClick)="goToMovieDetails($event, popularsImageObject)" [images]="popularsImageObject" #nav></ng-image-slider>
+  </div>
+
+  <div class="carousel-container">
+    <h1 class="shelf-title">Latest Movies</h1>
+    <ng-image-slider (imageClick)="goToMovieDetails($event, latestsImageObject)" [images]="latestsImageObject" #nav></ng-image-slider>
+  </div>
+
+  <div class="carousel-container">
+    <h1 class="shelf-title">Top Rated Movies</h1>
+    <ng-image-slider (imageClick)="goToMovieDetails($event, topRatedsImageObject)" [images]="topRatedsImageObject" #nav></ng-image-slider>
+  </div>
+
+  <div class="carousel-container">
+    <h1 class="shelf-title">Upcoming Movies</h1>
+    <ng-image-slider (imageClick)="goToMovieDetails($event, upcomingsImageObject)" [images]="upcomingsImageObject" #nav></ng-image-slider>
+  </div>
+</div>
+
+
