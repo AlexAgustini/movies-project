@@ -1,5 +1,5 @@
 import { SliderImages } from './../../models/slider-images.model';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Movie } from './../../models/movie.model';
 import { MoviesService } from './../../services/movies-service';
 
@@ -10,20 +10,20 @@ import { MoviesService } from './../../services/movies-service';
 })
 export class MovieShelfComponent implements OnInit{
 
+  constructor(private moviesService: MoviesService) {};
+
   @Input()
   public typeOfMovies?: string;
 
   @Input()
   public mode?: string;
 
-  @Output()
-  public onClick: EventEmitter<string> = new EventEmitter<string>();
+  @Input()
+  public title?: string;
 
   public isLoading: boolean = false;
-
   public hasError: boolean = false;
 
-  constructor(private moviesService: MoviesService) {};
 
   ngOnInit() {
     this.mode = this.mode != null ? this.mode : "carousel";
@@ -35,18 +35,10 @@ export class MovieShelfComponent implements OnInit{
     this.getTypeOfMovie();
   }
 
-
   moviesList!: Movie[];
-
   carouselImages!: SliderImages[];
 
-  internalClick(id: number) {
-    console.log(id);
-    this.onClick.emit(String(id));
-  }
-
   getTypeOfMovie() {
-
     if (!this.typeOfMovies) {
       return;
     }
@@ -60,11 +52,13 @@ export class MovieShelfComponent implements OnInit{
             return;
           }
           this.moviesList = response;
-          this.carouselImages = this.moviesList.map((movie) => { return {
-            image: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
-            thumbImage: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
-            id: movie.id
-          }})
+          this.carouselImages = this.moviesList.map((movie) => {
+             return {
+              image: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
+              thumbImage: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
+              id: movie.id
+             }
+          })
           this.isLoading = false;
         },
         error: () => {

@@ -6,7 +6,5 @@ import { Component } from '@angular/core';
   selector: "home-component"
 })
 export class HomeComponent {
-  homeTest(e: string) {
-    console.log(e);
-  }
+
 }

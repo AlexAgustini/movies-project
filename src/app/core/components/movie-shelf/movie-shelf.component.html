@@ -1,14 +1,21 @@
 <div class="alert alert-danger" *ngIf="hasError">Ocorreu um erro na busca</div>
+
 <ng-container *ngIf="!isLoading && !hasError">
+
   <div class="w-[95vw] mt-16 container grid content-center items-center grid-cols-5 gap-3" *ngIf="mode == 'static'">
     <div *ngFor="let movie of moviesList">
-      <img class="cursor-pointer w-full h-[200px]" (click)="internalClick(movie.id)"
-        src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}" alt="">
+      <img
+         class="cursor-pointer w-full h-[200px]"
+         src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"
+         alt=""
+         [routerLink]="['/movie', movie.id]"
+        >
     </div>
   </div>
 
   <div class="carousel-container" *ngIf="mode == 'carousel'">
-    <h1 class="shelf-title">Popular Movies</h1>
+    <h1 class="shelf-title">{{title}}</h1>
     <ng-image-slider [images]="carouselImages" #nav></ng-image-slider>
   </div>
+
 </ng-container>

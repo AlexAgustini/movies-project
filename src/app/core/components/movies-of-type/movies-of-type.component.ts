@@ -10,20 +10,11 @@ export class MoviesOfTypeComponent {
 
   public typeOfMovie?: string;
 
-  constructor(private activatedRoute: ActivatedRoute) {
-
-  }
-
-  clickTest(evento: string) {
-    console.log("teste");
-    console.log(evento);
-  }
+  constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
 
     this.activatedRoute.params.subscribe((params) => {
-
-      console.log(params);
       this.typeOfMovie = params['type_of_movie'];
     })
   }
