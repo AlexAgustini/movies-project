@@ -2,6 +2,7 @@ import { SliderImages } from './../../models/slider-images.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { Movie } from './../../models/movie.model';
 import { MoviesService } from './../../services/movies-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-shelf',
@@ -10,13 +11,16 @@ import { MoviesService } from './../../services/movies-service';
 })
 export class MovieShelfComponent implements OnInit{
 
-  constructor(private moviesService: MoviesService) {};
+  constructor(private moviesService: MoviesService, private router: Router) {};
 
   @Input()
   public typeOfMovies?: string;
 
   @Input()
   public mode?: string;
+
+  @Input()
+  public similarMoviesShelf?: number;
 
   @Input()
   public title?: string;
@@ -27,7 +31,6 @@ export class MovieShelfComponent implements OnInit{
 
   ngOnInit() {
     this.mode = this.mode != null ? this.mode : "carousel";
-
     this.getTypeOfMovie();
   };
 
@@ -67,5 +70,11 @@ export class MovieShelfComponent implements OnInit{
         }
     });
   };
+
+  goToMovieDetail(index: number) {
+    const movieId = this.moviesList[index].id
+
+    this.router.navigate(['/movie', movieId])
+  }
 
 }

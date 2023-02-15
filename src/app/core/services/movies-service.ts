@@ -18,11 +18,17 @@ export class MoviesService {
     )
   }
 
+  getSimilarMovies(id: number) {
+    return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/movie/${id}?api_key=17acd9c39b103a235bc6dcaa22e3957a`).pipe(
+      map(response => response.results)
+    );
+  }
 
   getMovie(id: number): Observable<Movie> {
     return this.http.get(`https://api.themoviedb.org/3/movie/${id}?api_key=17acd9c39b103a235bc6dcaa22e3957a`).pipe(
       map(response => response as Movie)
     );
   }
+
 
 }

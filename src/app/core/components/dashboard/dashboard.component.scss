@@ -1,6 +1,5 @@
 .dashboard {
   min-height: 20px;
-  background-color: black;
   position: sticky;
   z-index: 10;
   top: 0;
@@ -12,7 +11,7 @@
 
 .dashboard-inner {
   display: flex;
-  margin: 0 auto;
+  width: 95vw;
 }
 
 .dashboard-left {

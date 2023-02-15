@@ -3,7 +3,10 @@ export interface Movie {
   backdrop_path: string,
   belongs_to_collection: any,
   budget: number,
-  genres: Array<{}>,
+  genres: Array<{
+    name: string,
+    id: number
+  }>,
   homepage: string,
   id: number,
   imdb_id: number,

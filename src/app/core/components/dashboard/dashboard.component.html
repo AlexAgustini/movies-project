@@ -1,4 +1,4 @@
-<div class="dashboard">
+<mat-toolbar class="dashboard" color="primary">
 
   <div class="dashboard-inner">
     <div class="dashboard-left">
@@ -10,11 +10,11 @@
       </button>
     </div>
     <div class="dashboard-right">
-      <h3 routerLink="/movies/popular">Popular</h3>
-      <h3 routerLink="/movies/now_playing">Now Playing</h3>
-      <h3 routerLink="/movies/top_rated">Top Rated</h3>
-      <h3 routerLink="/movies/upcoming">Upcoming</h3>
+      <button mat-raised-button color="primary" routerLink="/movies/popular">Popular</button>
+      <button mat-raised-button color="primary" routerLink="/movies/now_playing">Now Playing</button>
+      <button mat-raised-button color="primary" routerLink="/movies/top_rated">Top Rated</button>
+      <button mat-raised-button color="primary" routerLink="/movies/upcoming">Upcoming</button>
     </div>
   </div>
 
-</div>
+</mat-toolbar>
