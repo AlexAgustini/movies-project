@@ -12,15 +12,15 @@ export class MoviesService {
   constructor(private http: HttpClient) { }
 
 
-  getTypeOfMovie(typeOfMovie: string, currentPage: number ) {
-    return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/movie/${typeOfMovie}?api_key=17acd9c39b103a235bc6dcaa22e3957a&page=${currentPage}`)
+  getTypeOfMovie(typeOfMovie?: string, currentPage?: number, similarMovies?: number ) {
+
+    if (similarMovies) {
+        return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/movie/${similarMovies}/similar?api_key=17acd9c39b103a235bc6dcaa22e3957a`)
+    } else {
+      return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/movie/${typeOfMovie}?api_key=17acd9c39b103a235bc6dcaa22e3957a&page=${currentPage}`)
+    }
   }
 
-  getSimilarMovies(id: number) {
-    return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/movie/${id}?api_key=17acd9c39b103a235bc6dcaa22e3957a`).pipe(
-      map(response => response.results)
-    );
-  }
 
   getMovie(id: number): Observable<Movie> {
     return this.http.get(`https://api.themoviedb.org/3/movie/${id}?api_key=17acd9c39b103a235bc6dcaa22e3957a`).pipe(

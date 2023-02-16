@@ -13,9 +13,11 @@ export class MovieDetailComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private moviesService: MoviesService) {};
 
   currentMovie!: Movie;
+  currentMovieId!: number;
 
   getMovieId() {
     const id: number =  this.activatedRoute.snapshot.params['id'];
+    this.currentMovieId = id;
     this.moviesService.getMovie(id).subscribe(response => {
       this.currentMovie = response;
     })
@@ -24,5 +26,7 @@ export class MovieDetailComponent implements OnInit {
   ngOnInit() {
     this.getMovieId();
   };
+
+
 
 }
