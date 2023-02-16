@@ -13,7 +13,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'movies/:type_of_movie', component: MoviesOfTypeComponent
+    path: 'movies/:type_of_movie/:id', component: MoviesOfTypeComponent
   }
 
 ];

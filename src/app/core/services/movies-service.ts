@@ -12,10 +12,8 @@ export class MoviesService {
   constructor(private http: HttpClient) { }
 
 
-  getTypeOfMovie(string: string) {
-    return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/movie/${string}?api_key=17acd9c39b103a235bc6dcaa22e3957a`).pipe(
-      map(response => response.results)
-    )
+  getTypeOfMovie(typeOfMovie: string, currentPage: number ) {
+    return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/movie/${typeOfMovie}?api_key=17acd9c39b103a235bc6dcaa22e3957a&page=${currentPage}`)
   }
 
   getSimilarMovies(id: number) {

@@ -2,7 +2,8 @@ import { SliderImages } from './../../models/slider-images.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { Movie } from './../../models/movie.model';
 import { MoviesService } from './../../services/movies-service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import {PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-movie-shelf',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class MovieShelfComponent implements OnInit{
 
-  constructor(private moviesService: MoviesService, private router: Router) {};
+  constructor(private moviesService: MoviesService, private router: Router, private activatedRoute: ActivatedRoute) {};
 
   @Input()
   public typeOfMovies?: string;
@@ -31,15 +32,23 @@ export class MovieShelfComponent implements OnInit{
 
   ngOnInit() {
     this.mode = this.mode != null ? this.mode : "carousel";
+    this.currentPage = this.activatedRoute.snapshot.params['id'];
+
     this.getTypeOfMovie();
+
   };
 
   ngOnChanges() {
+    this.currentPage = this.activatedRoute.snapshot.params['id'];
     this.getTypeOfMovie();
   }
 
   moviesList!: Movie[];
   carouselImages!: SliderImages[];
+
+  currentPage!: number;
+  totalResults!: number;
+  totalPages!: number;
 
   getTypeOfMovie() {
     if (!this.typeOfMovies) {
@@ -47,14 +56,17 @@ export class MovieShelfComponent implements OnInit{
     }
     this.isLoading = true;
     this.hasError = false;
-    this.moviesService.getTypeOfMovie(this.typeOfMovies).subscribe({
+    this.moviesService.getTypeOfMovie(this.typeOfMovies, this.currentPage).subscribe({
         next: (response) => {
-          if (!Array.isArray(response)) {
+          if (!Array.isArray(response.results)) {
             this.hasError = true;
             this.isLoading = false;
             return;
           }
-          this.moviesList = response;
+          console.log(response);
+          this.moviesList = response.results;
+          this.totalPages = response.total_pages;
+          this.totalResults = response.total_results;
           this.carouselImages = this.moviesList.map((movie) => {
              return {
               image: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
@@ -75,6 +87,17 @@ export class MovieShelfComponent implements OnInit{
     const movieId = this.moviesList[index].id
 
     this.router.navigate(['/movie', movieId])
+  }
+
+  handlePages(e: any) {
+
+    if (e.pageIndex === 0) {
+      e.pageIndex = 1
+    }
+
+    this.router.navigate(['movies', this.typeOfMovies, e.pageIndex])
+    this.currentPage = e.pageIndex
+    this.getTypeOfMovie()
   }
 
 }

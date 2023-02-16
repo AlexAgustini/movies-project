@@ -5,25 +5,43 @@
 </div>
 
 <ng-container *ngIf="!isLoading && !hasError">
-  <div class="w-[95vw] mt-16 container-movies grid content-center items-center grid-cols-6 gap-8" *ngIf="mode == 'static'">
-    <div *ngFor="let movie of moviesList">
-      <img
-         class="cursor-pointer w-full h-[200px]"
-         src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"
-         alt=""
-         [routerLink]="['/movie', movie.id]"
-        >
+
+  <div *ngIf="mode == 'static'">
+    <div class="w-[95vw] mt-16 container-movies grid content-center grid-cols-5 pl-16 pr-16 gap-8">
+      <div  *ngFor="let movie of moviesList" class="movie-item-container flex flex-col items-stretch min-h-[260px] p-1">
+          <img
+             class="cursor-pointer w-full h-[200px]"
+             src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"
+             alt=""
+             [routerLink]="['/movie', movie.id]"
+          >
+          <div class="justify-center content-center flex h-full items-center">
+            <h3 class="text-center">{{movie.title}}</h3>
+          </div>
+      </div>
     </div>
+
+    <mat-paginator class="mr-16" #paginator
+      [length]="totalPages"
+      (page)="handlePages($event)"
+      [pageIndex]="currentPage"
+      pageSize="1"
+      [showFirstLastButtons]="false"
+      [hidePageSize]="true"
+      aria-label="Select page">
+    </mat-paginator>
+
   </div>
 
   <div class="carousel-container" *ngIf="mode == 'carousel'">
     <h1 class="shelf-title">{{title}}</h1>
-    <ng-image-slider (imageClick)="goToMovieDetail($event)" slideImage=7 [images]="carouselImages"  #nav></ng-image-slider>
+    <ng-image-slider (imageClick)="goToMovieDetail($event)" [slideImage]="7" [images]="carouselImages"  #nav></ng-image-slider>
   </div>
 
   <div class="movie-detail-shelf" *ngIf="similarMoviesShelf">
 
   </div>
+
 
 
 
