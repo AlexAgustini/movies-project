@@ -34,7 +34,7 @@
   </div>
 
   <div class="carousel-container" *ngIf="mode == 'carousel' && similarMoviesShelf === undefined ">
-    <h1 class="shelf-title">{{title}}</h1>
+    <h1 class="shelf-title mb-4">{{title}}</h1>
     <ng-image-slider (imageClick)="goToMovieDetail($event)" [slideImage]="7" [images]="carouselImages"  #nav></ng-image-slider>
   </div>
 
@@ -47,8 +47,7 @@
              alt=""
              [routerLink]="['/movie', movie.id]"
           >
-          <div class="justify-center content-center flex h-full min-h-[55px]
-          shadow-[rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px] items-center">
+          <div class="justify-center content-center flex h-full min-h-[55px] items-center border-[1px solid]">
             <h3 class="text-center">{{movie.title}}</h3>
           </div>
       </div>
