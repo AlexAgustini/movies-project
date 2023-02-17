@@ -14,17 +14,30 @@ export class MovieDetailComponent implements OnInit {
 
   currentMovie!: Movie;
   currentMovieId!: number;
-
-  getMovieId() {
-    const id: number =  this.activatedRoute.snapshot.params['id'];
-    this.currentMovieId = id;
-    this.moviesService.getMovie(id).subscribe(response => {
-      this.currentMovie = response;
-    })
-  };
+  videoUrl!: string;
 
   ngOnInit() {
-    this.getMovieId();
+    this.getMovie();
+  };
+
+  getMovie() {
+
+    this.activatedRoute.params.subscribe(routeParams => {
+      const movieId = routeParams['id'];
+      this.currentMovieId = movieId;
+      this.moviesService.getMovie(movieId).subscribe(response => {
+        this.currentMovie = response;
+      })
+
+      this.moviesService.getTrailers(this.currentMovieId).subscribe(response => {
+
+        if (response) {
+          console.log(response)
+          this.videoUrl = `https://www.youtube.com/embed/${response.key}`
+        }
+
+      })
+    });
   };
 
 

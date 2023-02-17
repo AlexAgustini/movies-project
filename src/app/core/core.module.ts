@@ -11,6 +11,7 @@ import { MovieShelfComponent } from './components/movie-shelf/movie-shelf.compon
 import { HomeComponent } from './components/home/home.component';
 import { MoviesOfTypeComponent } from './components/movies-of-type/movies-of-type.component';
 import { FooterComponent } from './components/footer/footer/footer.component';
+import { SafePipe } from './safePipe/safePipe';
 
 
 const COMPONENTS = [
@@ -19,7 +20,8 @@ const COMPONENTS = [
   MovieShelfComponent,
   HomeComponent,
   MoviesOfTypeComponent,
-  FooterComponent
+  FooterComponent,
+  SafePipe
 ]
 
 const MODULES = [

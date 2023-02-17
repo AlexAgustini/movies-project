@@ -22,7 +22,7 @@
     </div>
 
     <mat-paginator class="mr-16" #paginator
-      [length]="totalPages"
+      [length]="500"
       (page)="handlePages($event)"
       [pageIndex]="currentPage"
       pageSize="1"
@@ -40,19 +40,21 @@
 
   <div class="movie-detail-shelf" *ngIf="similarMoviesShelf">
     <div class="mt-16 container-movies grid content-center grid-cols-2 gap-8">
-      <div  *ngFor="let movie of moviesList" class="movie-item-container flex flex-col items-stretch max-h-[260px]">
+      <div  *ngFor="let movie of moviesList" class="movie-item-container flex flex-col items-stretch max-w-[200px]">
           <img
-             class="cursor-pointer w-full h-full"
+             class="cursor-pointer w-full min-h-[250px] object-cover"
              src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"
              alt=""
              [routerLink]="['/movie', movie.id]"
           >
-          <div class="justify-center content-center flex h-full items-center">
+          <div class="justify-center content-center flex h-full min-h-[55px]
+          shadow-[rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px] items-center">
             <h3 class="text-center">{{movie.title}}</h3>
           </div>
       </div>
     </div>
   </div>
+
 
 
 

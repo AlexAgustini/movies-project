@@ -3,7 +3,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Movie } from './../../models/movie.model';
 import { MoviesService } from './../../services/movies-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import {PageEvent} from '@angular/material/paginator';
 import { MoviesResult } from '../../models/movie-result.model';
 
 @Component({
@@ -33,25 +32,33 @@ export class MovieShelfComponent implements OnInit{
 
   ngOnInit() {
     this.mode = this.mode != null ? this.mode : "carousel";
-    this.currentPage = this.activatedRoute.snapshot.params['id'];
 
-    this.getTypeOfMovie();
+    this.activatedRoute.params.subscribe(routeParams => {
+
+      if (this.similarMoviesShelf) {
+        this.similarMoviesShelf = routeParams['id']
+      }
+
+      this.currentPage = routeParams['id'];
+    });
 
   };
 
   ngOnChanges() {
+
     this.currentPage = this.activatedRoute.snapshot.params['id'];
     this.getTypeOfMovie();
+
   }
 
   moviesList!: Movie[];
-  carouselImages!: SliderImages[];  
+  carouselImages!: SliderImages[];
 
   currentPage!: number;
   totalResults!: number;
   totalPages!: number;
 
-  getTypeOfMovie() {
+  getTypeOfMovie(): void {
 
     if (!this.typeOfMovies && this.similarMoviesShelf === null) {
       return;
@@ -60,10 +67,10 @@ export class MovieShelfComponent implements OnInit{
     this.isLoading = true;
     this.hasError = false;
 
+    console.log(this.currentPage);
+
       this.moviesService.getTypeOfMovie(this.typeOfMovies, this.currentPage, this.similarMoviesShelf).subscribe({
           next: (response: MoviesResult) => {
-            console.log(response);
-
             if (!Array.isArray(response.results)) {
               this.hasError = true;
               this.isLoading = false;
@@ -88,13 +95,13 @@ export class MovieShelfComponent implements OnInit{
       });
     };
 
-  goToMovieDetail(index: number) {
+  goToMovieDetail(index: number): void {
     const movieId = this.moviesList[index].id
 
     this.router.navigate(['/movie', movieId])
   }
 
-  handlePages(e: any) {
+  handlePages(e: any): void {
 
     if (e.pageIndex === 0) {
       e.pageIndex = 1

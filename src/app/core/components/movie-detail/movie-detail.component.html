@@ -23,7 +23,7 @@
 
       <div class="image-info-container flex gap-4">
         <div class="image-container min-w-[300px]">
-          <img class="object-cover" src="https://image.tmdb.org/t/p/w500//{{currentMovie.poster_path}}" alt="">
+          <img class="object-cover max-w-[300px]" src="https://image.tmdb.org/t/p/w500//{{currentMovie.poster_path}}" alt="">
         </div>
 
         <div class="info-container flex flex-col gap-2">
@@ -61,7 +61,10 @@
       </div>
 
     </div>
+    <iframe [src]="videoUrl | safe" class="w-[80%] h-[400px] ml-auto mr-auto mt-8"></iframe>
   </div>
   <app-movie-shelf [similarMoviesShelf]="currentMovieId"></app-movie-shelf>
+
+
 </div>
 
