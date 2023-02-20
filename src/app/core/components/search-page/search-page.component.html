@@ -1,10 +1,12 @@
 <div class="w-[95vw] mt-16 container-movies grid content-center grid-cols-4 p-8 rounded-[10px] gap-8">
   <div *ngFor="let movie of moviesReturned" class="movie-item-container flex flex-col items-stretch min-h-[260px] rounded-[10px] overflow-hidden">
+    <mat-progress-bar *ngIf="!image"></mat-progress-bar>
       <img
           class="cursor-pointer w-full h-[300px]"
-          src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"
+          src="{{image.src}}    https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"
           alt=""
           [routerLink]="['/movie', movie.id]"
+          #image
       >
       <div class="justify-center content-center flex min-h-[60px] items-center">
         <h3 class="text-center">{{movie.title}}</h3>

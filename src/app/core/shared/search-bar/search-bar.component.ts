@@ -17,7 +17,8 @@ export class SearchBarComponent{
   constructor(private moviesService: MoviesService, private router: Router) {}
 
   search(value: string): void {
-    this.router.navigate([`movies/search`], { queryParams: {q: value} })
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([`movies/search`], {queryParams: {q: value}}));
   }
 
 }

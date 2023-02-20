@@ -12,24 +12,34 @@ export class SearchPageComponent implements OnInit{
 
   constructor(private moviesService: MoviesService, private activatedRoute: ActivatedRoute) {}
 
+  public isLoading: boolean = false;
+  public hasError: boolean = false;
+
   queryMade!: string | null;
   moviesReturned!: Movie[];
 
   ngOnInit() {
+    this.queryMade = this.activatedRoute.snapshot.queryParamMap.get('q');
+    this.isLoading = true;
 
-    this.queryMade = this.activatedRoute.snapshot.queryParamMap.get('q')
-
-    this.moviesService.getMoviesSearchBar(this.queryMade).subscribe(movies => {
-      this.moviesReturned = movies
+    this.moviesService.getMoviesSearchBar(this.queryMade).subscribe({
+      next: (movies) => {
+        this.moviesReturned = movies
+        this.isLoading = false
+      },
+      error: (err) => {
+        this.hasError = true;
+        this.isLoading = false
+        console.error(err);
+      }
     })
   }
 
   ngOnChanges() {
-    this.queryMade = this.activatedRoute.snapshot.queryParamMap.get('q')
-
     this.moviesService.getMoviesSearchBar(this.queryMade).subscribe(movies => {
       this.moviesReturned = movies
     })
   }
+
 
 }
