@@ -7,15 +7,15 @@
 <ng-container *ngIf="!isLoading && !hasError">
 
   <div *ngIf="mode == 'static'">
-    <div class="w-[95vw] mt-16 container-movies grid content-center grid-cols-5 pl-16 pr-16 gap-8">
-      <div  *ngFor="let movie of moviesList" class="movie-item-container flex flex-col items-stretch min-h-[260px] p-1">
+    <div class="w-[95vw] mt-16 container-movies grid content-center grid-cols-4 p-8 rounded-[10px] gap-8">
+      <div *ngFor="let movie of moviesList" class="movie-item-container flex flex-col items-stretch min-h-[260px] rounded-[10px] overflow-hidden">
           <img
-             class="cursor-pointer w-full h-[200px]"
+             class="cursor-pointer w-full h-[300px]"
              src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"
              alt=""
              [routerLink]="['/movie', movie.id]"
           >
-          <div class="justify-center content-center flex h-full items-center">
+          <div class="justify-center content-center flex min-h-[60px] items-center">
             <h3 class="text-center">{{movie.title}}</h3>
           </div>
       </div>
@@ -53,9 +53,4 @@
       </div>
     </div>
   </div>
-
-
-
-
-
 </ng-container>

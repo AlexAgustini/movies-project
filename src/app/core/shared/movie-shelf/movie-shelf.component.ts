@@ -31,6 +31,7 @@ export class MovieShelfComponent implements OnInit{
 
 
   ngOnInit() {
+
     this.mode = this.mode != null ? this.mode : "carousel";
 
     this.activatedRoute.params.subscribe(routeParams => {
@@ -67,16 +68,21 @@ export class MovieShelfComponent implements OnInit{
     this.isLoading = true;
     this.hasError = false;
 
-    console.log(this.currentPage);
-
       this.moviesService.getTypeOfMovie(this.typeOfMovies, this.currentPage, this.similarMoviesShelf).subscribe({
+
           next: (response: MoviesResult) => {
             if (!Array.isArray(response.results)) {
               this.hasError = true;
               this.isLoading = false;
               return;
             }
-            this.moviesList = response.results;
+
+            if (this.similarMoviesShelf) {
+              this.moviesList = response.results.slice(0, 10)
+            } else {
+              this.moviesList = response.results;
+            }
+
             this.totalPages = response.total_pages;
             this.totalResults = response.total_results;
             this.carouselImages = this.moviesList.map((movie) => {

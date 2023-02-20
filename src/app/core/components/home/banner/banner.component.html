@@ -1,0 +1,23 @@
+<ngb-carousel [showNavigationIndicators]="false" [showNavigationArrows]="false">
+  <ng-template ngbSlide *ngFor="let movie of movies; let i = index">
+    <div class="picsum-img-wrapper">
+      <img class="ml-auto max-h-[400px] min-w-[300px] rounded overflow-hidden" [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="{{ movie.title }}" />
+    </div>
+    <div class="carousel-caption">
+      <div>
+        <div class="text-container">
+          <h3 class="banner-title">{{movie.original_title}}</h3>
+          <p class="banner-description">{{movie.overview}}</p>
+        </div>
+        <div class="info flex gap-4 items-center mt-[1em]">
+          <img src="../../../../assets/imdb.svg" class="w-[45px] h-[30px] object-cover" alt="">
+          <p>{{movie.vote_average}}</p>
+          <div class="separator w-[1px] h-[30px] bg-white"></div>
+          <img [src]="getFlagImage(movie.original_language)" alt="" class="w-[40px] h-[30px]">
+          <p>{{getLanguage(movie.original_language)}}</p>
+        </div>
+      </div>
+      <button class="bg-transparent text-white watch-button">Watch</button>
+    </div>
+  </ng-template>
+</ngb-carousel>

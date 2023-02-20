@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+
+.carousel-caption {
+  top: 5%;
+  left: 5%;
+  bottom: 0;
+  right: unset;
+  display: flex;
+  flex-direction: column;
+  gap: .5em;
+  width: 60%;
+  text-align: start;
+  justify-content: center;
+}
+
+.text-container {
+  align-items: center;
+  text-align: start;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: .5em;
+}
+
+.banner-title {
+  width: 100% !important;
+  font-size: 2.5rem !important;
+  font-family: 'Nunito', sans-serif !important;
+}
+
+.banner-description {
+  font-size: 1.1rem !important;
+}
+
+.watch-button {
+  border-radius: 10px;
+  padding: 1em 2em;
+  border: 1px solid #0F2027;
+  color: white;
+  max-width: 200px;
+  font-size: 1.4rem;
+  border-radius: 30px;
+  margin-top: auto;
+
+  &:hover {
+    border: 1px solid transparent;
+    transition: .8s ease-in-out;
+    background-color: #0F2027 !important;
+
+  }
+}
+
+p {
+  margin: 0 !important;
+}

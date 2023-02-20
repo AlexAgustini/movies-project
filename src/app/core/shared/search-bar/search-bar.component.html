@@ -1,0 +1,9 @@
+  <mat-form-field class="w-full">
+
+    <input matInput type="text" placeholder="Search" #searchbar (keyup.enter)="search(searchbar.value)">
+
+    <button mat-icon-button *ngIf="searchbar.value" (click)="searchbar.value = ''">
+      <mat-icon>close</mat-icon>
+    </button>
+
+  </mat-form-field>
