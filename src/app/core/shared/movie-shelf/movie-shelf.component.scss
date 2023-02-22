@@ -18,3 +18,14 @@ h3, h1 {
   background: #0F2027;
   background: linear-gradient(to right, #0F2027, #203A43, #0F2027);
 }
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+
+.paginator {
+  background: transparent;
+}

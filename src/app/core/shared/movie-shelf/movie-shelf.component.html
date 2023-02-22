@@ -1,16 +1,15 @@
 <div class="alert alert-danger" *ngIf="hasError">Ocorreu um erro na busca</div>
 
-<div *ngIf="isLoading">
-  <mat-progress-bar class="h-[1px] imp" mode="indeterminate"></mat-progress-bar>
+<div *ngIf="isLoading" class="spinner">
+  <mat-spinner></mat-spinner>
 </div>
 
 <ng-container *ngIf="!isLoading && !hasError">
-
   <div *ngIf="mode == 'static'">
-    <div class="w-[95vw] mt-16 container-movies grid content-center grid-cols-4 p-8 rounded-[10px] gap-8">
+    <div class="w-[95vw] mt-16 container-movies grid content-center grid-cols-5 p-8 rounded-[10px] gap-8">
       <div *ngFor="let movie of moviesList" class="movie-item-container flex flex-col items-stretch min-h-[260px] rounded-[10px] overflow-hidden">
           <img
-             class="cursor-pointer w-full h-[300px]"
+             class="cursor-pointer w-[350px]"
              src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"
              alt=""
              [routerLink]="['/movie', movie.id]"
@@ -21,7 +20,8 @@
       </div>
     </div>
 
-    <mat-paginator class="mr-16" #paginator
+    <mat-paginator class="mr-16 paginator" #paginator
+      [color]="'primary'"
       [length]="500"
       (page)="handlePages($event)"
       [pageIndex]="currentPage"
@@ -30,16 +30,15 @@
       [hidePageSize]="true"
       aria-label="Select page">
     </mat-paginator>
-
   </div>
 
   <div class="carousel-container" *ngIf="mode == 'carousel' && similarMoviesShelf === undefined ">
     <h1 class="shelf-title mb-4">{{title}}</h1>
-    <ng-image-slider (imageClick)="goToMovieDetail($event)" [slideImage]="7" [images]="carouselImages"  #nav></ng-image-slider>
+    <ng-image-slider (imageClick)="goToMovieDetail($event)" [slideImage]="7" [images]="carouselImages" [imageSize]="{width: '20%q', height: '500px'}" #nav></ng-image-slider>
   </div>
 
-  <div class="movie-detail-shelf" *ngIf="similarMoviesShelf">
-    <div class="mt-16 container-movies grid content-center grid-cols-2 gap-8">
+  <div class="p-6 movie-detail-shelf" *ngIf="similarMoviesShelf">
+    <div class="container-movies grid content-center grid-cols-2 gap-8 p-4 rounded-lg">
       <div  *ngFor="let movie of moviesList" class="movie-item-container flex flex-col items-stretch max-w-[200px]">
           <img
              class="cursor-pointer w-full min-h-[250px] object-cover"

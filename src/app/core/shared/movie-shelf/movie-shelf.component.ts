@@ -15,7 +15,7 @@ export class MovieShelfComponent implements OnInit{
   constructor(private moviesService: MoviesService, private router: Router, private activatedRoute: ActivatedRoute) {};
 
   @Input()
-  public typeOfMovies?: string;
+  public typeOfProgram?: string;
 
   @Input()
   public mode?: string;
@@ -61,14 +61,14 @@ export class MovieShelfComponent implements OnInit{
 
   getTypeOfMovie(): void {
 
-    if (!this.typeOfMovies && this.similarMoviesShelf === null) {
+    if (!this.typeOfProgram && this.similarMoviesShelf === null) {
       return;
     }
 
     this.isLoading = true;
     this.hasError = false;
 
-      this.moviesService.getTypeOfMovie(this.typeOfMovies, this.currentPage, this.similarMoviesShelf).subscribe({
+      this.moviesService.getTypeOfMovie(this.typeOfProgram, this.currentPage, this.similarMoviesShelf).subscribe({
 
           next: (response: MoviesResult) => {
             if (!Array.isArray(response.results)) {
@@ -113,7 +113,7 @@ export class MovieShelfComponent implements OnInit{
       e.pageIndex = 1
     }
 
-    this.router.navigate(['movies', this.typeOfMovies, e.pageIndex])
+    this.router.navigate(['movies', this.typeOfProgram, e.pageIndex])
     this.currentPage = e.pageIndex
     this.getTypeOfMovie()
   }

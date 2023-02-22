@@ -14,21 +14,33 @@ export class BannerComponent {
   constructor(private moviesService: MoviesService) {};
 
   movies!: Movie[];
+  public isLoading: boolean = false;
 
   ngOnInit() {
     this.getTypeOfMovie();
   }
 
   getTypeOfMovie(): void {
+    this.isLoading = true;
       this.moviesService.getTypeOfMovie('popular').subscribe({
-          next: (response: MoviesResult) => {
-            this.movies = response.results
-            console.log(response.results)
-          }
-        })
-    };
+          next: (movies: MoviesResult) => {
 
-    getFlagImage(language: string) {
+            let newArray: Movie[] = [];
+
+            for (let movie of movies.results) {
+              this.moviesService.getCast(movie.id).subscribe(response => {
+                movie = {...movie, ...response}
+                newArray.push(movie);
+              })
+            }
+
+            this.movies = newArray;
+            this.isLoading = false;
+          }
+      })
+  };
+
+    getFlagImage(language: string): string {
       switch (language) {
         case 'en':
           return '../../../../assets/usa-flag.svg'
@@ -36,7 +48,7 @@ export class BannerComponent {
       return '../../../../assets/usa-flag.svg'
     }
 
-    getLanguage(language: string) {
+    getLanguage(language: string): string {
       switch (language) {
         case 'en':
           return 'English'

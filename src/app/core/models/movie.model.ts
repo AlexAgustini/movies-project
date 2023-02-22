@@ -7,6 +7,9 @@ export interface Movie {
     name: string,
     id: number
   }>,
+  cast: Array<{
+    profile_path: string
+  }>
   homepage: string,
   id: number,
   imdb_id: number,

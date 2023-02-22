@@ -14,6 +14,8 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { BannerComponent } from './components/home/banner/banner.component';
 import { SharedModule } from './shared/shared.module';
 import { SearchPageComponent } from './components/search-page/search-page.component';
+import { MoviesCarouselComponent } from './components/home/movies-carousel/movies-carousel.component';
+import { NgImageSliderModule } from 'ng-image-slider';
 
 const COMPONENTS = [
   DashboardComponent,
@@ -30,13 +32,15 @@ const MODULES = [
   AppRoutingModule,
   MaterialModule,
   NgbCarouselModule,
-  SharedModule
+  SharedModule,
+  NgImageSliderModule
 ]
 
 @NgModule({
   declarations: [
     COMPONENTS,
     SearchPageComponent,
+    MoviesCarouselComponent,
   ],
   imports: [
     MODULES

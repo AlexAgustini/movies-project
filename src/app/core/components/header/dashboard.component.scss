@@ -1,20 +1,20 @@
 .dashboard {
   min-height: 20px;
-  position: sticky;
+  position: fixed;
   z-index: 10;
   top: 0;
   left: 0;
   right: 0;
   padding-block: 1em;
   align-items: center;
-  background: #16222A;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #3A6073, #16222A);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #3A6073, #16222A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, #0F2027, #203A43, #0F2027);
 }
 
 .dashboard-inner {
   display: flex;
   width: 95vw;
+  margin: 0 auto;
+  justify-content: space-between;
 }
 
 .dashboard-left {

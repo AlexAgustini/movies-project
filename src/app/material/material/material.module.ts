@@ -8,6 +8,7 @@ import { MatPaginatorModule} from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const MAT_MODULES = [
   MatIconModule,
@@ -17,7 +18,8 @@ const MAT_MODULES = [
   MatToolbarModule,
   MatPaginatorModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatProgressSpinnerModule
 ]
 
 
@@ -32,7 +34,8 @@ const MAT_MODULES = [
     MatToolbarModule,
     MatPaginatorModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MAT_MODULES

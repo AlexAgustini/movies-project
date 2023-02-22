@@ -14,11 +14,15 @@ export class MovieDetailComponent implements OnInit {
 
   currentMovie!: Movie;
   currentMovieId!: number;
-  videoUrl!: string;
+  videoUrl!: string | null;
 
   ngOnInit() {
     this.getMovie();
   };
+
+  ngOnChanges() {
+    this.getMovie();
+  }
 
   getMovie() {
 
@@ -32,10 +36,10 @@ export class MovieDetailComponent implements OnInit {
       this.moviesService.getTrailers(this.currentMovieId).subscribe(response => {
 
         if (response) {
-          console.log(response)
           this.videoUrl = `https://www.youtube.com/embed/${response.key}`
+        } else {
+          this.videoUrl = null
         }
-
       })
     });
   };

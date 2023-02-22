@@ -61,7 +61,8 @@
       </div>
 
     </div>
-    <iframe [src]="videoUrl | safe" class="w-[80%] h-[400px] ml-auto mr-auto mt-8"></iframe>
+    <iframe *ngIf="videoUrl" [src]="videoUrl | safe" class="w-[80%] h-[400px] ml-auto mr-auto mt-8"></iframe>
+    <div *ngIf="!videoUrl" class="text-white font text-base">Oops, it looks like there's no trailer available for this movie :/</div>
   </div>
   <app-movie-shelf [similarMoviesShelf]="currentMovieId"></app-movie-shelf>
 

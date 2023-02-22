@@ -17,7 +17,13 @@ export class MoviesService {
     if (similarMovieId) {
       return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/movie/${similarMovieId}/recommendations?api_key=17acd9c39b103a235bc6dcaa22e3957a`)
     } else {
-      return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/movie/${typeOfMovie}?api_key=17acd9c39b103a235bc6dcaa22e3957a&page=${currentPage}`)
+
+      if (typeOfMovie?.slice(0, 6) === 'series') {
+        return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/tv/${typeOfMovie.slice(7, typeOfMovie.length)}?api_key=17acd9c39b103a235bc6dcaa22e3957a`)
+      } else {
+        return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/movie/${typeOfMovie}?api_key=17acd9c39b103a235bc6dcaa22e3957a&page=${currentPage}`)
+      }
+
     }
   }
 
@@ -37,5 +43,9 @@ export class MoviesService {
     return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/search/movie?api_key=17acd9c39b103a235bc6dcaa22e3957a&query=${value}`).pipe(
       map(movies => movies.results)
     )
+  }
+
+  getCast(id: number): Observable<{}> {
+    return this.http.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=17acd9c39b103a235bc6dcaa22e3957a`)
   }
 }
