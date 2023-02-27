@@ -7,6 +7,12 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { DatabaseModule, provideDatabase  } from '@angular/fire/database'
+import { environment } from 'src/environments/environment.development';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getDatabase } from 'firebase/database';
+import { Persistence } from 'firebase/auth';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -17,7 +23,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    CoreModule
+    CoreModule,
+    DatabaseModule,
+    provideFirebaseApp(()=> initializeApp(environment.firebase)),
+    provideDatabase(()=> getDatabase()),
+
   ],
 
   providers: [],

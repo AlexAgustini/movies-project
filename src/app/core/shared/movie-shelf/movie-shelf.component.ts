@@ -71,6 +71,7 @@ export class MovieShelfComponent implements OnInit{
       this.moviesService.getTypeOfMovie(this.typeOfProgram, this.currentPage, this.similarMoviesShelf).subscribe({
 
           next: (response: MoviesResult) => {
+            console.log(response)
             if (!Array.isArray(response.results)) {
               this.hasError = true;
               this.isLoading = false;

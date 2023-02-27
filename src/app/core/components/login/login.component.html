@@ -1,0 +1,44 @@
+<div class="login-container">
+
+  <h1 class="text-center text-white">Sign in</h1>
+
+  <form [formGroup]="form" novalidate>
+
+    <div class="field-wrapper">
+      <mat-form-field>
+        <mat-label>Your Email</mat-label>
+        <input matInput formControlName="email" (input)="emailErrors = ''">
+        <mat-hint class="display-none"></mat-hint>
+        <span>{{emailErrors}}</span>
+        <mat-error></mat-error>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="formState == 'register'" class="field-wrapper">
+      <mat-form-field>
+         <mat-label>Your name</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+      <mat-error *ngIf="form.controls['name'].hasError('required')">You must type a name.</mat-error>
+      <p></p>
+    </div>
+
+    <div class="field-wrapper">
+      <mat-form-field>
+        <mat-label>Your password</mat-label>
+        <input type="password" matInput formControlName="password" (input)="form.controls['password']" #pass>
+        <mat-error>{{passwordErrors}}</mat-error>
+        <mat-error *ngIf="formState == 'register' && form.controls['password'].hasError('required')">Minimum password length is 10 characters.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="actions">
+      <span>Forgot Password?</span>
+      <button *ngIf="formState == 'login'" class="" (click)="login()">Login</button>
+      <button *ngIf="formState == 'register'" class="" (click)="register()">Sign up</button>
+      <span *ngIf="formState == 'login'">Not a member? <a  class="cursor-pointer underline" (click)="changeFormState()">Sign Up</a></span>
+    </div>
+
+
+  </form>
+</div>

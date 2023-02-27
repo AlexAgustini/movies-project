@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Movie } from '../models/movie.model';
-import { Observable, map } from 'rxjs';
+import { Observable, map, filter } from 'rxjs';
 import { MoviesResult } from '../models/movie-result.model';
 import { videoModel } from '../models/video-model';
 
@@ -15,11 +15,18 @@ export class MoviesService {
 
   getTypeOfMovie(typeOfMovie?: string, currentPage?: number, similarMovieId?: number ) {
     if (similarMovieId) {
-      return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/movie/${similarMovieId}/recommendations?api_key=17acd9c39b103a235bc6dcaa22e3957a`)
+      return (this.http.get<MoviesResult>(`https://api.themoviedb.org/3/movie/${similarMovieId}/recommendations?api_key=17acd9c39b103a235bc6dcaa22e3957a`)
+      )
     } else {
 
       if (typeOfMovie?.slice(0, 6) === 'series') {
-        return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/tv/${typeOfMovie.slice(7, typeOfMovie.length)}?api_key=17acd9c39b103a235bc6dcaa22e3957a`)
+        return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/tv/${typeOfMovie.slice(7, typeOfMovie.length)}?api_key=17acd9c39b103a235bc6dcaa22e3957a`).pipe(
+          map((moviesResult: MoviesResult) => {
+            moviesResult.results = moviesResult.results.filter(movie => movie.original_language === 'en' || movie.original_language == 'es' || movie.original_language === 'pt' || movie.original_language === '')
+
+            return moviesResult
+          })
+        )
       } else {
         return this.http.get<MoviesResult>(`https://api.themoviedb.org/3/movie/${typeOfMovie}?api_key=17acd9c39b103a235bc6dcaa22e3957a&page=${currentPage}`)
       }

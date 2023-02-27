@@ -1,0 +1,90 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-block: 8em;
+  padding: 4em 3em;
+  border-radius: 10px;
+  background-color: #0F2027;
+  width: min(90%, 600px);
+
+  form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .field-wrapper {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+      mat-form-field {
+        background-color: transparent;
+        box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px !important;
+        width: 100%;
+        color: white !important;
+
+        mat-label, h1, input {
+          color: #E6E6E6 !important;
+        }
+      }
+
+      span {
+        color: red !important;
+        padding: 0;
+      }
+    }
+
+    button {
+      background-color: #3A6073 !important;
+      color: #E6E6E6;
+      font-weight: 500;
+      letter-spacing: .4px;
+      padding-block: 1em;
+      margin: 0 auto;
+      width: 80%;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+      &:hover {
+        opacity: .9;
+        transition: .4s ease !important;
+      }
+    }
+  }
+
+}
+
+
+
+
+:host ::ng-deep mat-form-field .mdc-text-field--filled{
+  background-color: transparent !important;
+}
+
+
+.actions {
+  display: flex;
+  width: 100%;
+  gap: 1.5em;
+  flex-direction: column;
+
+  span {
+    color: white;
+    padding-left: 1em;
+
+    a {
+      color: #3A6073 !important;
+      margin-left: .5em;
+    }
+  }
+}
+
+
+
+
+

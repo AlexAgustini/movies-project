@@ -4,23 +4,30 @@ import { MovieDetailComponent } from './core/components/movie-detail/movie-detai
 import { HomeComponent } from './core/components/home/home.component';
 import { MoviesOfTypeComponent } from './core/components/movies-of-type/movies-of-type.component';
 import { SearchPageComponent } from './core/components/search-page/search-page.component';
+import { LoginComponent } from './core/components/login/login.component';
+import { AuthGuard } from './core/auth.guard'
 
 const routes: Routes = [
   {
-    path: '', component: HomeComponent
+    path: '', redirectTo: '/home', pathMatch: 'full'
   },
   {
-    path: 'movie/:id', component: MovieDetailComponent
+    path: 'login', component: LoginComponent
+  },
+  {
+    path: 'home', component: HomeComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'movie/:id', component: MovieDetailComponent, canActivate: [AuthGuard]
   },
 
   {
-    path: 'movies/:type_of_movie/:id', component: MoviesOfTypeComponent
+    path: 'movies/:type_of_movie/:id', component: MoviesOfTypeComponent, canActivate: [AuthGuard]
   },
 
   {
-    path: 'movies/search', component: SearchPageComponent
-  }
-
+    path: 'movies/search', component: SearchPageComponent, canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

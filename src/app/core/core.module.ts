@@ -16,6 +16,8 @@ import { SharedModule } from './shared/shared.module';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { MoviesCarouselComponent } from './components/home/movies-carousel/movies-carousel.component';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { LoginComponent } from './components/login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const COMPONENTS = [
   DashboardComponent,
@@ -24,7 +26,10 @@ const COMPONENTS = [
   MoviesOfTypeComponent,
   FooterComponent,
   SafePipe,
-  BannerComponent
+  BannerComponent,
+  SearchPageComponent,
+  MoviesCarouselComponent,
+  LoginComponent,
 ]
 
 const MODULES = [
@@ -33,14 +38,14 @@ const MODULES = [
   MaterialModule,
   NgbCarouselModule,
   SharedModule,
-  NgImageSliderModule
+  NgImageSliderModule,
+  FormsModule,
+  ReactiveFormsModule
 ]
 
 @NgModule({
   declarations: [
     COMPONENTS,
-    SearchPageComponent,
-    MoviesCarouselComponent,
   ],
   imports: [
     MODULES
