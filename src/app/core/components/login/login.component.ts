@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { User } from '../../shared/user';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -26,14 +27,6 @@ export class LoginComponent implements OnInit{
     })
   }
 
-  private getUserData(): User {
-    const name = this.form.get('name')?.value;
-    const email = this.form.get('email')?.value;
-    const password = this.form.get('password')?.value;
-
-    return { name, email, password }
-  }
-
   changeFormState(): void {
     this.formState = 'register';
     this.form.get('name')?.setValue('');
@@ -46,21 +39,23 @@ export class LoginComponent implements OnInit{
     this.emailErrors = '';
     this.passwordErrors = '';
 
-    this.authService.login(this.getUserData()).subscribe(loginResult => {
-      console.log(loginResult)
-      if (loginResult === 'User logged in') {
-        this.router.navigate(['home'])
-      } else if (loginResult === 'Wrong password') {
-        this.passwordErrors = 'Wrong password'
-      } else {
-        this.emailErrors = 'Email not found'
-      }
-    })
+    this.authService.login(this.getUserData())
   }
 
   register() {
-     this.authService.registerUser(this.getUserData())
-     this.formState = 'login'
+     this.authService.registerUser(this.getUserData()).then(result=> {
+      console.log(result)
+     })
+    //  this.formState = 'login'
   }
+
+  private getUserData(): User {
+    const name = this.form.get('name')?.value;
+    const email = this.form.get('email')?.value;
+    const password = this.form.get('password')?.value;
+
+    return { name, email, password }
+  }
+
 
 }

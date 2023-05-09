@@ -11,7 +11,7 @@ import { DatabaseModule, provideDatabase  } from '@angular/fire/database'
 import { environment } from 'src/environments/environment.development';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getDatabase } from 'firebase/database';
-import { Persistence } from 'firebase/auth';
+import { AngularFireModule } from '@angular/fire/compat';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { Persistence } from 'firebase/auth';
     DatabaseModule,
     provideFirebaseApp(()=> initializeApp(environment.firebase)),
     provideDatabase(()=> getDatabase()),
-
+    AngularFireModule.initializeApp(environment.firebase)
   ],
 
   providers: [],

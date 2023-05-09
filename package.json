@@ -29,6 +29,7 @@
     "crypto-js": "^4.1.1",
     "firebase": "^9.17.1",
     "ng-image-slider": "^7.0.0",
+    "ngx-toastr": "^16.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from '../app-routing.module';
 import { MaterialModule } from '../material/material/material.module';
-import { SafePipe } from './safePipe/safePipe';
 
 import { DashboardComponent } from './components/header/dashboard.component';
 import { MovieDetailComponent } from './components/movie-detail/movie-detail.component';
@@ -18,6 +17,7 @@ import { MoviesCarouselComponent } from './components/home/movies-carousel/movie
 import { NgImageSliderModule } from 'ng-image-slider';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SafePipe } from './safePipe/safePipe';
 
 const COMPONENTS = [
   DashboardComponent,
@@ -25,11 +25,11 @@ const COMPONENTS = [
   HomeComponent,
   MoviesOfTypeComponent,
   FooterComponent,
-  SafePipe,
   BannerComponent,
   SearchPageComponent,
   MoviesCarouselComponent,
   LoginComponent,
+  SafePipe
 ]
 
 const MODULES = [
@@ -47,11 +47,9 @@ const MODULES = [
   declarations: [
     COMPONENTS,
   ],
-  imports: [
-    MODULES
-  ],
+  imports: [MODULES],
   exports: [
     COMPONENTS
-  ]
+  ],
 })
 export class CoreModule { }
