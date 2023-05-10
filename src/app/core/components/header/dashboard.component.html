@@ -1,23 +1,25 @@
-<mat-toolbar class="dashboard">
+<ng-container *ngIf="currentUser">
 
-  <div class="dashboard-inner">
-    <div class="dashboard-left">
-      <button matTooltip="Menu" mat-icon-button>
-        <mat-icon [ngStyle]="{'color': 'white'}">menu</mat-icon>
-      </button>
-      <button matTooltip="Home" mat-icon-button routerLink="/">
-        <mat-icon [ngStyle]="{'color': 'white'}">home</mat-icon>
-      </button>
+  <mat-toolbar class="dashboard">
+    <div class="dashboard-inner">
+      <div class="dashboard-left">
+        <button (click)="openSidenav()" matTooltip="Menu" mat-icon-button>
+          <mat-icon [ngStyle]="{'color': 'white'}">menu</mat-icon>
+        </button>
+        <button matTooltip="Home" mat-icon-button routerLink="/">
+          <mat-icon [ngStyle]="{'color': 'white'}">home</mat-icon>
+        </button>
+      </div>
+
+      <app-search-bar class="w-[80%]"></app-search-bar>
+
+      <div class="dashboard-right">
+        <button mat-flat-button class="bg-transparent text-white" routerLink="/movies/popular/1">Popular</button>
+        <button mat-flat-button class="bg-transparent text-white" routerLink="/movies/now_playing/1">Now Playing</button>
+        <button mat-flat-button class="bg-transparent text-white" routerLink="/movies/top_rated/1">Top Rated</button>
+        <button mat-flat-button class="bg-transparent text-white" routerLink="/movies/upcoming/1">Upcoming</button>
+      </div>
     </div>
+  </mat-toolbar>
 
-    <app-search-bar class="w-[80%]"></app-search-bar>
-
-    <div class="dashboard-right">
-      <button mat-flat-button class="bg-transparent text-white" routerLink="/movies/popular/1">Popular</button>
-      <button mat-flat-button class="bg-transparent text-white" routerLink="/movies/now_playing/1">Now Playing</button>
-      <button mat-flat-button class="bg-transparent text-white" routerLink="/movies/top_rated/1">Top Rated</button>
-      <button mat-flat-button class="bg-transparent text-white" routerLink="/movies/upcoming/1">Upcoming</button>
-    </div>
-  </div>
-
-</mat-toolbar>
+</ng-container>

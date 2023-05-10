@@ -4,13 +4,13 @@
 
   <form [formGroup]="form" novalidate>
 
+    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
     <div class="field-wrapper">
       <mat-form-field>
         <mat-label>Your Email</mat-label>
         <input matInput formControlName="email" (input)="emailErrors = ''">
-        <mat-hint class="display-none"></mat-hint>
-        <span>{{emailErrors}}</span>
-        <mat-error></mat-error>
+        <mat-error>{{emailErrors}}</mat-error>
       </mat-form-field>
     </div>
 
@@ -18,8 +18,8 @@
       <mat-form-field>
          <mat-label>Your name</mat-label>
         <input matInput formControlName="name">
+        <mat-error *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched">You must type a name</mat-error>
       </mat-form-field>
-      <mat-error *ngIf="form.controls['name'].hasError('required')">You must type a name.</mat-error>
       <p></p>
     </div>
 
@@ -28,7 +28,6 @@
         <mat-label>Your password</mat-label>
         <input type="password" matInput formControlName="password" (input)="form.controls['password']" #pass>
         <mat-error>{{passwordErrors}}</mat-error>
-        <mat-error *ngIf="formState == 'register' && form.controls['password'].hasError('required')">Minimum password length is 10 characters.</mat-error>
       </mat-form-field>
     </div>
 
@@ -37,8 +36,10 @@
       <button *ngIf="formState == 'login'" class="" (click)="login()">Login</button>
       <button *ngIf="formState == 'register'" class="" (click)="register()">Sign up</button>
       <span *ngIf="formState == 'login'">Not a member? <a  class="cursor-pointer underline" (click)="changeFormState()">Sign Up</a></span>
+      <span *ngIf="formState == 'register'">Already have an account? <a  class="cursor-pointer underline" (click)="changeFormState()">Sign in</a></span>
     </div>
 
+    <mat-error>{{genericErrors}}</mat-error>
 
   </form>
 </div>

@@ -45,7 +45,6 @@
   background: linear-gradient(to right, #0F2027, #203A43, #0F2027);
   color: white;
   z-index: 100;
-
 }
 
 .cast-slider {
@@ -53,6 +52,7 @@
   bottom: 10%;
   left: 5%;
   max-width: 480px;
+
 }
 
 .cast-slider-inner {
@@ -85,6 +85,8 @@
   min-width: 300px;
   height: 300px;
   display: flex;
+  scroll-snap-type: x mandatory;
+  scroll-snap-align: start;
   align-items: center;
 }
 

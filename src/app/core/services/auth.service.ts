@@ -1,101 +1,110 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { FirebaseError } from '@firebase/util'
-
-import { from, Observable, of} from 'rxjs';
-import { User } from '../shared/user';
-import {
-  Database,
-  set,
-  ref,
-  push,
-  get,
-  equalTo,
-  orderByChild,
-  query
-} from '@angular/fire/database';
-
+import { Injectable, EventEmitter } from '@angular/core';
+import { UserData, UserForm } from '../shared/user';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FirebaseErrorEnum } from '../types/firebase-errors.enum';
+import { RegisterUserResult } from '../types/firebase-register-result.tpye';
+import { BehaviorSubject, firstValueFrom, } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService{
+export class AuthService {
 
-  constructor(private database: Database, private router: Router, private afAuth: AngularFireAuth) { }
+  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) { }
 
-  private usersRef = ref(this.database, 'users');
-  public currentUser!: User;
+  private currentUserSource = new BehaviorSubject<string>('');
+  public currentUser$ = this.currentUserSource.asObservable();
 
-  async registerUser(userData: User): Promise<any> {
-
+  public async registerUser(userData: UserForm): Promise<RegisterUserResult> {
     try {
-      return await this.afAuth.createUserWithEmailAndPassword(userData.email, userData.password)
+      const authResult = await this.afAuth.createUserWithEmailAndPassword(userData.email, userData.password)
+      if (authResult.user) {
+          const userDocRef = this.db.collection("users").doc(authResult.user.uid);
+          await userDocRef.set({
+            name: userData.name,
+            email: userData.email,
+          });
+
+        this.setCurrentUser(authResult.user.uid);
+
+      }
+      return authResult;
 
     } catch (error: any){
       const errorCode = error.code;
-
       if (errorCode === FirebaseErrorEnum.EMAIL_INVALID) {
-        return "The email format is invalid"
+        return {
+          errorType: "email",
+          message: "The email format is invalid. Please try another one.",
+        }
       } else if (errorCode === FirebaseErrorEnum.EMAIlL_ALREADY_IN_USE) {
-        return "This email is already being used"
+        return {
+          errorType: "email",
+          message: "This email is already being used. Please try another one.",
+        }
       } else if (errorCode === FirebaseErrorEnum.WEAK_PASSWORD) {
-        return "Invalid password"
+        return {
+          errorType: "password",
+          message: "Weak password. Please try another one.",
+        }
       } else {
-        return "Invalid credentials"
+        return {
+          errorType: "generic",
+          message: "Invalid credentials. Please try again.",
+        }
       }
     }
-    // const usersQuery = query(this.usersRef, orderByChild('email'), equalTo(userData.email));
-
-    // get(usersQuery).then((snapshot) => {
-    //   if (snapshot.exists()) {
-    //     console.log('This email is already registered')
-    //     return
-    //   } else {
-    //     const newUserRef = push(this.usersRef);
-    //     set(newUserRef, {
-    //       username: userData.name,
-    //       email: userData.email,
-    //       password: userData.password
-    //     });
-    //   }
-    // })
   }
 
-  async login(userData: User): Promise<any> {
+  public async login(userData: UserForm): Promise<RegisterUserResult> {
 
     try {
-      // Some firebase functions
-      await this.afAuth.signInWithEmailAndPassword(userData.email, userData.password)
-    } catch (error) {
-      console.error(error);
+      const login = await this.afAuth.signInWithEmailAndPassword(userData.email, userData.password)
+      if (login.user) {
+        this.setCurrentUser(login.user.uid);
+        localStorage.setItem("userToken", login.user.uid);
+      }
+      return login;
+    } catch (error: any) {
+      const errorCode = error.code;
+      if (errorCode === FirebaseErrorEnum.EMAIL_INVALID) {
+        return {
+          errorType: "email",
+          message: "The email is invalid. Please try again.",
+        }
+      } else if (errorCode === FirebaseErrorEnum.USER_NOT_FOUND) {
+        return {
+          errorType: "email",
+          message: "User not found. Please try again.",
+        }
+      } else if (errorCode === FirebaseErrorEnum.WRONG_PASSWORD) {
+        return {
+          errorType: "password",
+          message: "Wrong password. Please try again.",
+        }
+      } else {
+        return {
+          errorType: "generic",
+          message: "Invalid credentials. Please try again.",
+        }
+      }
     }
-
-
-
-
-    // const usersQuery = query(this.usersRef, orderByChild('email'), equalTo(userData.email));
-    // return from(get(usersQuery).then((snapshot) => {
-    //   if (snapshot.exists()) {
-    //     const users = snapshot.val();
-    //     const userIds = Object.keys(users);
-    //     const userId = userIds[0];
-    //     const user = users[userId];
-    //     if (user.password === userData.password) {
-    //       this.currentUser = user;
-    //       return 'User logged in'
-    //     } else {
-    //       return 'Wrong password'
-    //     }
-    //   } else {
-    //     return 'User not found';
-    //   }
-    // }));
   }
 
-  retrieveCurrentUser(): User {
-    return this.currentUser
+
+  public setCurrentUser(userToken: string) {
+    this.currentUserSource.next(userToken);
   }
 
+  public async getUserInfo() {
+    const userId = await firstValueFrom(this.currentUser$);
+    const userDocRef = this.db.collection("users").doc(userId);
+    const userDoc = await firstValueFrom(userDocRef.get());
+    if (userDoc.exists) {
+      return userDoc.data() as Promise<UserData>;
+    } else {
+      return null;
+    }
+  }
 }

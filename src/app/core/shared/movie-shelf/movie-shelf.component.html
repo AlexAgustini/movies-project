@@ -6,7 +6,7 @@
 
 <ng-container *ngIf="!isLoading && !hasError">
   <div *ngIf="mode == 'static'">
-    <div class="w-[95vw] mt-16 container-movies grid content-center grid-cols-5 p-8 rounded-[10px] gap-8">
+    <div class="max-w-full mt-16 container-movies grid content-center grid-cols-5 p-8 rounded-[10px] gap-8">
       <div *ngFor="let movie of moviesList" class="movie-item-container flex flex-col items-stretch min-h-[260px] rounded-[10px] overflow-hidden">
           <img
              class="cursor-pointer w-[350px]"

@@ -18,6 +18,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SafePipe } from './safePipe/safePipe';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 const COMPONENTS = [
   DashboardComponent,
@@ -29,7 +30,8 @@ const COMPONENTS = [
   SearchPageComponent,
   MoviesCarouselComponent,
   LoginComponent,
-  SafePipe
+  SafePipe,
+  SidebarComponent
 ]
 
 const MODULES = [
@@ -40,7 +42,7 @@ const MODULES = [
   SharedModule,
   NgImageSliderModule,
   FormsModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
 ]
 
 @NgModule({

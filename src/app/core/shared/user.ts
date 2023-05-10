@@ -1,5 +1,10 @@
-export interface User {
+export interface UserForm {
   email: string
-  password: string;
   name: string;
+  password: string;
+}
+
+export interface UserData {
+  email: string,
+  name: string
 }

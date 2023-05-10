@@ -1,6 +1,12 @@
-.container {
+.content-container {
   max-width: 95vw;
   padding: 0;
   margin-top: 6em;
+  margin-inline: auto;
+  transition: .4s ease;
+
+  &.sidenav-open {
+    max-width: 85vw;
+  }
 }
 

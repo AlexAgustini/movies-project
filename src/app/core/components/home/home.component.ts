@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   templateUrl: "./home.component.html",
@@ -6,5 +7,4 @@ import { Component } from '@angular/core';
   selector: "home-component"
 })
 export class HomeComponent {
-
 }

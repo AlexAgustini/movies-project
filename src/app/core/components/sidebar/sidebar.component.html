@@ -1,0 +1,30 @@
+<mat-sidenav-container class="sidenav-container" [class.active]="(sidenavStatus | async) === 'open'">
+  <mat-sidenav-content>
+    <mat-icon (click)="closeSidenav() " class="close-icon">close</mat-icon>
+
+    <div class="user-info-wrapper">
+      <mat-icon>person</mat-icon>
+
+      <span *ngIf="userData">Hey {{userData.name}}!</span>
+    </div>
+
+    <ul class="options-list">
+
+      <li class="li">
+        <mat-icon>person</mat-icon>
+        <span>My Profile</span>
+      </li>
+
+      <li class="li">
+        <mat-icon>favorite</mat-icon>
+        <span>Favorite Movies</span>
+      </li>
+
+    </ul>
+
+
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<div class="toggle-content" [class.active]="(sidenavStatus | async) === 'open'"></div>

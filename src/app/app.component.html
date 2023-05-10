@@ -1,7 +1,9 @@
-<app-dashboard></app-dashboard>
+<div class="app-container flex">
+  <app-sidebar></app-sidebar>
 
-<div class="container">
-  <router-outlet></router-outlet>
+  <div class="content-container" [class.sidenav-open]="($sidenavStatus | async) === 'open'">
+    <app-dashboard></app-dashboard>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  </div>
 </div>
-
-<app-footer></app-footer>

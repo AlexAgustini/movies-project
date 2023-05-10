@@ -1,0 +1,95 @@
+.sidenav-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background-color: #0F2027;
+  transition: .4s ease;
+  z-index: 99;
+  padding-block: 2em;
+
+  &.active {
+    padding: 1em;
+    width: 10vw;
+  }
+
+  .close-icon {
+    color: white;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    cursor: pointer;
+  }
+
+  .user-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+
+    span {
+      color: white;
+      font-size: 22px;
+    }
+
+    mat-icon {
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      border: 1px solid white;
+      padding: .8em;
+      border-radius: 100%;
+    }
+  }
+
+  .options-list {
+
+    margin-top: 2em;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    li {
+      cursor: pointer;
+      font-size: 14px ;
+      padding-bottom: .5em;
+      margin: 0;
+      display: flex;
+      gap: 1em;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255, .3);
+
+      span {
+        color: white;
+        transition: .3s ease;
+      }
+
+      mat-icon {
+        color: white;
+      }
+
+      &:hover {
+        span {
+          transform: translateY(-1px);
+        }
+      }
+    }
+  }
+}
+
+.toggle-content {
+  height: 100vw;
+  width: 0;
+  background-color: transparent;
+  transition: .4s ease;
+
+  &.active {
+    width: 10vw;
+  }
+
+}

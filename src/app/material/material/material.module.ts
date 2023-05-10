@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 const MAT_MODULES = [
   MatIconModule,
@@ -19,23 +20,16 @@ const MAT_MODULES = [
   MatPaginatorModule,
   MatFormFieldModule,
   MatInputModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatProgressBarModule,
+  MatSidenavModule
 ]
 
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatButtonModule,
-    MatProgressBarModule,
-    MatToolbarModule,
-    MatPaginatorModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatProgressSpinnerModule
+    MAT_MODULES
   ],
   exports: [
     MAT_MODULES

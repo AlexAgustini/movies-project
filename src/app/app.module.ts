@@ -17,7 +17,6 @@ import { AngularFireModule } from '@angular/fire/compat';
   declarations: [
     AppComponent
   ],
-
   imports: [
     BrowserModule,
     HttpClientModule,

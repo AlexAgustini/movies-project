@@ -29,7 +29,6 @@ export class MovieShelfComponent implements OnInit{
   public isLoading: boolean = false;
   public hasError: boolean = false;
 
-
   ngOnInit() {
 
     this.mode = this.mode != null ? this.mode : "carousel";
@@ -71,7 +70,6 @@ export class MovieShelfComponent implements OnInit{
       this.moviesService.getTypeOfMovie(this.typeOfProgram, this.currentPage, this.similarMoviesShelf).subscribe({
 
           next: (response: MoviesResult) => {
-            console.log(response)
             if (!Array.isArray(response.results)) {
               this.hasError = true;
               this.isLoading = false;
