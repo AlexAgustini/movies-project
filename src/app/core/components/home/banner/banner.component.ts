@@ -1,8 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { MoviesResult } from '../../../models/movie-result.model';
-import { Movie } from '../../../models/movie.model';
-import { MoviesService } from '../../../services/movies-service';
+import { MoviesService } from '../../../services/movies.service';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
+import { SidenavService } from 'src/app/core/services/sidenav.service';
+import { ProgramResultType } from 'src/app/core/models/program-fetch-result.model';
 
 @Component({
   selector: 'app-banner',
@@ -13,33 +14,35 @@ export class BannerComponent {
 
   @ViewChild('ngb-carousel', { static: true }) carousel!: NgbCarousel;
 
-  constructor(private moviesService: MoviesService) {};
+  constructor(private moviesService: MoviesService, private sidenavService: SidenavService) {};
 
-  movies!: Movie[];
+  public $sidenavStatus!: Observable<"closed" | "open">
+  movies!: ProgramResultType[];
   public isLoading: boolean = false;
 
   ngOnInit() {
-    this.getTypeOfMovie();
+    this.getPrograms();
+    this.$sidenavStatus = this.sidenavService.$sidenavStatus;
   }
 
-  getTypeOfMovie(): void {
-    this.isLoading = true;
-    this.moviesService.getTypeOfMovie('popular').subscribe({
-      next: (movies: MoviesResult) => {
+  getPrograms(): void {
+    // this.isLoading = true;
+    // this.moviesService.getPrograms('popular').subscribe({
+    //   next: (movies: MoviesResult) => {
 
-        let newArray: Movie[] = [];
+    //     let newArray: Movie[] = [];
 
-        for (let movie of movies.results) {
-          this.moviesService.getCast(movie.id).subscribe(response => {
-            movie = {...movie, ...response}
-            newArray.push(movie);
-          })
-        }
+    //     for (let movie of movies.results) {
+    //       this.moviesService.getCast(movie.id).subscribe(response => {
+    //         movie = {...movie, ...response}
+    //         newArray.push(movie);
+    //       })
+    //     }
 
-        this.movies = newArray;
-        this.isLoading = false;
-      }
-    })
+    //     this.movies = newArray;
+    //     this.isLoading = false;
+    //   }
+    // })
   };
 
   getFlagImage(language: string): string {

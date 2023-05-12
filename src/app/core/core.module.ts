@@ -5,7 +5,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { MaterialModule } from '../material/material/material.module';
 
 import { DashboardComponent } from './components/header/dashboard.component';
-import { MovieDetailComponent } from './components/movie-detail/movie-detail.component';
+import { MovieDetailComponent } from './components/program-detail/program-detail.component';
 import { HomeComponent } from './components/home/home.component';
 import { MoviesOfTypeComponent } from './components/movies-of-type/movies-of-type.component';
 import { FooterComponent } from './components/footer/footer/footer.component';

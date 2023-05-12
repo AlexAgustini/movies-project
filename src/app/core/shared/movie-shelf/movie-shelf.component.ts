@@ -1,21 +1,23 @@
 import { SliderImages } from './../../models/slider-images.model';
 import { Component, Input, OnInit } from '@angular/core';
-import { Movie } from './../../models/movie.model';
-import { MoviesService } from './../../services/movies-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MoviesResult } from '../../models/movie-result.model';
+import { ProgramResultType, ProgramType } from '../../models/program-fetch-result.model';
 
 @Component({
   selector: 'app-movie-shelf',
   templateUrl: './movie-shelf.component.html',
   styleUrls: ['./movie-shelf.component.scss']
 })
+
 export class MovieShelfComponent implements OnInit{
 
-  constructor(private moviesService: MoviesService, private router: Router, private activatedRoute: ActivatedRoute) {};
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {};
 
   @Input()
-  public typeOfProgram?: string;
+  public programData!: Array<ProgramResultType>;
+
+  @Input()
+  public typeOfProgram?: ProgramType;
 
   @Input()
   public mode?: string;
@@ -28,82 +30,32 @@ export class MovieShelfComponent implements OnInit{
 
   public isLoading: boolean = false;
   public hasError: boolean = false;
+  public carouselImages: SliderImages[] = [];
+  public currentPage!: number;
 
   ngOnInit() {
-
-    this.mode = this.mode != null ? this.mode : "carousel";
-
-    this.activatedRoute.params.subscribe(routeParams => {
-
-      if (this.similarMoviesShelf) {
-        this.similarMoviesShelf = routeParams['id']
-      }
-
-      this.currentPage = routeParams['id'];
-    });
-
+    if (this.mode === "carousel") {
+      this.assembleCarrouselData();
+    } else {
+      console.log(this.programData)
+    }
   };
 
-  ngOnChanges() {
-
-    this.currentPage = this.activatedRoute.snapshot.params['id'];
-    this.getTypeOfMovie();
-
+  assembleCarrouselData() {
+    if (!this.programData) return;
+    this.programData.forEach(program=> {
+      this.carouselImages.push({
+        id: program.id,
+        image: `https://image.tmdb.org/t/p/w500${program.poster_path}`,
+        thumbImage: `https://image.tmdb.org/t/p/w500${program.poster_path}`
+      });
+    })
   }
 
-  moviesList!: Movie[];
-  carouselImages!: SliderImages[];
-
-  currentPage!: number;
-  totalResults!: number;
-  totalPages!: number;
-
-  getTypeOfMovie(): void {
-
-    if (!this.typeOfProgram && this.similarMoviesShelf === null) {
-      return;
-    }
-
-    this.isLoading = true;
-    this.hasError = false;
-
-      this.moviesService.getTypeOfMovie(this.typeOfProgram, this.currentPage, this.similarMoviesShelf).subscribe({
-
-          next: (response: MoviesResult) => {
-            if (!Array.isArray(response.results)) {
-              this.hasError = true;
-              this.isLoading = false;
-              return;
-            }
-
-            if (this.similarMoviesShelf) {
-              this.moviesList = response.results.slice(0, 10)
-            } else {
-              this.moviesList = response.results;
-            }
-
-            this.totalPages = response.total_pages;
-            this.totalResults = response.total_results;
-            this.carouselImages = this.moviesList.map((movie) => {
-              return {
-                image: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
-                thumbImage: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
-                id: movie.id
-              }
-            })
-            this.isLoading = false;
-          },
-          error: () => {
-            this.isLoading = false;
-            this.hasError = true;
-          }
-      });
-    };
 
   goToMovieDetail(index: number): void {
-    const movieId = this.moviesList[index].id
-
-    this.router.navigate(['/movie', movieId])
+    const movieId = this.programData[index].id
+    this.router.navigate([`/${this.typeOfProgram}`, movieId])
   }
 
   handlePages(e: any): void {
@@ -114,7 +66,6 @@ export class MovieShelfComponent implements OnInit{
 
     this.router.navigate(['movies', this.typeOfProgram, e.pageIndex])
     this.currentPage = e.pageIndex
-    this.getTypeOfMovie()
   }
 
 }

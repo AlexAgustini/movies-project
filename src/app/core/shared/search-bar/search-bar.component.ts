@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Movie } from '../../models/movie.model';
-import { MoviesService } from '../../services/movies-service';
+import { ProgramResultType } from '../../models/program-fetch-result.model';
+import { MoviesService } from '../../services/movies.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -12,7 +12,7 @@ export class SearchBarComponent{
 
   @Input() label = '';
 
-  moviesReturned!: Movie[];
+  moviesReturned!: ProgramResultType[];
 
   constructor(private moviesService: MoviesService, private router: Router) {}
 

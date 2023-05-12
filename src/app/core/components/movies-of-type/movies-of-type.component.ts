@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { combineLatest, map } from 'rxjs';
+import { MovieCategories, ProgramResultType, ProgramType, SeriesCategories } from '../../models/program-fetch-result.model';
+import { MoviesService } from '../../services/movies.service';
+import { SeriesService } from '../../services/series.service';
 
 @Component({
   templateUrl: "./movies-of-type.component.html",
@@ -8,14 +12,39 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MoviesOfTypeComponent {
 
-  public typeOfMovie?: string;
+  public programCategory?: MovieCategories | SeriesCategories;
+  public typeOfProgram!: ProgramType;
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  public programData!: Array<ProgramResultType>;
+
+  constructor(private activatedRoute: ActivatedRoute, private moviesService: MoviesService, private seriesService: SeriesService) {}
 
   ngOnInit() {
+    const programCategory$ = this.activatedRoute.params.pipe(
+      map(params => params["program_category"])
+    );
 
-    this.activatedRoute.params.subscribe((params) => {
-      this.typeOfMovie = params['type_of_movie'];
-    })
+    const programType$ = this.activatedRoute.url.pipe(
+      map(url => url[0].path)
+    );
+
+    combineLatest([programType$, programCategory$]).subscribe(([programType, programCategory]) => {
+      this.typeOfProgram = programType as ProgramType;
+      this.programCategory = programCategory;
+      this.fetchShelvesData();
+    });
+  }
+
+  async fetchShelvesData() {
+    if (this.programCategory) {
+
+      if (this.typeOfProgram === "movies") {
+
+        this.programData = await this.moviesService.getMoviesByCategory(this.programCategory as MovieCategories);
+      } else {
+        this.programData = await this.seriesService.getSeriesByCategory(this.programCategory as SeriesCategories);
+      }
+
+    }
   }
 }

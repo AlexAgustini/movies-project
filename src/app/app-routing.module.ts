@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MovieDetailComponent } from './core/components/movie-detail/movie-detail.component';
+import { MovieDetailComponent } from './core/components/program-detail/program-detail.component';
 import { HomeComponent } from './core/components/home/home.component';
 import { MoviesOfTypeComponent } from './core/components/movies-of-type/movies-of-type.component';
 import { SearchPageComponent } from './core/components/search-page/search-page.component';
@@ -18,11 +18,11 @@ const routes: Routes = [
     path: 'home', component: HomeComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'movie/:id', component: MovieDetailComponent, canActivate: [AuthGuard]
+    path: 'movies/:id', component: MovieDetailComponent, canActivate: [AuthGuard]
   },
 
   {
-    path: 'movies/:type_of_movie/:id', component: MoviesOfTypeComponent, canActivate: [AuthGuard]
+    path: 'movies/:program_category/:id', component: MoviesOfTypeComponent, canActivate: [AuthGuard]
   },
 
   {

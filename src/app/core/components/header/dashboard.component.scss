@@ -1,39 +1,55 @@
 .dashboard {
   min-height: 20px;
   position: fixed;
-  z-index: 10;
+  z-index: 999;
   top: 0;
   left: 0;
   right: 0;
   padding-block: 1em;
   align-items: center;
   background: linear-gradient(to right, #0F2027, #203A43, #0F2027);
-}
-
-.dashboard-inner {
-  display: flex;
-  width: 95vw;
-  margin: 0 auto;
-  justify-content: space-between;
-}
-
-.dashboard-left {
+  transition: .4s ease;
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 1em;
+
+  &.sidenav-active {
+    .dashboard-inner {
+      padding-left: 5vw;
+      width: 85vw;
+    }
+  }
+
+  app-search-bar {
+    width: 80%;
+  }
+
+  .dashboard-inner {
+    display: flex;
+    width: 95vw;
+    justify-content: space-between;
+    transition: .4s ease;
+  }
+
+  .dashboard-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+  }
+
+  .dashboard-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    gap: 1em;
+  }
+
+  h3 {
+    cursor: pointer;
+    margin: 0;
+    color: white;
+  }
+
 }
 
-.dashboard-right {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  gap: 1em;
-}
-
-h3 {
-  cursor: pointer;
-  margin: 0;
-  color: white;
-}

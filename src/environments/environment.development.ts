@@ -1,4 +1,9 @@
 export const environment = {
+  apiUrls: {
+    moviesUrl: "https://api.themoviedb.org/3/movie",
+    seriesUrl: "https://api.themoviedb.org/3/tv"
+  },
+  apiKey: "17acd9c39b103a235bc6dcaa22e3957a",
   production: false,
   firebase: {
     apiKey: "AIzaSyD0I49OsQmZR5Czg_10tgs5BDAUY9K8K0o",

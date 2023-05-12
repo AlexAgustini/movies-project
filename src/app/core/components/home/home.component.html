@@ -2,9 +2,11 @@
   <app-banner></app-banner>
 </div>
 
-<div class="flex flex-col gap-6">
-  <app-movie-shelf typeOfProgram="popular" title="Popular Movies"></app-movie-shelf>
-  <app-movie-shelf typeOfProgram="series/popular" title="Popular Series" ></app-movie-shelf>
-  <app-movie-shelf typeOfProgram="top_rated" title="Top Rated Movies"></app-movie-shelf>
-  <app-movie-shelf typeOfProgram="upcoming" title="Upcoming Movies"></app-movie-shelf>
-</div>
+<ng-container *ngIf="dataFetched">
+  <div class="flex flex-col gap-6">
+    <app-movie-shelf mode="carousel" typeOfProgram="movies" [programData]="popularMoviesList" title="Popular Movies"></app-movie-shelf>
+    <app-movie-shelf mode="carousel" typeOfProgram="tv" [programData]="popularSeriesList" title="Popular Series"></app-movie-shelf>
+    <app-movie-shelf mode="carousel" typeOfProgram="movies" [programData]="topRatedMoviesList" title="Top Rated Movies"></app-movie-shelf>
+    <app-movie-shelf mode="carousel" typeOfProgram="movies" [programData]="upcomingMoviesList" title="Upcoming Movies"></app-movie-shelf>
+  </div>
+</ng-container>

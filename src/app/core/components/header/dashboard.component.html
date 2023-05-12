@@ -1,6 +1,6 @@
 <ng-container *ngIf="currentUser">
 
-  <mat-toolbar class="dashboard">
+  <mat-toolbar class="dashboard"  [class.sidenav-active]="($sidenavStatus | async) === 'open'">
     <div class="dashboard-inner">
       <div class="dashboard-left">
         <button (click)="openSidenav()" matTooltip="Menu" mat-icon-button>
@@ -11,7 +11,7 @@
         </button>
       </div>
 
-      <app-search-bar class="w-[80%]"></app-search-bar>
+      <app-search-bar></app-search-bar>
 
       <div class="dashboard-right">
         <button mat-flat-button class="bg-transparent text-white" routerLink="/movies/popular/1">Popular</button>

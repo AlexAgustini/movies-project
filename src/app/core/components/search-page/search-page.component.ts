@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Movie } from '../../models/movie.model';
-import { MoviesService } from '../../services/movies-service';
+import { ProgramResultType } from '../../models/program-fetch-result.model';
+import { MoviesService } from '../../services/movies.service';
 
 @Component({
   selector: 'app-search-page',
@@ -16,7 +16,7 @@ export class SearchPageComponent implements OnInit{
   public hasError: boolean = false;
 
   queryMade!: string | null;
-  moviesReturned!: Movie[];
+  moviesReturned!: ProgramResultType[];
 
   ngOnInit() {
     this.queryMade = this.activatedRoute.snapshot.queryParamMap.get('q');

@@ -20,6 +20,8 @@ body {
   font-family: 'Montserrat', sans-serif ;
 }
 
+// region main carousel styling
+
 .carousel-control-prev-icon{
   left: 320%;
   position: absolute;
@@ -30,4 +32,16 @@ body {
   right: 10%;
 }
 
+.carousel-item {
+  padding: 1em 4em;
+
+  &.active {
+    position: relative;
+    flex-direction: row-reverse;
+    display: flex;
+    gap: 4em;
+  }
+}
+
+// endregion
 

@@ -2,11 +2,11 @@
   max-width: 95vw;
   padding: 0;
   margin-top: 6em;
-  margin-inline: auto;
   transition: .4s ease;
+  margin-inline: auto;
 
   &.sidenav-open {
+    padding-left: 5vw;
     max-width: 85vw;
   }
 }
-

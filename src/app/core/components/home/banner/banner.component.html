@@ -1,7 +1,13 @@
-<ngb-carousel [interval]="5000" [showNavigationIndicators]="false" [showNavigationArrows]="true">
+<ngb-carousel class="banner-container" [interval]="5000" [showNavigationIndicators]="false" [showNavigationArrows]="true">
   <ng-template ngbSlide *ngFor="let movie of movies; let i = index">
     <div class="picsum-img-wrapper">
-      <img class="ml-auto max-h-[600px] min-w-[1000px] rounded overflow-hidden" [src]="'https://image.tmdb.org/t/p/w1280/' + movie.backdrop_path" alt="{{ movie.title }}" />
+      <img
+        class="banner-img ml-auto rounded overflow-hidden"
+        [src]="'https://image.tmdb.org/t/p/w1280/' + movie.backdrop_path"
+        alt="{{ movie.title }}"
+        [class.sidenav-active]="($sidenavStatus | async) === 'open'"
+      />
+    <button class="watch-button" [routerLink]="['/movie', movie.id]">Watch</button>
     </div>
     <div class="carousel-caption">
       <div>
@@ -26,8 +32,6 @@
         </div>
       </div>
     </div>
-
-    <button class="watch-button" [routerLink]="['/movie', movie.id]">Watch</button>
 
   </ng-template>
 </ngb-carousel>

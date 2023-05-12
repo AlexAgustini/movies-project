@@ -1,3 +1,7 @@
+* {
+  overflow: hidden;
+}
+
 .sidenav-container {
   position: fixed;
   top: 0;
@@ -5,7 +9,7 @@
   width: 0;
   background-color: #0F2027;
   transition: .4s ease;
-  z-index: 99;
+  z-index: 1000;
   padding-block: 2em;
 
   &.active {
@@ -80,16 +84,4 @@
       }
     }
   }
-}
-
-.toggle-content {
-  height: 100vw;
-  width: 0;
-  background-color: transparent;
-  transition: .4s ease;
-
-  &.active {
-    width: 10vw;
-  }
-
 }
