@@ -33,13 +33,13 @@
   </div>
 
   <ng-template #carousel>
-    <div  class="carousel-container" *ngIf="mode == 'carousel' && similarMoviesShelf === undefined ">
+    <div  class="carousel-container" *ngIf="mode == 'carousel' && similarProgramsShelf === undefined ">
       <h1 class="shelf-title mb-4">{{title}}</h1>
       <ng-image-slider (imageClick)="goToMovieDetail($event)" [slideImage]="7" [images]="carouselImages" [imageSize]="{width: '20%q', height: '500px'}" #nav></ng-image-slider>
     </div>
   </ng-template>
 
-  <div class="p-6 movie-detail-shelf" *ngIf="similarMoviesShelf">
+  <div class="p-6 movie-detail-shelf" *ngIf="similarProgramsShelf">
     <div class="container-movies grid content-center grid-cols-2 gap-8 p-4 rounded-lg">
       <div  *ngFor="let movie of programData" class="movie-item-container flex flex-col items-stretch max-w-[200px]">
           <img

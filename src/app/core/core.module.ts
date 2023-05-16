@@ -5,7 +5,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { MaterialModule } from '../material/material/material.module';
 
 import { DashboardComponent } from './components/header/dashboard.component';
-import { MovieDetailComponent } from './components/program-detail/program-detail.component';
+import { ProgramDetailComponent } from './components/program-detail/program-detail.component';
 import { HomeComponent } from './components/home/home.component';
 import { MoviesOfTypeComponent } from './components/movies-of-type/movies-of-type.component';
 import { FooterComponent } from './components/footer/footer/footer.component';
@@ -22,7 +22,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 const COMPONENTS = [
   DashboardComponent,
-  MovieDetailComponent,
+  ProgramDetailComponent,
   HomeComponent,
   MoviesOfTypeComponent,
   FooterComponent,
@@ -31,7 +31,7 @@ const COMPONENTS = [
   MoviesCarouselComponent,
   LoginComponent,
   SafePipe,
-  SidebarComponent
+  SidebarComponent,
 ]
 
 const MODULES = [

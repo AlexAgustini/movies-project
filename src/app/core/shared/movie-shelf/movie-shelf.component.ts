@@ -23,7 +23,7 @@ export class MovieShelfComponent implements OnInit{
   public mode?: string;
 
   @Input()
-  public similarMoviesShelf?: number;
+  public similarProgramsShelf?: number;
 
   @Input()
   public title?: string;
@@ -34,14 +34,11 @@ export class MovieShelfComponent implements OnInit{
   public currentPage!: number;
 
   ngOnInit() {
-    if (this.mode === "carousel") {
-      this.assembleCarrouselData();
-    } else {
-      console.log(this.programData)
-    }
+    if (this.mode === "carousel") this.assembleCarrouselData();
+    if (this.similarProgramsShelf) this.assembleSimilarMoviesData();
   };
 
-  assembleCarrouselData() {
+  private assembleCarrouselData() {
     if (!this.programData) return;
     this.programData.forEach(program=> {
       this.carouselImages.push({
@@ -52,6 +49,9 @@ export class MovieShelfComponent implements OnInit{
     })
   }
 
+  private assembleSimilarMoviesData() {
+
+  }
 
   goToMovieDetail(index: number): void {
     const movieId = this.programData[index].id

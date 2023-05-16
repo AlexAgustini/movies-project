@@ -10,3 +10,38 @@ h3, p, h1, span {
 mat-icon {
   color: white;
 }
+
+.skeleton {
+  .skeleton-title {
+    width: 300px;
+    height: 20px;
+    animation: skeleton-loading infinite linear alternate 1s;
+  }
+
+  .skeleton-text {
+    height: 20px;
+    width: 150px;
+    animation: skeleton-loading infinite linear alternate 1s;
+  }
+
+  .skeleton-img {
+    height: 450px;
+    width: 300px;
+    animation: skeleton-loading infinite linear alternate 1s;
+  }
+
+  .skeleton-description {
+    height: 20px;
+    width: 350px;
+    animation: skeleton-loading infinite linear alternate 1s;
+  }
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: #203A43;
+  }
+  100% {
+    background-color: #203a4300;
+  }
+}

@@ -20,12 +20,12 @@ export class MoviesService {
     return moviesList.filter(movie=> !movie.adult && movie.original_language === "pt" || movie.original_language === "pt" || movie.original_language === "en");
   }
 
-  async getSimilarMovies(similarMovieId: string):Promise<ProgramResultType[]> {
+  async getSimilarMovies(similarMovieId: string | number):Promise<ProgramResultType[]> {
     return (await firstValueFrom(this.http.get<ProgramsFetchResult>(`${this.apiUrl}/${similarMovieId}/recommendations?api_key=17acd9c39b103a235bc6dcaa22e3957a`))).results
   }
 
   async getMovieById(movieId: number): Promise<ProgramResultType> {
-    return (await firstValueFrom(this.http.get<ProgramResultType>(`${this.apiUrl}/${movieId}/recommendations?api_key=17acd9c39b103a235bc6dcaa22e3957a`)));
+    return (await firstValueFrom(this.http.get<ProgramResultType>(`${this.apiUrl}/${movieId}?api_key=17acd9c39b103a235bc6dcaa22e3957a`)));
   }
 
   getMovieTrailer(id: number) {

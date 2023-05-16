@@ -7,10 +7,12 @@ import { NgImageSliderModule } from 'ng-image-slider';
 
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { MovieShelfComponent } from './movie-shelf/movie-shelf.component';
+import { SimilarProgramsShelfComponent } from './similar-programs-shelf/similar-programs-shelf.component';
 
 const COMPONENTS = [
   SearchBarComponent,
   MovieShelfComponent,
+  SimilarProgramsShelfComponent
 ]
 
 @NgModule({
