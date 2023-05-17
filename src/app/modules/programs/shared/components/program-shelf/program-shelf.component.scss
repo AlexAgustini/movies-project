@@ -26,11 +26,14 @@ h3, h1 {
     top: 4px;
     cursor: pointer;
 
-    mat-icon {
-      transition: .4s ease;
-      &:hover {
+    &:hover {
+      mat-icon {
         color: #8B0000;
       }
+    }
+
+    mat-icon {
+      transition: .4s ease;
 
       &.favorited {
         color: red;

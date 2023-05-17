@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-<<<<<<< HEAD:src/app/modules/programs/private/views/program-detail/program-detail.view.ts
-=======
-import { ISeriesResult, ProgramResultType, ProgramType } from '../../models/program-fetch-result.model';
->>>>>>> 0f96549605c34c684881a29a69f0f83b8a0df62a:src/app/core/components/program-detail/program-detail.component.ts
 import { MoviesService } from '../../services/movies.service';
 import { SeriesService } from '../../services/series.service';
-import { ProgramResultType, ProgramType } from '../../types/program-fetch-result.type';
+import { ISeriesResult, ProgramResultType, ProgramType } from '../../types/program-fetch-result.type';
 
 @Component({
   selector: 'app-movie-detail',

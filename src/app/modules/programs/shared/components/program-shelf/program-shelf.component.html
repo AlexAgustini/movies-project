@@ -7,14 +7,10 @@
 <ng-container *ngIf="!hasError">
   <div *ngIf="mode == 'static' && !isLoading else carousel">
     <div class="max-w-full mt-16 container-movies grid content-center grid-cols-5 p-8 rounded-[10px] gap-8">
-<<<<<<< HEAD:src/app/modules/programs/shared/components/program-shelf/program-shelf.component.html
       <div *ngFor="let program of programData" class="movie-item-container flex flex-col items-stretch min-h-[260px] rounded-[10px] overflow-hidden">
-=======
-      <div *ngFor="let movie of programData; let i = index" class="movie-item-container flex flex-col items-stretch min-h-[260px] rounded-[10px] overflow-hidden">
-          <div (click)="toggleFavoriteProgram(movie)" class="favorite-wrapper">
-            <mat-icon [ngClass]="{'favorited' : movie.programFavorited}">favorite</mat-icon>
-          </div>
->>>>>>> 0f96549605c34c684881a29a69f0f83b8a0df62a:src/app/core/shared/movie-shelf/movie-shelf.component.html
+        <div (click)="toggleFavoriteProgram(program)" class="favorite-wrapper">
+          <mat-icon [ngClass]="{'favorited' : program.programFavorited}">favorite</mat-icon>
+        </div>
           <img
              class="cursor-pointer w-[350px]"
              src="https://image.tmdb.org/t/p/w500/{{program.poster_path}}"
@@ -45,23 +41,4 @@
       <ng-image-slider (imageClick)="goToMovieDetail($event)" [slideImage]="7" [images]="carouselImages" [imageSize]="{width: '16.6%q', height: '450px'}" #nav></ng-image-slider>
     </div>
   </ng-template>
-<<<<<<< HEAD:src/app/modules/programs/shared/components/program-shelf/program-shelf.component.html
-
-  <div class="p-6 movie-detail-shelf" *ngIf="similarProgramsShelf">
-    <div class="container-movies grid content-center grid-cols-2 gap-8 p-4 rounded-lg">
-      <div  *ngFor="let program of programData" class="movie-item-container flex flex-col items-stretch max-w-[200px]">
-          <img
-             class="cursor-pointer w-full min-h-[250px] object-cover"
-             src="https://image.tmdb.org/t/p/w500/{{program.poster_path}}"
-             alt=""
-             [routerLink]="['/{{typeOfProgram}}', program.id]"
-          >
-          <div class="justify-center content-center flex h-full min-h-[55px] items-center border-[1px solid]">
-            <h3 class="text-center">{{program.title}}</h3>
-          </div>
-      </div>
-    </div>
-  </div>
-=======
->>>>>>> 0f96549605c34c684881a29a69f0f83b8a0df62a:src/app/core/shared/movie-shelf/movie-shelf.component.html
 </ng-container>

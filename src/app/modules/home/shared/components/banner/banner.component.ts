@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { MoviesService } from '../../../services/movies.service';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
-import { SidenavService } from 'src/app/core/services/sidenav.service';
-import { ProgramResultType } from 'src/app/core/models/program-fetch-result.model';
+import { SidenavService } from 'src/app/common/services/sidenav.service';
+import { MoviesService } from 'src/app/modules/programs/private/services/movies.service';
+import { ProgramResultType } from 'src/app/modules/programs/private/types/program-fetch-result.type';
 
 @Component({
   selector: 'app-banner',

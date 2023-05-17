@@ -1,12 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-<<<<<<< HEAD:src/app/modules/programs/shared/components/program-shelf/program-shelf.component.ts
+import {  Router } from '@angular/router';
+import { FavoritesService } from '../../../private/services/favorites.service';
 import { ProgramResultType, ProgramType } from '../../../private/types/program-fetch-result.type';
 import { SliderImages } from '../../../private/types/slider-images.type';
-=======
-import { ProgramResultType, ProgramType } from '../../models/program-fetch-result.model';
-import { FavoritesService } from '../../services/favorites.service';
->>>>>>> 0f96549605c34c684881a29a69f0f83b8a0df62a:src/app/core/shared/movie-shelf/movie-shelf.component.ts
 
 @Component({
   selector: 'program-shelf',

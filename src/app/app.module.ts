@@ -11,7 +11,6 @@ import { environment } from 'src/environments/environment.development';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getDatabase } from 'firebase/database';
 import { AngularFireModule } from '@angular/fire/compat';
-import { AccountComponent } from './modules/account/private/views/account/account.component';
 
 import { SidebarModule } from './common/components/sidebar/sidebar.module';
 import { FooterModule } from './common/components/footer/footer.module';
@@ -20,7 +19,6 @@ import { HeaderModule } from './common/components/header/header.module';
 @NgModule({
   declarations: [
     AppComponent,
-    AccountComponent
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-<<<<<<< HEAD:src/app/common/components/sidebar/sidebar.component.ts
 import { AuthService } from '../../../modules/login/shared/services/auth.service';
-=======
-import { AuthService } from '../../services/auth.service';
->>>>>>> 0f96549605c34c684881a29a69f0f83b8a0df62a:src/app/core/components/sidebar/sidebar.component.ts
 import { SidenavService } from '../../services/sidenav.service';
 import { UserData } from '../../../modules/login/shared/types/user.type';
 

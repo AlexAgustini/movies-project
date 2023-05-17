@@ -2,12 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable, firstValueFrom, map } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-<<<<<<< HEAD:src/app/modules/programs/private/services/series.service.ts
 import { ProgramResultType, ProgramsFetchResult, SeriesCategories } from '../types/program-fetch-result.type';
-=======
-import { ProgramResultType, ProgramsFetchResult, SeriesCategories } from '../models/program-fetch-result.model';
-import { videoModel } from '../models/video-model';
->>>>>>> 0f96549605c34c684881a29a69f0f83b8a0df62a:src/app/core/services/series.service.ts
+import { VideoModel } from '../types/video-type';
 
 @Injectable({
   providedIn: "root"
@@ -33,7 +29,7 @@ export class SeriesService {
   }
 
   public async getSeriesTrailer(seriesId: number):Promise<string> {
-    return firstValueFrom(this.http.get<videoModel>(`${this.apiUrl}/${seriesId}/videos?api_key=17acd9c39b103a235bc6dcaa22e3957a`).pipe(
+    return firstValueFrom(this.http.get<VideoModel>(`${this.apiUrl}/${seriesId}/videos?api_key=17acd9c39b103a235bc6dcaa22e3957a`).pipe(
       map(response => response.results.find(result => result.name === 'Official Trailer')),
       map(response=> `https://www.youtube.com/embed/${response?.key}`)
     ));

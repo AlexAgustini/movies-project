@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { AuthService } from './auth.service';
 import { arrayUnion, arrayRemove } from "firebase/firestore";
 import { firstValueFrom } from 'rxjs';
+import { AuthService } from 'src/app/modules/login/shared/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
