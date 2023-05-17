@@ -25,7 +25,7 @@ export class HomeView {
 
   async fetchShelvesData() {
     this.popularMoviesList = await this.moviesService.getMoviesByCategory("popular");
-    this.popularSeriesList = await this.seriesService.getSeriesByCategory("popular");
+    this.popularSeriesList = await this.seriesService.getSeriesByCategory("top_rated");
     this.topRatedMoviesList = await this.moviesService.getMoviesByCategory("top_rated");
     this.upcomingMoviesList = await this.moviesService.getMoviesByCategory("upcoming");
     this.dataFetched = true;

@@ -1,9 +1,10 @@
+// @ts-nocheck
 <ng-container *ngIf="!isLoading else loadingTemplate">
   <div class="flex">
     <div class="container-movie shadow-2xl p-4 flex flex-col w-3/4">
 
       <div class="movie-title-container">
-        <h1>{{currentProgram.title}} - {{currentProgram.tagline}}</h1>
+        <h1>{{$any(currentProgram).title}} - {{currentProgram.tagline}}</h1>
       </div>
 
       <div class="movie-details-container flex gap-4 flex-col ">
@@ -11,12 +12,12 @@
         <div class="genres-release-date-container flex gap-4 items-center">
           <div class="release-date-container gap-2 flex items-center">
             <mat-icon>access_time</mat-icon>
-            <span>{{currentProgram.release_date}}</span>
+            <span>{{$any(currentProgram).release_date}}</span>
           </div>
 
           <div class="genres-container gap-2 flex items-center">
             <mat-icon>menu</mat-icon>
-            <span *ngFor="let genre of currentProgram.genres; let last = last">
+            <span *ngFor="let genre of $any(currentProgram).genres; let last = last">
               {{genre.name}}{{last ? '': ' -'}}
             </span>
           </div>
@@ -24,28 +25,99 @@
 
         <div class="image-info-container flex gap-4">
           <div class="image-container min-w-[300px] overflow-hidden rounded-lg">
-            <img class="object-cover max-w-[300px]" src="https://image.tmdb.org/t/p/w500//{{currentProgram.poster_path}}" alt="">
+            <img class="object-cover max-w-[300px]" src="https://image.tmdb.org/t/p/w500//{{$any(currentProgram).poster_path}}" alt="">
           </div>
 
           <div class="info-container flex flex-col gap-2">
             <div class="info-inner">
               <mat-icon>movie</mat-icon>
-              <h3>Nome original: {{currentProgram.original_title}}</h3>
+              <h3>Nome original: {{$any(currentProgram).original_title}}</h3>
             </div>
 
             <div class="info-inner">
               <mat-icon>attach_money</mat-icon>
-              <h3>Orçamento: {{currentProgram.budget}}</h3>
+              <h3>Orçamento: {{$any(currentProgram).budget}}</h3>
             </div>
 
             <div class="info-inner">
               <mat-icon>calendar_today</mat-icon>
-              <h3>Lançamento: {{currentProgram.release_date}}</h3>
+              <h3>Lançamento: {{$any(currentProgram).release_date}}</h3>
             </div>
 
             <div class="info-inner">
               <mat-icon>language</mat-icon>
-              <h3>Idioma Original: {{currentProgram.original_language}}</h3>
+              <h3>Idioma Original: {{$any(currentProgram).original_language}}</h3>
+            </div>
+
+            <div class="info-inner">
+              <mat-icon>people</mat-icon>
+              <h3>Popularidade: {{currentProgram.popularity}}</h3>
+            </div>
+
+            <div class="info-inner">
+              <mat-icon class="w-[100px]">textsms</mat-icon>
+              <h3>Sinopse: <p>{{currentProgram.overview}}</p></h3>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <iframe *ngIf="videoUrl" [src]="videoUrl | safe" class="w-[80%] h-[400px] ml-auto mr-auto mt-8"></iframe>
+      <div *ngIf="!videoUrl" class="text-white font text-base">Oops, it looks like there's no trailer available for this movie :/</div>
+    </div>
+    <similar-movies-shelf [programType]="currentProgramType" [programId]="currentProgramId"></similar-movies-shelf>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!isLoading && currentProgramType==='tv' else loadingTemplate">
+  <div class="flex">
+    <div class="container-movie shadow-2xl p-4 flex flex-col w-3/4">
+
+      <div class="movie-title-container">
+        <h1>{{$any(currentProgramType)==="movies" ? $any(currentProgram).original_name : null}} - {{currentProgram.tagline}}</h1>
+      </div>
+
+      <div class="movie-details-container flex gap-4 flex-col ">
+
+        <div class="genres-release-date-container flex gap-4 items-center">
+          <div class="release-date-container gap-2 flex items-center">
+            <mat-icon>access_time</mat-icon>
+            <span>{{$any(currentProgram).release_date}}</span>
+          </div>
+
+          <div class="genres-container gap-2 flex items-center">
+            <mat-icon>menu</mat-icon>
+            <span *ngFor="let genre of $any(currentProgram).genres; let last = last">
+              {{genre.name}}{{last ? '': ' -'}}
+            </span>
+          </div>
+        </div>
+
+        <div class="image-info-container flex gap-4">
+          <div class="image-container min-w-[300px] overflow-hidden rounded-lg">
+            <img class="object-cover max-w-[300px]" src="https://image.tmdb.org/t/p/w500//{{$any(currentProgram).poster_path}}" alt="">
+          </div>
+
+          <div class="info-container flex flex-col gap-2">
+            <div class="info-inner">
+              <mat-icon>movie</mat-icon>
+              <h3>Nome original: {{$any(currentProgram).original_title}}</h3>
+            </div>
+
+            <div class="info-inner">
+              <mat-icon>attach_money</mat-icon>
+              <h3>Orçamento: {{$any(currentProgram).budget}}</h3>
+            </div>
+
+            <div class="info-inner">
+              <mat-icon>calendar_today</mat-icon>
+              <h3>Lançamento: {{$any(currentProgram).release_date}}</h3>
+            </div>
+
+            <div class="info-inner">
+              <mat-icon>language</mat-icon>
+              <h3>Idioma Original: {{$any(currentProgram).original_language}}</h3>
             </div>
 
             <div class="info-inner">

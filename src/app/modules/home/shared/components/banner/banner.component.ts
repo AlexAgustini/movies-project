@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { MoviesService } from '../../../../programs/private/services/movies.service';
+import { MoviesService } from '../../../services/movies.service';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
-import { SidenavService } from 'src/app/common/services/sidenav.service';
-import { ProgramResultType } from 'src/app/modules/programs/private/types/program-fetch-result.type';
+import { SidenavService } from 'src/app/core/services/sidenav.service';
+import { ProgramResultType } from 'src/app/core/models/program-fetch-result.model';
 
 @Component({
   selector: 'app-banner',
@@ -12,12 +12,12 @@ import { ProgramResultType } from 'src/app/modules/programs/private/types/progra
 })
 export class BannerComponent {
 
-  @ViewChild('ngb-carousel', { static: true }) carousel!: NgbCarousel;
+  @ViewChild('ngbCarousel', { static: true }) carousel!: NgbCarousel;
 
   constructor(private moviesService: MoviesService, private sidenavService: SidenavService) {};
 
   public $sidenavStatus!: Observable<"closed" | "open">
-  movies!: ProgramResultType[];
+  public movies!: ProgramResultType[];
   public isLoading: boolean = false;
 
   ngOnInit() {
@@ -27,31 +27,16 @@ export class BannerComponent {
 
   private async getPrograms() {
     this.isLoading = true;
+    let moviesList = await this.moviesService.getMoviesByCategory("popular")
 
-    const moviesList = await this.moviesService.getMoviesByCategory('popular')
-    moviesList.forEach(async movie=> {
-      const movieCast = await this.moviesService.getMoviesCast(movie.id)
+    moviesList = await Promise.all(moviesList.map(async (movie) => {
+      const movieCast = await this.moviesService.getMoviesCast(movie.id);
+      return movie = { ...movie, ...movieCast };
+    }));
 
 
-    })
-
-
-    this.moviesService.getMoviesByCategory('popular').then({
-      next: (movies: MoviesResult) => {
-
-        let newArray: Movie[] = [];
-
-        for (let movie of movies.results) {
-          this.moviesService.getCast(movie.id).subscribe(response => {
-            movie = {...movie, ...response}
-            newArray.push(movie);
-          })
-        }
-
-        this.movies = newArray;
-        this.isLoading = false;
-      }
-    })
+    this.movies = moviesList
+    console.log(this.movies)
   };
 
   getFlagImage(language: string): string {
@@ -71,6 +56,7 @@ export class BannerComponent {
   }
 
   nextSlide() {
+    console.log(this.carousel)
     this.carousel.next();
   }
 
