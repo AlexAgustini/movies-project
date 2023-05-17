@@ -32,6 +32,24 @@ export interface ProgramResultType {
   vote_count: number
 }
 
+export interface ISeriesResult {
+  adult: boolean;
+  backdrop_path: string;
+  created_by: [{id: string, name: string}],
+  episode_run_time: Array<number>,
+  first_air_date: string,
+  genres: [{id: string, name: string}]
+  homepage: string,
+  original_name: string,
+  seasons: [{}];
+  tagline: string,
+  vote_average: number,
+  vote_count: number,
+  popularity: number,
+  overview: string,
+  number_of_episodes: number
+}
+
 export interface ProgramsFetchResult {
   page: number,
   results: ProgramResultType[],

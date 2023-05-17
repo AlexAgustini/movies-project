@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProgramResultType, ProgramType } from '../../models/program-fetch-result.model';
+import { ISeriesResult, ProgramResultType, ProgramType } from '../../models/program-fetch-result.model';
 import { MoviesService } from '../../services/movies.service';
 import { SeriesService } from '../../services/series.service';
 
@@ -13,7 +13,8 @@ export class ProgramDetailComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, private moviesService: MoviesService, private seriesService: SeriesService) {};
 
-  public currentProgram!: ProgramResultType;
+  moviesType!: ProgramResultType
+  public currentProgram!: ProgramResultType | ISeriesResult;
   public currentProgramId!: number;
   public currentProgramType!: ProgramType;
   public videoUrl!: string | null;
@@ -36,13 +37,15 @@ export class ProgramDetailComponent implements OnInit {
     if (this.currentProgramType === "movies") {
 
       await this.moviesService.getMovieById(this.currentProgramId).then(result=> this.currentProgram = result)
-      await this.moviesService.getMovieTrailer(this.currentProgramId).toPromise().then(response => {
-        if (response) {
-          this.videoUrl = `https://www.youtube.com/embed/${response.key}`
-        } else {
-          this.videoUrl = null
-        }
+      await this.moviesService.getMovieTrailer(this.currentProgramId).then(response => {
+        response ? this.videoUrl = response : null;
       })
+    } else {
+      await this.seriesService.getSeriesById(this.currentProgramId).then(result=> this.currentProgram = result)
+      await this.seriesService.getSeriesTrailer(this.currentProgramId).then(response => {
+        response ? this.videoUrl = response : null;
+      })
+      console.log(this.currentProgram)
     };
 
     this.isLoading = false;
