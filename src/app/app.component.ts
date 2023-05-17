@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from './core/services/auth.service';
-import { SidenavService } from './core/services/sidenav.service';
+import { AuthService } from './modules/login/shared/services/auth.service';
+import { SidenavService } from './common/services/sidenav.service';
 
 @Component({
   selector: 'app-root',

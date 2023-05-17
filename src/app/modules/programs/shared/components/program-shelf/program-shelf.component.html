@@ -1,0 +1,57 @@
+<div class="alert alert-danger" *ngIf="hasError">Ocorreu um erro na busca</div>
+
+<div *ngIf="isLoading" class="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+
+<ng-container *ngIf="!isLoading && !hasError">
+  <div *ngIf="mode == 'static' else carousel">
+    <div class="max-w-full mt-16 container-movies grid content-center grid-cols-5 p-8 rounded-[10px] gap-8">
+      <div *ngFor="let program of programData" class="movie-item-container flex flex-col items-stretch min-h-[260px] rounded-[10px] overflow-hidden">
+          <img
+             class="cursor-pointer w-[350px]"
+             src="https://image.tmdb.org/t/p/w500/{{program.poster_path}}"
+             alt=""
+             [routerLink]="['/' + typeOfProgram, program.id]"
+          >
+          <div class="justify-center content-center flex min-h-[60px] items-center">
+            <h3 class="text-center">{{program.title}}</h3>
+          </div>
+      </div>
+    </div>
+
+    <mat-paginator class="mr-16 paginator" #paginator
+      [color]="'primary'"
+      [length]="500"
+      (page)="handlePages($event)"
+      [pageIndex]="currentPage"
+      pageSize="1"
+      [showFirstLastButtons]="false"
+      [hidePageSize]="true"
+      aria-label="Select page">
+    </mat-paginator>
+  </div>
+
+  <ng-template #carousel>
+    <div  class="carousel-container" *ngIf="mode == 'carousel' && similarProgramsShelf === undefined ">
+      <h1 class="shelf-title mb-4">{{title}}</h1>
+      <ng-image-slider (imageClick)="goToMovieDetail($event)" [slideImage]="7" [images]="carouselImages" [imageSize]="{width: '20%q', height: '500px'}" #nav></ng-image-slider>
+    </div>
+  </ng-template>
+
+  <div class="p-6 movie-detail-shelf" *ngIf="similarProgramsShelf">
+    <div class="container-movies grid content-center grid-cols-2 gap-8 p-4 rounded-lg">
+      <div  *ngFor="let program of programData" class="movie-item-container flex flex-col items-stretch max-w-[200px]">
+          <img
+             class="cursor-pointer w-full min-h-[250px] object-cover"
+             src="https://image.tmdb.org/t/p/w500/{{program.poster_path}}"
+             alt=""
+             [routerLink]="['/{{typeOfProgram}}', program.id]"
+          >
+          <div class="justify-center content-center flex h-full min-h-[55px] items-center border-[1px solid]">
+            <h3 class="text-center">{{program.title}}</h3>
+          </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

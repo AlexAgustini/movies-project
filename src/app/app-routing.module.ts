@@ -1,39 +1,31 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ProgramDetailComponent } from './core/components/program-detail/program-detail.component';
-import { HomeComponent } from './core/components/home/home.component';
-import { MoviesOfTypeComponent } from './core/components/movies-of-type/movies-of-type.component';
-import { SearchPageComponent } from './core/components/search-page/search-page.component';
-import { LoginComponent } from './core/components/login/login.component';
-import { AuthGuard } from './core/auth.guard'
+import { RouterModule } from '@angular/router';
 
-const routes: Routes = [
-  {
-    path: '', redirectTo: '/home', pathMatch: 'full'
-  },
-  {
-    path: 'login', component: LoginComponent
-  },
-  {
-    path: 'home', component: HomeComponent, canActivate: [AuthGuard]
-  },
-  {
-    path: 'movies/:id', component: ProgramDetailComponent, canActivate: [AuthGuard]
-  },
-  {
-    path: "tv/:id", component: ProgramDetailComponent, canActivate: [AuthGuard]
-  },
-  {
-    path: 'movies/:program_category/:id', component: MoviesOfTypeComponent, canActivate: [AuthGuard]
-  },
-
-  {
-    path: 'movies/search', component: SearchPageComponent, canActivate: [AuthGuard]
-  },
-];
+import { AuthGuard } from './common/helpers/guards/auth.guard'
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
+  imports: [RouterModule.forRoot([
+    {
+      path: "",
+      loadChildren: ()=> import('./modules/home/home.module').then(m => m.HomeModule),
+      canActivate: [AuthGuard]
+    },
+    {
+      path: "programs",
+      loadChildren: ()=> import('./modules/programs/programs.module').then(m => m.ProgramsModule),
+      canActivate: [AuthGuard]
+    },
+    {
+      path: "login",
+      loadChildren: ()=> import('./modules/login/auth.module').then(m => m.AuthModule),
+      canActivate: [AuthGuard]
+    },
+    {
+      path: "account",
+      loadChildren: ()=> import('./modules/account/account.module').then(m => m.AccountModule),
+      canActivate: [AuthGuard]
+    },
+  ], {onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
