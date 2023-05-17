@@ -32,19 +32,19 @@ export class ProgramDetailComponent implements OnInit {
   }
 
   private async fetchProgramData() {
-    this.isLoading = true;
-    if (this.currentProgramType === "movies") {
+    // this.isLoading = true;
+    // if (this.currentProgramType === "movies") {
 
-      await this.moviesService.getMovieById(this.currentProgramId).then(result=> this.currentProgram = result)
-      await this.moviesService.getMovieTrailer(this.currentProgramId).toPromise().then(response => {
-        if (response) {
-          this.videoUrl = `https://www.youtube.com/embed/${response.key}`
-        } else {
-          this.videoUrl = null
-        }
-      })
-    };
+    //   await this.moviesService.getMovieById(this.currentProgramId).then(result=> this.currentProgram = result)
+    //   await this.moviesService.getMovieTrailer(this.currentProgramId).toPromise().then(response => {
+    //     if (response) {
+    //       this.videoUrl = `https://www.youtube.com/embed/${response.key}`
+    //     } else {
+    //       this.videoUrl = null
+    //     }
+    //   })
+    // };
 
-    this.isLoading = false;
+    // this.isLoading = false;
   }
 }

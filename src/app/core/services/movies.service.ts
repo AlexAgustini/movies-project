@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, filter, firstValueFrom } from 'rxjs';
+import { map, firstValueFrom } from 'rxjs';
 import { videoModel } from '../models/video-model';
 import { environment } from 'src/environments/environment.development';
 import { MovieCategories, ProgramResultType, ProgramsFetchResult } from '../models/program-fetch-result.model';
@@ -28,19 +28,19 @@ export class MoviesService {
     return (await firstValueFrom(this.http.get<ProgramResultType>(`${this.apiUrl}/${movieId}?api_key=17acd9c39b103a235bc6dcaa22e3957a`)));
   }
 
-  getMovieTrailer(id: number) {
+  async getMovieTrailer(id: number) {
     return this.http.get<videoModel>(`${this.apiUrl}/${id}/videos?api_key=17acd9c39b103a235bc6dcaa22e3957a`).pipe(
       map(response => response.results.find(result => result.name === 'Official Trailer')),
     );
   }
 
-  getMoviesSearchBar(value: string | null): Observable<ProgramResultType[]> {
-    return this.http.get<ProgramsFetchResult>(`https://api.themoviedb.org/3/search/movie?api_key=17acd9c39b103a235bc6dcaa22e3957a&query=${value}`).pipe(
+  async getMoviesSearchBar(value: string | null): Promise<ProgramResultType[]> {
+    return (await firstValueFrom(this.http.get<ProgramsFetchResult>(`https://api.themoviedb.org/3/search/movie?api_key=17acd9c39b103a235bc6dcaa22e3957a&query=${value}`).pipe(
       map(movies => movies.results)
-    )
+    )))
   }
 
-  getMoviesCast(id: number): Observable<{}> {
-    return this.http.get(`${this.apiUrl}/${id}/credits?api_key=17acd9c39b103a235bc6dcaa22e3957a`)
+  async getMoviesCast(id: number): Promise<{}> {
+    return await firstValueFrom(this.http.get(`${this.apiUrl}/${id}/credits?api_key=17acd9c39b103a235bc6dcaa22e3957a`))
   }
 }

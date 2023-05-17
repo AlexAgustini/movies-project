@@ -4,10 +4,13 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<ng-container *ngIf="!isLoading && !hasError">
-  <div *ngIf="mode == 'static' else carousel">
+<ng-container *ngIf="!hasError">
+  <div *ngIf="mode == 'static' && !isLoading else carousel">
     <div class="max-w-full mt-16 container-movies grid content-center grid-cols-5 p-8 rounded-[10px] gap-8">
-      <div *ngFor="let movie of programData" class="movie-item-container flex flex-col items-stretch min-h-[260px] rounded-[10px] overflow-hidden">
+      <div *ngFor="let movie of programData; let i = index" class="movie-item-container flex flex-col items-stretch min-h-[260px] rounded-[10px] overflow-hidden">
+          <div (click)="toggleFavoriteProgram(movie)" class="favorite-wrapper">
+            <mat-icon [ngClass]="{'favorited' : movie.programFavorited}">favorite</mat-icon>
+          </div>
           <img
              class="cursor-pointer w-[350px]"
              src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"
@@ -33,25 +36,9 @@
   </div>
 
   <ng-template #carousel>
-    <div  class="carousel-container" *ngIf="mode == 'carousel' && similarProgramsShelf === undefined ">
+    <div  class="carousel-container" *ngIf="mode == 'carousel'">
       <h1 class="shelf-title mb-4">{{title}}</h1>
-      <ng-image-slider (imageClick)="goToMovieDetail($event)" [slideImage]="7" [images]="carouselImages" [imageSize]="{width: '20%q', height: '500px'}" #nav></ng-image-slider>
+      <ng-image-slider (imageClick)="goToMovieDetail($event)" [slideImage]="7" [images]="carouselImages" [imageSize]="{width: '16.6%q', height: '450px'}" #nav></ng-image-slider>
     </div>
   </ng-template>
-
-  <div class="p-6 movie-detail-shelf" *ngIf="similarProgramsShelf">
-    <div class="container-movies grid content-center grid-cols-2 gap-8 p-4 rounded-lg">
-      <div  *ngFor="let movie of programData" class="movie-item-container flex flex-col items-stretch max-w-[200px]">
-          <img
-             class="cursor-pointer w-full min-h-[250px] object-cover"
-             src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"
-             alt=""
-             [routerLink]="['/{{typeOfProgram}}', movie.id]"
-          >
-          <div class="justify-center content-center flex h-full min-h-[55px] items-center border-[1px solid]">
-            <h3 class="text-center">{{movie.title}}</h3>
-          </div>
-      </div>
-    </div>
-  </div>
 </ng-container>

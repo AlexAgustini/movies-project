@@ -1,15 +1,35 @@
 
 .banner-container {
+  overflow: hidden;
+  position: relative;
+
   .picsum-img-wrapper {
     position: relative;
 
+    .arrows-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+
+      mat-icon {
+        color: ghostwhite;
+        font-size: 40px;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+      }
+    }
+
     .banner-img {
       transition: .4s ease;
-      min-width: 40vw;
+      width: 55vw;
       height: 100%;
 
       &.sidenav-active {
-        min-width: 20vw;
+        width: 45vw;
       }
     }
 
@@ -30,19 +50,18 @@
   }
 
   .carousel-caption {
-    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: .5em;
     width: 30%;
     text-align: start;
-    left: unset;
+    left: 30px;
     right: unset;
     top: unset;
     bottom: unset;
 
-    .text-container {
+    .text-template {
       align-items: center;
       text-align: start;
       justify-content: center;
@@ -52,11 +71,16 @@
 
       .banner-title {
         width: 100% !important;
-        font-size: 2.5rem !important;
+        font-size: 1.8rem !important;
       }
 
       .banner-description {
-        font-size: 1.1rem !important;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 5; /* number of lines to show */
+          line-clamp: 5;
+          -webkit-box-orient: vertical;
       }
     }
   }

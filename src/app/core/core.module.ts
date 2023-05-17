@@ -8,7 +8,7 @@ import { DashboardComponent } from './components/header/dashboard.component';
 import { ProgramDetailComponent } from './components/program-detail/program-detail.component';
 import { HomeComponent } from './components/home/home.component';
 import { MoviesOfTypeComponent } from './components/movies-of-type/movies-of-type.component';
-import { FooterComponent } from './components/footer/footer/footer.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { BannerComponent } from './components/home/banner/banner.component';
 import { SharedModule } from './shared/shared.module';

@@ -12,10 +12,12 @@ import { environment } from 'src/environments/environment.development';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getDatabase } from 'firebase/database';
 import { AngularFireModule } from '@angular/fire/compat';
+import { AccountComponent } from './modules/account/private/views/account/account.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
