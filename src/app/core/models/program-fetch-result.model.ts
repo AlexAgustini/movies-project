@@ -29,7 +29,8 @@ export interface ProgramResultType {
   title: string,
   video: boolean
   vote_average: number,
-  vote_count: number
+  vote_count: number,
+  programFavorited?: boolean;
 }
 
 export interface ISeriesResult {

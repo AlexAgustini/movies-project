@@ -12,12 +12,12 @@ import { ProgramResultType } from 'src/app/core/models/program-fetch-result.mode
 })
 export class BannerComponent {
 
-  @ViewChild('ngb-carousel', { static: true }) carousel!: NgbCarousel;
+  @ViewChild('ngbCarousel', { static: true }) carousel!: NgbCarousel;
 
   constructor(private moviesService: MoviesService, private sidenavService: SidenavService) {};
 
   public $sidenavStatus!: Observable<"closed" | "open">
-  movies!: ProgramResultType[];
+  public movies!: ProgramResultType[];
   public isLoading: boolean = false;
 
   ngOnInit() {
@@ -25,24 +25,18 @@ export class BannerComponent {
     this.$sidenavStatus = this.sidenavService.$sidenavStatus;
   }
 
-  getPrograms(): void {
-    // this.isLoading = true;
-    // this.moviesService.getPrograms('popular').subscribe({
-    //   next: (movies: MoviesResult) => {
+  private async getPrograms() {
+    this.isLoading = true;
+    let moviesList = await this.moviesService.getMoviesByCategory("popular")
 
-    //     let newArray: Movie[] = [];
+    moviesList = await Promise.all(moviesList.map(async (movie) => {
+      const movieCast = await this.moviesService.getMoviesCast(movie.id);
+      return movie = { ...movie, ...movieCast };
+    }));
 
-    //     for (let movie of movies.results) {
-    //       this.moviesService.getCast(movie.id).subscribe(response => {
-    //         movie = {...movie, ...response}
-    //         newArray.push(movie);
-    //       })
-    //     }
 
-    //     this.movies = newArray;
-    //     this.isLoading = false;
-    //   }
-    // })
+    this.movies = moviesList
+    console.log(this.movies)
   };
 
   getFlagImage(language: string): string {
@@ -62,6 +56,7 @@ export class BannerComponent {
   }
 
   nextSlide() {
+    console.log(this.carousel)
     this.carousel.next();
   }
 

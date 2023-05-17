@@ -2,6 +2,7 @@ import { SliderImages } from './../../models/slider-images.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramResultType, ProgramType } from '../../models/program-fetch-result.model';
+import { FavoritesService } from '../../services/favorites.service';
 
 @Component({
   selector: 'app-movie-shelf',
@@ -11,7 +12,7 @@ import { ProgramResultType, ProgramType } from '../../models/program-fetch-resul
 
 export class MovieShelfComponent implements OnInit{
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {};
+  constructor(private router: Router, private favoritesService: FavoritesService) {};
 
   @Input()
   public programData!: Array<ProgramResultType>;
@@ -23,19 +24,18 @@ export class MovieShelfComponent implements OnInit{
   public mode?: string;
 
   @Input()
-  public similarProgramsShelf?: number;
-
-  @Input()
   public title?: string;
+
 
   public isLoading: boolean = false;
   public hasError: boolean = false;
   public carouselImages: SliderImages[] = [];
   public currentPage!: number;
+  public favoritedMovies!: Array<number>
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.checkForFavoritePrograms();
     if (this.mode === "carousel") this.assembleCarrouselData();
-    if (this.similarProgramsShelf) this.assembleSimilarMoviesData();
   };
 
   private assembleCarrouselData() {
@@ -47,10 +47,6 @@ export class MovieShelfComponent implements OnInit{
         thumbImage: `https://image.tmdb.org/t/p/w500${program.poster_path}`
       });
     })
-  }
-
-  private assembleSimilarMoviesData() {
-
   }
 
   goToMovieDetail(index: number): void {
@@ -68,4 +64,23 @@ export class MovieShelfComponent implements OnInit{
     this.currentPage = e.pageIndex
   }
 
+  public toggleFavoriteProgram(program: ProgramResultType) {
+    if (!program.programFavorited) {
+      this.favoritesService.addFavoriteProgram(program.id)
+      program.programFavorited = true;
+    } else {
+      this.favoritesService.removeFavoriteProgram(program.id)
+      program.programFavorited = false;
+    }
+  }
+
+  private async checkForFavoritePrograms() {
+    const userFavoritedMovies = await this.favoritesService.getFavoritePrograms()
+    if (!userFavoritedMovies) return;
+    this.programData.forEach(program=> {
+      if (userFavoritedMovies.some(favoritedProgram => favoritedProgram === program.id)) {
+        program.programFavorited = true;
+      }
+    })
+  }
 }

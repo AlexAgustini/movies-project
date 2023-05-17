@@ -1,37 +1,43 @@
-<ngb-carousel class="banner-container" [interval]="5000" [showNavigationIndicators]="false" [showNavigationArrows]="true">
-  <ng-template ngbSlide *ngFor="let movie of movies; let i = index">
-    <div class="picsum-img-wrapper">
-      <img
-        class="banner-img ml-auto rounded overflow-hidden"
-        [src]="'https://image.tmdb.org/t/p/w1280/' + movie.backdrop_path"
-        alt="{{ movie.title }}"
-        [class.sidenav-active]="($sidenavStatus | async) === 'open'"
-      />
-    <button class="watch-button" [routerLink]="['/movie', movie.id]">Watch</button>
-    </div>
-    <div class="carousel-caption">
-      <div>
-        <div class="text-container">
-          <h3 class="banner-title">{{movie.original_title}}</h3>
-          <p class="banner-description">{{movie.overview}}</p>
+<div>
+  <ngb-carousel #ngbCarousel class="banner-container" [showNavigationIndicators]="false" [showNavigationArrows]="false">
+    <ng-template ngbSlide *ngFor="let movie of movies; let i = index">
+      <div class="picsum-img-wrapper">
+        <div class="arrows-wrapper">
+          <mat-icon (click)="previousSlide()">arrow_circle_left</mat-icon>
+          <mat-icon (click)="nextSlide()">arrow_circle_right</mat-icon>
         </div>
-        <div class="info flex gap-4 items-center mt-[1em]">
-          <img src="../../../../assets/imdb.svg" class="w-[45px] h-[30px] object-cover" alt="">
-          <p>{{movie.vote_average}}</p>
-          <div class="separator w-[1px] h-[30px] bg-white"></div>
-          <img [src]="getFlagImage(movie.original_language)" alt="" class="w-[40px] h-[30px]">
-          <p>{{getLanguage(movie.original_language)}}</p>
-        </div>
+        <img
+          class="banner-img ml-auto rounded overflow-hidden"
+          [src]="'https://image.tmdb.org/t/p/w1280/' + movie.backdrop_path"
+          alt="{{ movie.title }}"
+          [class.sidenav-active]="($sidenavStatus | async) === 'open'"
+        />
+      <button class="watch-button" [routerLink]="['/movie', movie.id]">Watch</button>
       </div>
-      <div class="cast-slider">
-        <div class="cast-slider-inner">
-          <div class="cast-slider-inner-wrapper"  *ngFor="let actor of movie.cast">
-            <img *ngIf="actor.profile_path" [src]="'https://image.tmdb.org/t/p/w500/' + actor.profile_path" class="rounded-md max-h-[250px]">
-            <img *ngIf="!actor.profile_path" src="../../../../assets/profile.png" class="max-h-[250px]">
+      <div class="carousel-caption">
+        <div>
+          <div class="text-template">
+            <h3 class="banner-title">{{movie.original_title}}</h3>
+            <p class="banner-description">{{movie.overview}}</p>
+          </div>
+          <div class="info flex gap-4 items-center mt-[1em]">
+            <img src="../../../../assets/imdb.svg" class="w-[45px] h-[30px] object-cover" alt="">
+            <p>{{movie.vote_average}}</p>
+            <div class="separator w-[1px] h-[30px] bg-white"></div>
+            <img [src]="getFlagImage(movie.original_language)" alt="" class="w-[40px] h-[30px]">
+            <p>{{getLanguage(movie.original_language)}}</p>
+          </div>
+        </div>
+        <div class="cast-slider">
+          <div class="cast-slider-inner">
+            <div class="cast-slider-inner-wrapper"  *ngFor="let actor of movie.cast">
+              <img *ngIf="actor.profile_path" [src]="'https://image.tmdb.org/t/p/w500/' + actor.profile_path" class="rounded-md max-h-[250px]">
+              <img *ngIf="!actor.profile_path" src="../../../../assets/profile.png" class="max-h-[250px]">
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-  </ng-template>
-</ngb-carousel>
+    </ng-template>
+  </ngb-carousel>
+</div>

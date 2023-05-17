@@ -41,7 +41,7 @@ export class MoviesService {
     )
   }
 
-  public getMoviesCast(id: number): Observable<{}> {
+  public async getMoviesCast(id: number): Promise<{}> {
     return this.http.get(`${this.apiUrl}/${id}/credits?api_key=17acd9c39b103a235bc6dcaa22e3957a`)
   }
 }

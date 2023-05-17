@@ -22,24 +22,19 @@ export class SearchPageComponent implements OnInit{
     this.queryMade = this.activatedRoute.snapshot.queryParamMap.get('q');
     this.isLoading = true;
 
-    this.moviesService.getMoviesSearchBar(this.queryMade).subscribe({
-      next: (movies) => {
-        this.moviesReturned = movies
-        this.isLoading = false
-      },
-      error: (err) => {
-        this.hasError = true;
-        this.isLoading = false
-        console.error(err);
-      }
+    this.moviesService.getMoviesSearchBar(this.queryMade).then(result=> {
+      this.moviesReturned = result;
+      this.isLoading = false
+    }).catch(error=> {
+      this.hasError = true;
+      this.isLoading = false
     })
   }
 
   ngOnChanges() {
-    this.moviesService.getMoviesSearchBar(this.queryMade).subscribe(movies => {
-      this.moviesReturned = movies
+    this.moviesService.getMoviesSearchBar(this.queryMade).then(result=> {
+      this.moviesReturned = result;
+      this.isLoading = false
     })
   }
-
-
 }
