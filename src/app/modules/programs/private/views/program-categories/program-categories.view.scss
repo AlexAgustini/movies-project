@@ -1,0 +1,9 @@
+.loading-template {
+  background: #0F2027;
+  background: linear-gradient(to right, #0F2027, #203A43, #0F2027);
+  padding: 1em;
+
+  .skeleton-card {
+    background-color: #203A43;
+  }
+}

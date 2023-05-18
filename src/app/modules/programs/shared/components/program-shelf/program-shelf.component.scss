@@ -45,6 +45,7 @@ h3, h1 {
 .container-movies {
   background: #0F2027;
   background: linear-gradient(to right, #0F2027, #203A43, #0F2027);
+  padding: 1em;
 }
 
 .spinner {
@@ -52,8 +53,4 @@ h3, h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%)
-}
-
-.paginator {
-  background: transparent;
 }

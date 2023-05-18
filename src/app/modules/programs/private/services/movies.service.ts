@@ -15,9 +15,14 @@ export class MoviesService {
   private apiKey = environment.apiKey;
   private apiUrl = environment.apiUrls.moviesUrl;
 
-  public async getMoviesByCategory(movieCategory: MovieCategories): Promise<ProgramResultType[]> {
-    const moviesList = (await firstValueFrom(this.http.get<ProgramsFetchResult>(`${this.apiUrl}/${movieCategory}?api_key=${this.apiKey}`))).results;
-    return moviesList.filter(movie=> !movie.adult && movie.original_language === "pt" || movie.original_language === "pt" || movie.original_language === "en");
+  public async getMoviesByCategory(movieCategory: MovieCategories, page?: string): Promise<ProgramResultType[]> {
+    const moviesList = (await firstValueFrom(this.http.get<ProgramsFetchResult>(`${this.apiUrl}/${movieCategory}?api_key=${this.apiKey}${page ? '&page=' + page : null}`)).then(result=> {
+      return {
+        movies: result.results,
+        pages:total_pages,
+      }
+    }))
+
   }
 
   public async getSimilarMovies(similarMovieId: string | number):Promise<ProgramResultType[]> {

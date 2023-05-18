@@ -22,23 +22,12 @@
           </div>
       </div>
     </div>
-
-    <mat-paginator class="mr-16 paginator" #paginator
-      [color]="'primary'"
-      [length]="500"
-      (page)="handlePages($event)"
-      [pageIndex]="currentPage"
-      pageSize="1"
-      [showFirstLastButtons]="false"
-      [hidePageSize]="true"
-      aria-label="Select page">
-    </mat-paginator>
   </div>
 
   <ng-template #carousel>
-    <div  class="carousel-container" *ngIf="mode == 'carousel'">
+    <div  class="carousel-container mt-4" *ngIf="mode == 'carousel'">
       <h1 class="shelf-title mb-4">{{title}}</h1>
-      <ng-image-slider (imageClick)="goToMovieDetail($event)" [slideImage]="7" [images]="carouselImages" [imageSize]="{width: '16.6%q', height: '450px'}" #nav></ng-image-slider>
+      <ng-image-slider (imageClick)="goToMovieDetail($event)" [slideImage]="7" [images]="carouselImages" [imageSize]="{width: '16.6%q', height: '450px'}"></ng-image-slider>
     </div>
   </ng-template>
 </ng-container>

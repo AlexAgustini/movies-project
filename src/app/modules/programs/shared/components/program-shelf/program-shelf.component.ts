@@ -49,19 +49,9 @@ export class ProgramShelfComponent implements OnInit{
     })
   }
 
-  goToMovieDetail(index: number): void {
+  public goToMovieDetail(index: number): void {
     const movieId = this.programData[index].id
     this.router.navigate([`/${this.typeOfProgram}`, movieId])
-  }
-
-  handlePages(e: any): void {
-
-    if (e.pageIndex === 0) {
-      e.pageIndex = 1
-    }
-
-    this.router.navigate(['movies', this.typeOfProgram, e.pageIndex])
-    this.currentPage = e.pageIndex
   }
 
   public toggleFavoriteProgram(program: ProgramResultType) {
