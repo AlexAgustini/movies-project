@@ -1,5 +1,7 @@
 export interface ProgramResultType {
   adult: boolean,
+  name: string,
+  original_name: string,
   backdrop_path: string,
   belongs_to_collection: any,
   budget: number,
@@ -41,7 +43,6 @@ export interface ISeriesResult {
   first_air_date: string,
   genres: [{id: string, name: string}]
   homepage: string,
-  original_name: string,
   seasons: [{}];
   tagline: string,
   vote_average: number,
@@ -49,6 +50,8 @@ export interface ISeriesResult {
   popularity: number,
   overview: string,
   number_of_episodes: number
+  original_name: string,
+  name: string,
 }
 
 export interface ProgramsFetchResult {

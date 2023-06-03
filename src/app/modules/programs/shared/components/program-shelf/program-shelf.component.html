@@ -7,7 +7,7 @@
 <ng-container *ngIf="!hasError">
   <div *ngIf="mode == 'static' && !isLoading else carousel">
     <div class="max-w-full mt-4 container-movies grid content-center grid-cols-5 p-8 rounded-[10px] gap-8">
-      <div *ngFor="let program of programData" class="movie-item-container flex flex-col items-stretch min-h-[260px] rounded-[10px] overflow-hidden">
+      <div @fadeAnimation *ngFor="let program of programData" class="movie-item-container flex flex-col items-stretch min-h-[260px] rounded-[10px] overflow-hidden">
         <div (click)="toggleFavoriteProgram(program)" class="favorite-wrapper">
           <mat-icon [ngClass]="{'favorited' : program.programFavorited}">favorite</mat-icon>
         </div>
@@ -27,7 +27,15 @@
   <ng-template #carousel>
     <div  class="carousel-container mt-4" *ngIf="mode == 'carousel'">
       <h1 class="shelf-title mb-4">{{title}}</h1>
-      <ng-image-slider (imageClick)="goToMovieDetail($event)" [slideImage]="7" [images]="carouselImages" [imageSize]="{width: '16.6%q', height: '450px'}"></ng-image-slider>
+      <ng-image-slider
+        (imageClick)="goToMovieDetail($event)"
+        [slideImage]="7"
+        [images]="carouselImages"
+        [imageSize]="{width:  '16.6%', height: '400px'}"
+        (cdkAutofill)="true"
+
+        >
+      </ng-image-slider>
     </div>
   </ng-template>
 </ng-container>

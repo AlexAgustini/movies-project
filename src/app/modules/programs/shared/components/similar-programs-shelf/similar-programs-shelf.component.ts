@@ -33,7 +33,8 @@ export class SimilarProgramsShelfComponent implements OnInit{
     if (this.programType === "movies") {
       await this.moviesService.getSimilarMovies(this.programId).then(result=> this.programsData = result);
     } else {
-      this.seriesService
+      this.programsData = await this.seriesService.getSimilarSeries(this.programId)
+      console.log(this.programsData)
     }
     this.isLoading = false;
   }

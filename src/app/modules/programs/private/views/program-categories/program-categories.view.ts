@@ -47,7 +47,6 @@ export class ProgramCategoriesView {
     const currentPage = Number(this.activatedRoute.snapshot.params["page"]);
     if (currentPage === 1 && !plus) return;
 
-
     this.router.navigate(['/programs', this.typeOfProgram, this.programCategory, plus ? currentPage + 1 : currentPage - 1])
   }
 

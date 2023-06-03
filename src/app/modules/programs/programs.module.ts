@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { SafePipe } from 'src/app/common/pipes/safePipe';
 import { ProgramsRoutingModule } from './programs-routing.module';
+import { FavoritesView } from './private/views/favorites/favorites.view';
 
 @NgModule({
   declarations: [
@@ -19,13 +20,14 @@ import { ProgramsRoutingModule } from './programs-routing.module';
     SimilarProgramsShelfComponent,
     ProgramShelfComponent,
     SafePipe,
+    FavoritesView,
   ],
   imports: [
     CommonModule,
     MaterialModule,
     RouterModule,
     NgImageSliderModule,
-    ProgramsRoutingModule
+    ProgramsRoutingModule,
   ],
   exports: [
     ProgramShelfComponent

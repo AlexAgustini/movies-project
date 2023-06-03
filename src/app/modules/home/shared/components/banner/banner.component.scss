@@ -97,12 +97,24 @@
       overflow-x: scroll;
 
       .cast-slider-inner-wrapper {
-        min-width: 300px;
+        min-width: 50%;
         height: 300px;
         display: flex;
         scroll-snap-type: x mandatory;
         scroll-snap-align: start;
         align-items: center;
+        transition: .4s ease;
+
+        &.sidenav-active {
+          align-items: flex-start !important;
+          min-width: 35%;
+          margin-top: .5em;
+
+          img {
+            transition: .4s ease;
+            max-height: 150px !important;
+          }
+        }
       }
     }
 

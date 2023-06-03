@@ -1,5 +1,5 @@
 <ng-container *ngIf="!isLoading else loadingTemplate">
-  <div class="flex">
+  <div class="flex" *ngIf="currentProgramType === 'movies'">
     <div class="container-movie shadow-2xl p-4 flex flex-col w-3/4">
 
       <div class="movie-title-container">
@@ -67,14 +67,12 @@
     </div>
     <similar-movies-shelf [programType]="currentProgramType" [programId]="currentProgramId"></similar-movies-shelf>
   </div>
-</ng-container>
 
-<ng-container *ngIf="!isLoading && currentProgramType==='tv' else loadingTemplate">
-  <div class="flex">
+  <div class="flex" *ngIf="currentProgramType === 'tv'">
     <div class="container-movie shadow-2xl p-4 flex flex-col w-3/4">
 
       <div class="movie-title-container">
-        <h1>{{$any(currentProgramType)==="movies" ? $any(currentProgram).original_name : null}} - {{currentProgram.tagline}}</h1>
+        <h1>{{currentProgram.name || currentProgram.original_name }} {{currentProgram.tagline ? '- ' + currentProgram.tagline : ''}}</h1>
       </div>
 
       <div class="movie-details-container flex gap-4 flex-col ">
@@ -82,7 +80,7 @@
         <div class="genres-release-date-container flex gap-4 items-center">
           <div class="release-date-container gap-2 flex items-center">
             <mat-icon>access_time</mat-icon>
-            <span>{{$any(currentProgram).release_date}}</span>
+            <span>{{$any(currentProgram).number_of_episodes}} episodes</span>
           </div>
 
           <div class="genres-container gap-2 flex items-center">
@@ -101,7 +99,7 @@
           <div class="info-container flex flex-col gap-2">
             <div class="info-inner">
               <mat-icon>movie</mat-icon>
-              <h3>Nome original: {{$any(currentProgram).original_title}}</h3>
+              <h3>Nome original: {{$any(currentProgram).original_title || currentProgram.original_name}}</h3>
             </div>
 
             <div class="info-inner">
@@ -111,7 +109,7 @@
 
             <div class="info-inner">
               <mat-icon>calendar_today</mat-icon>
-              <h3>Lançamento: {{$any(currentProgram).release_date}}</h3>
+              <h3>Lançamento: {{$any(currentProgram).first_air_date}}</h3>
             </div>
 
             <div class="info-inner">
@@ -134,11 +132,13 @@
 
       </div>
       <iframe *ngIf="videoUrl" [src]="videoUrl | safe" class="w-[80%] h-[400px] ml-auto mr-auto mt-8"></iframe>
-      <div *ngIf="!videoUrl" class="text-white font text-base">Oops, it looks like there's no trailer available for this movie :/</div>
+      <div *ngIf="!videoUrl" class="text-white font text-base">Oops, it looks like there's no trailer available for this series :/</div>
     </div>
     <similar-movies-shelf [programType]="currentProgramType" [programId]="currentProgramId"></similar-movies-shelf>
   </div>
+
 </ng-container>
+
 
 <ng-template #loadingTemplate>
   <div class="container-movie shadow-2xl p-4 flex flex-col w-3/4">

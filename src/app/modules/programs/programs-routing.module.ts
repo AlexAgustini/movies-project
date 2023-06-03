@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProgramCategoriesView } from './private/views/program-categories/program-categories.view';
 import { ProgramDetailView } from './private/views/program-detail/program-detail.view';
 import { SearchPageView } from './private/views/search/search-page.view';
+import { FavoritesView } from './private/views/favorites/favorites.view';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
     path: "tv/:id",
     component: ProgramDetailView
   },
+  {
+    path: "favorites/:page",
+    component: FavoritesView,
+  }
 ];
 
 @NgModule({

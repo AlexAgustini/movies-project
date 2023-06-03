@@ -18,7 +18,7 @@ export class FavoritesService {
   }
 
   private userUid!: string;
-  private usersCollectionRef= this.db.collection("users")
+  private usersCollectionRef= this.db.collection("users");
 
   public addFavoriteProgram(programId: number) {
     if (this.usersCollectionRef.doc(this.userUid))

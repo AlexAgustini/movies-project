@@ -33,7 +33,6 @@ import { HeaderModule } from './common/components/header/header.module';
     provideDatabase(()=> getDatabase()),
     AngularFireModule.initializeApp(environment.firebase)
   ],
-
   providers: [],
   bootstrap: [AppComponent]
 })

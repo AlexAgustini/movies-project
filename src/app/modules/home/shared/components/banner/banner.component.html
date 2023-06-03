@@ -1,5 +1,5 @@
 <div>
-  <ngb-carousel #ngbCarousel class="banner-container" [showNavigationIndicators]="false" [showNavigationArrows]="false">
+  <ngb-carousel [interval]="10000" #ngbCarousel class="banner-container" [showNavigationIndicators]="false" [showNavigationArrows]="false">
     <ng-template ngbSlide *ngFor="let movie of movies; let i = index">
       <div class="picsum-img-wrapper">
         <div class="arrows-wrapper">
@@ -30,7 +30,7 @@
         </div>
         <div class="cast-slider">
           <div class="cast-slider-inner">
-            <div class="cast-slider-inner-wrapper"  *ngFor="let actor of movie.cast">
+            <div class="cast-slider-inner-wrapper"  *ngFor="let actor of movie.cast" [class.sidenav-active]="($sidenavStatus | async) === 'open'">
               <img *ngIf="actor.profile_path" [src]="'https://image.tmdb.org/t/p/w500/' + actor.profile_path" class="rounded-md max-h-[250px]">
               <img *ngIf="!actor.profile_path" src="../../../../assets/profile.png" class="max-h-[250px]">
             </div>

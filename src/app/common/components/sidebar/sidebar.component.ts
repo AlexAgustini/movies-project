@@ -15,10 +15,6 @@ export class SidebarComponent {
   public sidenavStatus = this.sidenavService.$sidenavStatus;
   public currentUser$ = this.authService.currentUser$;
 
-  ngOnInit() {
-    this.authService.currentUser$.subscribe(value=> console.log(value))
-  }
-
   public logout() {
     this.authService.logout();
   }
