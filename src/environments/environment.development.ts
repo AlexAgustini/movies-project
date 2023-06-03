@@ -8,6 +8,7 @@ export const environment = {
   firebase: {
     apiKey: "AIzaSyD0I49OsQmZR5Czg_10tgs5BDAUY9K8K0o",
     authDomain: "movies-project-764fe.firebaseapp.com",
+    databaseURL: "https://movies-project-764fe-default-rtdb.firebaseio.com",
     projectId: "movies-project-764fe",
     storageBucket: "movies-project-764fe.appspot.com",
     messagingSenderId: "240134275038",

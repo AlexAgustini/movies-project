@@ -43,11 +43,12 @@ export class ProgramCategoriesView {
     this.isLoading = false;
   }
 
-  public handlePages(e: any): void {
-    if (e.pageIndex === 0) e.pageIndex = 1
+  public navigatePages(plus: boolean): void {
+    const currentPage = Number(this.activatedRoute.snapshot.params["page"]);
+    if (currentPage === 1 && !plus) return;
 
-    this.router.navigate(['/programs', this.typeOfProgram, this.programCategory, e.pageIndex])
-    this.currentPage = e.pageIndex
+
+    this.router.navigate(['/programs', this.typeOfProgram, this.programCategory, plus ? currentPage + 1 : currentPage - 1])
   }
 
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../shared/services/auth.service';
 import { UserForm } from '../../shared/types/user.type';
 
@@ -12,7 +11,7 @@ import { UserForm } from '../../shared/types/user.type';
 })
 export class LoginView implements OnInit{
 
-  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router, private toastr: ToastrService) {}
+  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {}
   isLoading!: boolean;
 
 
@@ -45,7 +44,7 @@ export class LoginView implements OnInit{
       this.treatErrors(authResult.errorType, authResult.message)
 
     } else if (authResult.user){
-      this.router.navigate(["home"]);
+      this.router.navigate(["/home"]);
     }
 
     this.isLoading = false;

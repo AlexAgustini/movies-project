@@ -1,20 +1,21 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { UserData, UserForm } from '../types/user.type';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FirebaseErrorEnum } from '../../../../common/helpers/types/firebase-errors.enum';
 import { BehaviorSubject, firstValueFrom, } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { RegisterUserResult } from 'src/app/common/helpers/types/firebase-register-result.tpye';
+import { Router } from '@angular/router';
+import { SidenavService } from 'src/app/common/services/sidenav.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) { }
+  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore, private router: Router, private sidenavService: SidenavService) { }
 
-  private currentUserSource = new BehaviorSubject<string>('');
-  public currentUser$ = this.currentUserSource.asObservable();
+  public currentUser$ = new BehaviorSubject<UserData | null>(null);
 
   public async registerUser(userData: UserForm): Promise<RegisterUserResult> {
     try {
@@ -58,12 +59,12 @@ export class AuthService {
   }
 
   public async login(userData: UserForm): Promise<RegisterUserResult> {
-
     try {
       const login = await this.afAuth.signInWithEmailAndPassword(userData.email, userData.password)
       if (login.user) {
-        this.setCurrentUser(login.user.uid);
         localStorage.setItem("userToken", login.user.uid);
+        this.setCurrentUser(login.user.uid);
+        this.getUserInfo()
       }
       return login;
     } catch (error: any) {
@@ -92,19 +93,24 @@ export class AuthService {
     }
   }
 
-
   public setCurrentUser(userToken: string) {
-    this.currentUserSource.next(userToken);
+    this.currentUser$.next({...this.currentUser$.getValue() as UserData, id: userToken});
+  }
+
+  public logout() {
+    localStorage.removeItem("userToken");
+    this.router.navigate(['/login'])
+    this.currentUser$.next(null);
+    this.sidenavService.closeSidenav();
   }
 
   public async getUserInfo() {
-    const userId = await firstValueFrom(this.currentUser$);
+    const userId = this.currentUser$.getValue()?.id;
+    if (!userId) return;
     const userDocRef = this.db.collection("users").doc(userId);
     const userDoc = await firstValueFrom(userDocRef.get());
     if (userDoc.exists) {
-      return userDoc.data() as Promise<UserData>;
-    } else {
-      return null;
+      this.currentUser$.next(userDoc.data() as UserData)
     }
   }
 }

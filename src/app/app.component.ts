@@ -12,14 +12,14 @@ export class AppComponent {
 
   constructor(private authService: AuthService, private sidenavService: SidenavService) {}
 
-  public $sidenavStatus!: Observable<"closed" | "open">
+  public $sidenavStatus = this.sidenavService.$sidenavStatus;
 
   ngOnInit() {
-    this.$sidenavStatus = this.sidenavService.$sidenavStatus;
     const userToken = localStorage.getItem("userToken");
 
     if (userToken) {
       this.authService.setCurrentUser(userToken);
+      this.authService.getUserInfo();
     }
   }
 

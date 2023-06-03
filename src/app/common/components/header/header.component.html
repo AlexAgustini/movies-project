@@ -1,4 +1,4 @@
-<ng-container *ngIf="currentUser">
+<ng-container *ngIf="currentUser$ | async">
 
   <mat-toolbar class="dashboard"  [class.sidenav-active]="($sidenavStatus | async) === 'open'">
     <div class="dashboard-inner">
@@ -6,7 +6,7 @@
         <button (click)="openSidenav()" matTooltip="Menu" mat-icon-button>
           <mat-icon [ngStyle]="{'color': 'white'}">menu</mat-icon>
         </button>
-        <button matTooltip="Home" mat-icon-button routerLink="/">
+        <button matTooltip="Home" mat-icon-button routerLink="/home">
           <mat-icon [ngStyle]="{'color': 'white'}">home</mat-icon>
         </button>
       </div>

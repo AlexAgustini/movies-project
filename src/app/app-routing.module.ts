@@ -6,7 +6,7 @@ import { AuthGuard } from './common/helpers/guards/auth.guard'
 @NgModule({
   imports: [RouterModule.forRoot([
     {
-      path: "",
+      path: "home",
       loadChildren: ()=> import('./modules/home/home.module').then(m => m.HomeModule),
       canActivate: [AuthGuard]
     },
@@ -18,7 +18,6 @@ import { AuthGuard } from './common/helpers/guards/auth.guard'
     {
       path: "login",
       loadChildren: ()=> import('./modules/login/auth.module').then(m => m.AuthModule),
-      canActivate: [AuthGuard]
     },
     {
       path: "account",

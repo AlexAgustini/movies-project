@@ -4,6 +4,7 @@ export interface individualVideo {
   key: string,
   site: string
   name: string,
+  type: string,
 }
 
 export interface VideoModel {

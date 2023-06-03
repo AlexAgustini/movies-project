@@ -10,13 +10,19 @@ import { AuthService } from 'src/app/modules/login/shared/services/auth.service'
 
 export class FavoritesService {
   constructor(private db: AngularFirestore, private authService: AuthService) {
-    this.authService.currentUser$.subscribe(uid=> this.userUid = uid);
+    this.authService.currentUser$.subscribe(userData=> {
+      if (userData?.id) {
+        this.userUid = userData.id
+      }
+    });
   }
 
   private userUid!: string;
   private usersCollectionRef= this.db.collection("users")
 
   public addFavoriteProgram(programId: number) {
+    if (this.usersCollectionRef.doc(this.userUid))
+
     this.usersCollectionRef.doc(this.userUid).update({
       favoritePrograms: arrayUnion(programId)
     })
@@ -29,6 +35,11 @@ export class FavoritesService {
   }
 
   public async getFavoritePrograms(): Promise<Array<number>> {
-    return await firstValueFrom(this.usersCollectionRef.doc(this.userUid).get()).then((data: {data(): any})=> data.data().favoritePrograms);
+    return await firstValueFrom(this.usersCollectionRef.doc(this.userUid).get())
+      .then((data: {data(): any})=> {
+        if (data.data()) {
+          return data.data().favoritePrograms
+        }
+      });
   }
 }

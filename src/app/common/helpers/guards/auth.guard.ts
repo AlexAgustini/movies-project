@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '../../../modules/login/shared/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +14,10 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     const userToken = localStorage.getItem("userToken");
-
     if (userToken) {
       return true;
     } else {
-      return this.router.parseUrl('/login');
+      return this.router.navigate(['/login']);
     }
   }
 

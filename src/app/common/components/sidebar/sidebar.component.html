@@ -1,11 +1,11 @@
-<mat-sidenav-container class="sidenav-container" [class.active]="(sidenavStatus | async) === 'open'">
-  <mat-sidenav-content>
+<mat-sidenav-container *ngIf="currentUser$ | async as currentUser" class="sidenav-container" [class.active]="(sidenavStatus | async) === 'open'">
+  <mat-sidenav-content class="flex flex-col">
     <mat-icon (click)="closeSidenav() " class="close-icon">close</mat-icon>
 
     <div class="user-info-wrapper">
       <mat-icon>person</mat-icon>
 
-      <span *ngIf="userData">Hey {{userData.name}}!</span>
+      <span *ngIf="currentUser">Hey {{currentUser.name}}!</span>
     </div>
 
     <ul class="options-list">
@@ -19,11 +19,13 @@
         <mat-icon>favorite</mat-icon>
         <span>Favorite Movies</span>
       </li>
-
     </ul>
 
 
-
+    <div (click)="logout()" class="hover:-translate-y-[0.1rem] transition-all d-flex mt-auto mb-2 gap-2 cursor-pointer" >
+      <mat-icon [ngStyle]="{'color': 'white'}" >keyboard_return</mat-icon>
+      <span class="text-white ">Logout</span>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
 

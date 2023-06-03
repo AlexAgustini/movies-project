@@ -51,7 +51,7 @@ export class ProgramShelfComponent implements OnInit{
 
   public goToMovieDetail(index: number): void {
     const movieId = this.programData[index].id
-    this.router.navigate([`/${this.typeOfProgram}`, movieId])
+    this.router.navigate([`/programs/${this.typeOfProgram}`, movieId])
   }
 
   public toggleFavoriteProgram(program: ProgramResultType) {

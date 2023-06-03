@@ -14,7 +14,7 @@ const routes: Routes = [
     component: ProgramDetailView
   },
   {
-    path: 'movies/:program_category/:id',
+    path: 'movies/:program_category/:page',
     component: ProgramCategoriesView
   },
   {

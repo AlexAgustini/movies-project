@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, firstValueFrom } from 'rxjs';
+import { map, firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { MovieCategories, ProgramResultType, ProgramsFetchResult } from '../types/program-fetch-result.type';
 import { VideoModel } from '../types/video-type';
@@ -16,13 +16,14 @@ export class MoviesService {
   private apiUrl = environment.apiUrls.moviesUrl;
 
   public async getMoviesByCategory(movieCategory: MovieCategories, page?: string): Promise<ProgramResultType[]> {
-    const moviesList = (await firstValueFrom(this.http.get<ProgramsFetchResult>(`${this.apiUrl}/${movieCategory}?api_key=${this.apiKey}${page ? '&page=' + page : null}`)).then(result=> {
-      return {
-        movies: result.results,
-        pages:total_pages,
-      }
-    }))
-
+    return (await firstValueFrom(
+      this.http.get<ProgramsFetchResult>(`${this.apiUrl}/${movieCategory}?api_key=${this.apiKey}${page ? `&page=${page}` :  ''}`))
+        .then(result=> {
+          return {
+            movies: result.results,
+            pages: result.total_pages,
+          }
+    })).movies
   }
 
   public async getSimilarMovies(similarMovieId: string | number):Promise<ProgramResultType[]> {
@@ -35,7 +36,7 @@ export class MoviesService {
 
   public async getMovieTrailer(id: number): Promise<string> {
     return await firstValueFrom(this.http.get<VideoModel>(`${this.apiUrl}/${id}/videos?api_key=17acd9c39b103a235bc6dcaa22e3957a`).pipe(
-      map(response => response.results.find(result => result.name === 'Official Trailer')),
+      map(response => response.results.find(result => result.type === 'Trailer')),
       map(response=> `https://www.youtube.com/embed/${response?.key}`)
     ))
   }

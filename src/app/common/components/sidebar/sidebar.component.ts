@@ -12,20 +12,15 @@ import { UserData } from '../../../modules/login/shared/types/user.type';
 export class SidebarComponent {
   constructor(private sidenavService: SidenavService, private authService: AuthService) {}
 
-  public sidenavStatus!: Observable<"closed" | "open">
-  public userData!: UserData;
+  public sidenavStatus = this.sidenavService.$sidenavStatus;
+  public currentUser$ = this.authService.currentUser$;
 
   ngOnInit() {
-    this.sidenavStatus = this.sidenavService.$sidenavStatus;
-
-    this.fetchUserData();
+    this.authService.currentUser$.subscribe(value=> console.log(value))
   }
 
-  private async fetchUserData() {
-    const userData = await this.authService.getUserInfo();
-    if (userData) {
-      this.userData = userData;
-    }
+  public logout() {
+    this.authService.logout();
   }
 
   public closeSidenav() {

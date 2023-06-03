@@ -17,7 +17,7 @@ export class SeriesService {
   constructor(private http: HttpClient) {}
 
   public async getSeriesByCategory(serieCategory: SeriesCategories, page?: string): Promise<ProgramResultType[]> {
-    return (await firstValueFrom(this.http.get<ProgramsFetchResult>(`${this.apiUrl}/${serieCategory}?api_key=${this.apiKey}${page ? '&page=' + page : null}`))).results;
+    return (await firstValueFrom(this.http.get<ProgramsFetchResult>(`${this.apiUrl}/${serieCategory}?api_key=${this.apiKey}${page ? `&page=${page}` : ''}`))).results;
   }
 
   public async getSimilarSeries(similarSerieId: string | number):Promise<ProgramResultType[]> {

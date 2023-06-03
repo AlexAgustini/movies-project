@@ -38,6 +38,7 @@ export class ProgramDetailView implements OnInit {
 
       await this.moviesService.getMovieById(this.currentProgramId).then(result=> this.currentProgram = result)
       await this.moviesService.getMovieTrailer(this.currentProgramId).then(response => {
+        console.log(response)
         response ? this.videoUrl = response : null;
       })
     } else {
@@ -45,7 +46,6 @@ export class ProgramDetailView implements OnInit {
       await this.seriesService.getSeriesTrailer(this.currentProgramId).then(response => {
         response ? this.videoUrl = response : null;
       })
-      console.log(this.currentProgram)
     };
 
     this.isLoading = false;
