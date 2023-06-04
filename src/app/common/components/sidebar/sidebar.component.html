@@ -5,17 +5,17 @@
     <div class="user-info-wrapper">
       <mat-icon>person</mat-icon>
 
-      <span *ngIf="currentUser">Hey {{currentUser.name}}!</span>
+      <span class="text-[16px] text-center text-white" *ngIf="currentUser">Hey {{currentUser.name}}!</span>
     </div>
 
     <ul class="options-list">
 
-      <li class="li">
+      <li class="li" routerLinkActive="link-active">
         <mat-icon>person</mat-icon>
         <span>My Profile</span>
       </li>
 
-      <li class="li" routerLink="/programs/favorites/1">
+      <li class="li" routerLink="/programs/favorites/1" routerLinkActive="link-active">
         <mat-icon>favorite</mat-icon>
         <span>Favorite Movies</span>
       </li>

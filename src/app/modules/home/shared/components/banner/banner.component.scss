@@ -24,9 +24,9 @@
     }
 
     .banner-img {
-      transition: .4s ease;
+      transition: .4s ease all;
       width: 55vw;
-      height: 100%;
+      height: calc(100% + 1em) !important;
 
       &.sidenav-active {
         width: 45vw;
@@ -54,6 +54,7 @@
     flex-direction: column;
     justify-content: center;
     gap: .5em;
+    height: 100%;
     width: 30%;
     text-align: start;
     left: 30px;
@@ -95,10 +96,10 @@
       display: flex;
       justify-content: flex-start;
       overflow-x: scroll;
+      gap: 1em;
 
       .cast-slider-inner-wrapper {
-        min-width: 50%;
-        height: 300px;
+        min-width: 40%;
         display: flex;
         scroll-snap-type: x mandatory;
         align-items: center;
@@ -112,7 +113,7 @@
 
           img {
             transition: .4s ease;
-            max-height: 150px !important;
+            max-height: 200px !important;
           }
         }
       }
@@ -129,4 +130,6 @@
 p {
   margin: 0 !important;
 }
+
+
 

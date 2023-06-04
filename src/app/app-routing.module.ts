@@ -18,13 +18,17 @@ import { AuthGuard } from './common/helpers/guards/auth.guard'
     {
       path: "login",
       loadChildren: ()=> import('./modules/login/auth.module').then(m => m.AuthModule),
-
     },
     {
       path: "account",
       loadChildren: ()=> import('./modules/account/account.module').then(m => m.AccountModule),
       canActivate: [AuthGuard],
     },
+    {
+      path: '**',
+      redirectTo: 'home'
+    }
+
   ], {onSameUrlNavigation: 'reload', scrollPositionRestoration: "enabled"})],
   exports: [RouterModule]
 })

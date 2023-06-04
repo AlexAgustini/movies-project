@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MoviesService } from '../../services/movies.service';
-import { MoviesResultType } from '../../types/program-fetch-result.type';
+import { MoviesResultType, SeriesResultType } from '../../types/program-fetch-result.type';
+import { SeriesService } from '../../services/series.service';
 
 @Component({
   selector: 'search-page-view',
@@ -10,31 +11,30 @@ import { MoviesResultType } from '../../types/program-fetch-result.type';
 })
 export class SearchPageView implements OnInit{
 
-  constructor(private moviesService: MoviesService, private activatedRoute: ActivatedRoute) {}
+  constructor(private moviesService: MoviesService, private activatedRoute: ActivatedRoute, private seriesService: SeriesService) {}
 
   public isLoading: boolean = false;
   public hasError: boolean = false;
-
-  queryMade!: string | null;
-  moviesReturned!: MoviesResultType[];
+  public queryMade!: string | null;
+  public moviesData!: (SeriesResultType | MoviesResultType) [];
 
   ngOnInit() {
     this.queryMade = this.activatedRoute.snapshot.queryParamMap.get('q');
     this.isLoading = true;
 
-    this.moviesService.getMoviesSearchBar(this.queryMade).then(result=> {
-      this.moviesReturned = result;
-      this.isLoading = false
-    }).catch(error=> {
-      this.hasError = true;
-      this.isLoading = false
-    })
-  }
+    const promises = [this.moviesService.getMoviesSearchBar(this.queryMade), this.seriesService.getSeriesSearchbar(this.queryMade)]
 
-  ngOnChanges() {
-    this.moviesService.getMoviesSearchBar(this.queryMade).then(result=> {
-      this.moviesReturned = result;
-      this.isLoading = false
-    })
+    Promise.all(promises)
+      .then(result=> {
+        const [movies, series] = result;
+        movies.forEach(movie=> {
+          movie.media_type = 'movies'
+        });
+        series.forEach(serie=> {
+          serie.media_type = 'tv'
+        })
+        this.moviesData = [...series, ...movies];
+        this.isLoading = false;
+      })
   }
 }

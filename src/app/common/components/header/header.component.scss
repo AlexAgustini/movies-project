@@ -43,6 +43,14 @@
     align-items: center;
     margin-left: auto;
     gap: 1em;
+
+
+    button {
+
+      &.link-active {
+        background-color: #0F2027 !important;
+      }
+    }
   }
 
   h3 {

@@ -14,7 +14,7 @@
         />
       <button class="watch-button" [routerLink]="['/programs', program.media_type === 'movies' ? 'movies' : 'tv', program.id]">Watch</button>
       </div>
-      <div class="carousel-caption">
+      <div class="carousel-caption py-0 max-h-full">
         <div>
           <div class="text-template">
             <h3 class="banner-title">{{program.media_type=== 'movies' ? program.title : program.original_name}}</h3>
@@ -28,7 +28,7 @@
             <p>{{getLanguage(program.original_language)}}</p>
           </div>
         </div>
-        <div class="cast-slider">
+        <div class="cast-slider mt-auto">
           <div class="cast-slider-inner">
             <div class="cast-slider-inner-wrapper"  *ngFor="let actor of program.cast" [class.sidenav-active]="($sidenavStatus | async) === 'open'">
               <img *ngIf="actor.profile_path" [src]="'https://image.tmdb.org/t/p/w500/' + actor.profile_path" class="rounded-md max-h-[250px]">

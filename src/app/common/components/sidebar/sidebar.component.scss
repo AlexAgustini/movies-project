@@ -28,11 +28,6 @@
     align-items: center;
     gap: 1em;
 
-    span {
-      color: white;
-      font-size: 22px;
-    }
-
     mat-icon {
       color: white;
       display: flex;
@@ -65,6 +60,7 @@
       gap: 1em;
       align-items: center;
       border-bottom: 1px solid rgba(255,255,255, .3);
+      transition: .4s ease;
 
       span {
         color: white;
@@ -80,6 +76,10 @@
         span {
           transform: translateY(-1px);
         }
+      }
+
+      &.link-active {
+        border-bottom: 1px solid white;
       }
     }
   }

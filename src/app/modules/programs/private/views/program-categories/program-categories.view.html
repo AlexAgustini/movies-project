@@ -1,6 +1,8 @@
-<div class="d-flex justify-end">
-  <div>
-
+<div class="d-flex justify-between items-center">
+  <div (click)="switchProgram()" class="flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-all hover:bg-[#0F2027]">
+    <span class="text-white text-xl">{{typeOfProgram === 'movies' ? (typeOfProgram | titlecase) : 'Series'  }}</span>
+    <mat-icon class="text-white">filter_list</mat-icon>
+    <div></div>
   </div>
   <div class="d-flex items-center gap-2">
     <mat-icon (click)="navigatePages(false)" [ngStyle]="{'color': 'white'}" class="d-flex items-center justify-center p-4 cursor-pointer overflow-visible rounded-full transition-all hover:bg-[#0F2027]">arrow_back</mat-icon>

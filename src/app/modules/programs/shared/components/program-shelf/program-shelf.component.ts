@@ -48,7 +48,6 @@ export class ProgramShelfComponent implements OnInit{
   async ngOnInit() {
     await this.checkForFavoritePrograms();
     if (this.mode === "carousel") this.assembleCarrouselData();
-    console.log(this.programData)
   };
 
   private assembleCarrouselData() {

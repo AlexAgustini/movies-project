@@ -39,6 +39,10 @@ export class FavoritesView {
     const startIndex = (this.currentPage - 1) * programsPerPage;
     const endIndex = startIndex + programsPerPage;
     const favoritePrograms = await this.favoritesService.getFavoritePrograms();
+    if (!favoritePrograms) {
+      this.isLoading = false;
+      return
+    };
     this.allProgramsLength = favoritePrograms.length;
     const programsData = favoritePrograms.slice(startIndex, endIndex);
     this.programData = await Promise.all(programsData.map(async (program) => {

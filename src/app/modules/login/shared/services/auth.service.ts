@@ -26,9 +26,6 @@ export class AuthService {
             name: userData.name,
             email: userData.email,
           });
-
-        this.setCurrentUser(authResult.user.uid);
-
       }
       return authResult;
 

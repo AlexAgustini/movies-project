@@ -1,19 +1,28 @@
 
-  <div class="p-6 movie-detail-shelf" *ngIf="!isLoading else loadingTemplate">
-    <div class="container-movies grid content-center grid-cols-2 gap-8 p-4 rounded-lg">
-      <div  *ngFor="let program of programsData" class="movie-item-container flex flex-col items-stretch max-w-[200px]">
-          <img
-             class="cursor-pointer w-full min-h-[250px] object-cover"
-             src="https://image.tmdb.org/t/p/w500/{{program.media_type === 'movies' ? program.poster_path : program.backdrop_path}}"
-             alt=""
-             [routerLink]="['/programs', programType, program.id]"
-          >
-          <div class="justify-center content-center flex h-full min-h-[55px] items-center border-[1px solid]">
-            <h3 class="text-center">{{ program.media_type === 'movies' ? program.title : program.original_name }}</h3>
-          </div>
+  <div class="shadow-2xl p-6 movie-detail-shelf" *ngIf="!isLoading else loadingTemplate">
+    <ng-container *ngIf="programsData.length else popcornTemplate">
+      <div class="container-movies grid content-center grid-cols-2 gap-8 p-4 rounded-lg">
+          <div *ngFor="let program of programsData" class="movie-item-container flex flex-col items-stretch max-w-[200px]">
+            <img
+              class="cursor-pointer w-full min-h-[250px] object-cover rounded-md"
+              src="https://image.tmdb.org/t/p/w500/{{program.media_type === 'movies' ? program.poster_path : program.backdrop_path}}"
+              alt=""
+              [routerLink]="['/programs', programType, program.id]"
+            >
+            <div class="justify-center content-center flex h-full min-h-[55px] items-center border-[1px solid]">
+              <h3 class="text-center">{{ program.media_type === 'movies' ? program.title : program.original_name }}</h3>
+            </div>
+        </div>
       </div>
-    </div>
+    </ng-container>
   </div>
+
+  <ng-template #popcornTemplate>
+    <div class="d-flex flex-col max-w-xs justify-center items-center ">
+      <h4 class="text-white">Oops, it looks like there's no recommended movies available, try again later!</h4>
+      <img class="max-w-[200px]" src="../../../../../../assets/popcorn-black.png">
+    </div>
+  </ng-template>
 
   <ng-template #loadingTemplate>
     <div class="p-6 movie-detail-shelf skeleton-template">

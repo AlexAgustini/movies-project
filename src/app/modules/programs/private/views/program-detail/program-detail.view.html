@@ -1,5 +1,5 @@
 <ng-container *ngIf="!isLoading else loadingTemplate">
-  <div class="flex" *ngIf="currentProgramType === 'movies'">
+  <div class=" rounded-xl flex gap-4" *ngIf="currentProgramType === 'movies'">
     <div class="container-movie shadow-2xl p-4 flex flex-col w-3/4">
 
       <div class="movie-title-container">
@@ -33,32 +33,27 @@
           <div class="info-container flex flex-col gap-2">
             <div class="info-inner">
               <mat-icon>movie</mat-icon>
-              <h3>Nome original: {{$any(currentProgram).original_title}}</h3>
-            </div>
-
-            <div class="info-inner">
-              <mat-icon>attach_money</mat-icon>
-              <h3>Orçamento: {{$any(currentProgram).budget}}</h3>
+              <h3>Original name: {{$any(currentProgram).original_title}}</h3>
             </div>
 
             <div class="info-inner">
               <mat-icon>calendar_today</mat-icon>
-              <h3>Lançamento: {{$any(currentProgram).release_date}}</h3>
+              <h3>Release Date: {{$any(currentProgram).release_date}}</h3>
             </div>
 
             <div class="info-inner">
               <mat-icon>language</mat-icon>
-              <h3>Idioma Original: {{$any(currentProgram).original_language}}</h3>
+              <h3>Original Language: {{$any(currentProgram).original_language}}</h3>
             </div>
 
             <div class="info-inner">
               <mat-icon>people</mat-icon>
-              <h3>Popularidade: {{currentProgram.popularity}}</h3>
+              <h3>Popularity: {{currentProgram.popularity}}</h3>
             </div>
 
             <div class="info-inner">
-              <mat-icon class="w-[100px]">textsms</mat-icon>
-              <h3>Sinopse: <p>{{currentProgram.overview}}</p></h3>
+              <mat-icon class="overflow-visible">textsms</mat-icon>
+              <h3>Overview: <p>{{currentProgram.overview}}</p></h3>
             </div>
 
           </div>
@@ -71,7 +66,7 @@
     <similar-movies-shelf [programType]="currentProgramType" [programId]="currentProgramId"></similar-movies-shelf>
   </div>
 
-  <div class="flex" *ngIf="currentProgramType === 'tv'">
+  <div class="flex gap-4" *ngIf="currentProgramType === 'tv'">
     <div class="container-movie shadow-2xl p-4 flex flex-col w-3/4">
 
       <div class="movie-title-container">
@@ -105,32 +100,32 @@
           <div class="info-container flex flex-col gap-2">
             <div class="info-inner">
               <mat-icon>movie</mat-icon>
-              <h3>Nome original: {{$any(currentProgram).original_title || currentProgram.original_name}}</h3>
-            </div>
-
-            <div class="info-inner">
-              <mat-icon>attach_money</mat-icon>
-              <h3>Orçamento: {{$any(currentProgram).budget}}</h3>
+              <h3>Original name: {{$any(currentProgram).original_title || currentProgram.original_name}}</h3>
             </div>
 
             <div class="info-inner">
               <mat-icon>calendar_today</mat-icon>
-              <h3>Lançamento: {{$any(currentProgram).first_air_date}}</h3>
+              <h3>Release Date: {{$any(currentProgram).first_air_date}}</h3>
             </div>
 
             <div class="info-inner">
               <mat-icon>language</mat-icon>
-              <h3>Idioma Original: {{$any(currentProgram).original_language}}</h3>
+              <h3>Original language: {{$any(currentProgram).original_language}}</h3>
             </div>
 
             <div class="info-inner">
               <mat-icon>people</mat-icon>
-              <h3>Popularidade: {{currentProgram.popularity}}</h3>
+              <h3>Popularity: {{currentProgram.popularity}}</h3>
             </div>
 
             <div class="info-inner">
-              <mat-icon class="w-[100px]">textsms</mat-icon>
-              <h3>Sinopse: <p>{{currentProgram.overview}}</p></h3>
+              <mat-icon>format_list_bulleted</mat-icon>
+              <h3>Number of seasons: {{currentProgram.media_type === 'tv' ? currentProgram.seasons.length : null}}</h3>
+            </div>
+
+            <div class="info-inner">
+              <mat-icon class="overflow-visible">textsms</mat-icon>
+              <h3>Overview: <p>{{currentProgram.overview}}</p></h3>
             </div>
 
           </div>

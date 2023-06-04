@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { MovieCategories, MoviesResultType, MoviesFetchResult } from '../types/program-fetch-result.type';
@@ -15,9 +15,19 @@ export class MoviesService {
   private apiKey = environment.apiKey;
   private apiUrl = environment.apiUrls.moviesUrl;
 
-  public async getMoviesByCategory(movieCategory: MovieCategories, page?: string): Promise<MoviesResultType[]> {
+  public async getMoviesByCategory(movieCategory: MovieCategories, page?: number): Promise<MoviesResultType[]> {
+    let params = new HttpParams()
+      .set('api_key', this.apiKey)
+      .set('adult', 'false')
+      .set('language', 'en-US')
+      .set('sort_by', 'popularity.desc')
+
+      if (page) {
+        params = params.append('page', page.toString());
+      }
+
     return (await firstValueFrom(
-      this.http.get<MoviesFetchResult>(`${this.apiUrl}/${movieCategory}?api_key=${this.apiKey}${page ? `&page=${page}` :  ''}`))
+      this.http.get<MoviesFetchResult>(`${this.apiUrl}/${movieCategory  }`, {params: params}))
         .then(result=> {
           return {
             movies: result.results,

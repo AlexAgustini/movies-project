@@ -1,21 +1,9 @@
-<div class="alert alert-danger" *ngIf="hasError">Ocorreu um erro na busca</div>
+<ng-container *ngIf="!isLoading">
+  <div class="alert alert-danger" *ngIf="hasError">Ocorreu um erro na busca</div>
 
-<div *ngIf="isLoading" class="spinner">
-  <mat-spinner></mat-spinner>
-</div>
-
-<div class="w-[95vw] mt-16 container-movies grid content-center grid-cols-5 p-8 rounded-[10px] gap-8">
-  <div *ngFor="let movie of moviesReturned" class="movie-item-container flex flex-col items-stretch min-h-[260px] rounded-[10px] overflow-hidden">
-    <mat-progress-bar *ngIf="!image"></mat-progress-bar>
-      <img
-          class="cursor-pointer w-full"
-          src="https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"
-          alt=""
-          [routerLink]="['/programs/movies', movie.id]"
-          #image
-      >
-      <div class="justify-center content-center flex min-h-[60px] items-center">
-        <h3 class="text-center">{{movie.title}}</h3>
-      </div>
-  </div>
-</div>
+  <program-shelf
+    [programData]="moviesData"
+    mode="static"
+  >
+  </program-shelf>
+</ng-container>

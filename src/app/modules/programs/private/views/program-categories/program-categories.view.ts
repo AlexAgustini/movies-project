@@ -18,7 +18,12 @@ export class ProgramCategoriesView {
   public currentPage!: string;
   public isLoading!: boolean;
 
-  constructor(private activatedRoute: ActivatedRoute, private moviesService: MoviesService, private seriesService: SeriesService, private router: Router) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private moviesService: MoviesService,
+    private seriesService: SeriesService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.activatedRoute.url.subscribe({
@@ -35,12 +40,17 @@ export class ProgramCategoriesView {
     this.isLoading = true;
     if (this.programCategory) {
       if (this.typeOfProgram === "movies") {
-        this.programData = await this.moviesService.getMoviesByCategory(this.programCategory as MovieCategories, this.currentPage);
+        this.programData = await this.moviesService.getMoviesByCategory(this.programCategory as MovieCategories, Number(this.currentPage));
         this.programData.forEach(program=> {
+          this.programCategory === 'airing_today' ? this.programCategory = 'now_playing' : null;
+          this.programCategory === 'on_the_air' ? this.programCategory = 'upcoming' : null;
           program.media_type = 'movies'
         })
       } else {
-        this.programData = await this.seriesService.getSeriesByCategory(this.programCategory as SeriesCategories, this.currentPage);
+        this.programCategory === 'now_playing' ? this.programCategory = 'airing_today' : null;
+        this.programCategory === 'upcoming' ? this.programCategory = 'on_the_air' : null;
+
+        this.programData = await this.seriesService.getSeriesByCategory(this.programCategory as SeriesCategories, Number(this.currentPage));
         this.programData.forEach(program=> {
           program.media_type = 'tv'
         })
@@ -54,6 +64,15 @@ export class ProgramCategoriesView {
     if (currentPage === 1 && !plus) return;
 
     this.router.navigate(['/programs', this.typeOfProgram, this.programCategory, plus ? currentPage + 1 : currentPage - 1])
+  }
+
+  public switchProgram() {
+    if (this.typeOfProgram === 'movies') {
+      this.typeOfProgram = 'tv';
+    } else {
+      this.typeOfProgram = 'movies'
+    }
+    this.router.navigate(['/programs/', this.typeOfProgram, this.programCategory, this.currentPage])
   }
 
 }

@@ -19,6 +19,10 @@ const routes: Routes = [
     component: ProgramCategoriesView
   },
   {
+    path: 'tv/:program_category/:page',
+    component: ProgramCategoriesView
+  },
+  {
     path: "tv/:id",
     component: ProgramDetailView
   },

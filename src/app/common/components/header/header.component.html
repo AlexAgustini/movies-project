@@ -11,13 +11,37 @@
         </button>
       </div>
 
-      <search-bar></search-bar>
+      <search-bar class="w-full"></search-bar>
 
       <div class="dashboard-right">
-        <button mat-flat-button class="bg-transparent text-white" routerLink="/programs/movies/popular/1">Popular</button>
-        <button mat-flat-button class="bg-transparent text-white" routerLink="/programs/movies/now_playing/1">Now Playing</button>
-        <button mat-flat-button class="bg-transparent text-white" routerLink="/programs/movies/top_rated/1">Top Rated</button>
-        <button mat-flat-button class="bg-transparent text-white" routerLink="/programs/movies/upcoming/1">Upcoming</button>
+        <button
+          (click)="navigate('popular')"
+          mat-flat-button class="bg-transparent text-white"
+          routerLink="/programs/{{currentCategory}}/popular/1"
+          routerLinkActive="link-active"
+          >Popular
+        </button>
+        <button
+         (click)="navigate('now_playing')"
+          mat-flat-button class="bg-transparent text-white"
+          routerLink="/programs/{{currentCategory}}/now_playing/1"
+          routerLinkActive="link-active"
+          >Now Playing
+        </button>
+        <button
+          (click)="navigate('top_rated')"
+          mat-flat-button class="bg-transparent text-white"
+          routerLink="/programs/{{currentCategory}}/top_rated/1"
+          routerLinkActive="link-active"
+          >Top Rated
+        </button>
+        <button
+          (click)="navigate('upcoming')"
+          mat-flat-button class="bg-transparent text-white"
+          routerLink="/programs/{{currentCategory}}/upcoming/1"
+          routerLinkActive="link-active"
+          >Upcoming
+        </button>
       </div>
     </div>
   </mat-toolbar>

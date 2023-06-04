@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable, firstValueFrom, map } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
@@ -16,8 +16,18 @@ export class SeriesService {
 
   constructor(private http: HttpClient) {}
 
-  public async getSeriesByCategory(serieCategory: SeriesCategories, page?: string): Promise<SeriesResultType[]> {
-    return (await firstValueFrom(this.http.get<SeriesFetchResult>(`${this.apiUrl}/${serieCategory}?api_key=${this.apiKey}${page ? `&page=${page}` : ''}`))).results;
+  public async getSeriesByCategory(serieCategory: SeriesCategories, page?: number): Promise<SeriesResultType[]> {
+    let params = new HttpParams()
+      .set('api_key', this.apiKey)
+      .set('adult', false)
+      .set('language', 'en-US')
+      .set('sort_by', 'popularity.desc')
+
+      if (page) {
+        params = params.append('page', (page).toString());
+      }
+
+    return (await firstValueFrom(this.http.get<SeriesFetchResult>(`${this.apiUrl}/${serieCategory}`, {params: params}))).results;
   }
 
   public async getSimilarSeries(similarSerieId: string | number):Promise<SeriesResultType[]> {
@@ -39,4 +49,9 @@ export class SeriesService {
     return firstValueFrom(this.http.get(`${this.apiUrl}/${seriesId}/credits?api_key=17acd9c39b103a235bc6dcaa22e3957a`))
   }
 
+  public async getSeriesSearchbar(value: string | null): Promise<SeriesResultType[]> {
+    return await firstValueFrom(this.http.get<SeriesFetchResult>(`https://api.themoviedb.org/3/search/tv?api_key=17acd9c39b103a235bc6dcaa22e3957a&query=${value}`).pipe(
+      map(series => series.results)
+    ))
+  }
 }

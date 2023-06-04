@@ -14,7 +14,7 @@ export class SearchBarComponent{
 
   moviesReturned!: MoviesResultType[];
 
-  constructor(private moviesService: MoviesService, private router: Router) {}
+  constructor(private router: Router) {}
 
   search(value: string): void {
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>

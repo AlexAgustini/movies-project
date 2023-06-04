@@ -42,18 +42,25 @@ export class ProgramDetailView implements OnInit {
     this.isLoading = true;
     if (this.currentProgramType === "movies") {
 
-      await this.moviesService.getMovieById(this.currentProgramId).then(result=> this.currentProgram = result)
+      await this.moviesService.getMovieById(this.currentProgramId).then(result=> {
+        this.currentProgram = result;
+        this.currentProgram.media_type = 'movies'
+      })
       await this.moviesService.getMovieTrailer(this.currentProgramId).then(response => {
         response ? this.videoUrl = response : null;
       })
     } else {
-      await this.seriesService.getSeriesById(this.currentProgramId).then(result=> this.currentProgram = result)
+      await this.seriesService.getSeriesById(this.currentProgramId).then(result=> {
+        this.currentProgram = result;
+        this.currentProgram.media_type = 'tv';
+      })
       await this.seriesService.getSeriesTrailer(this.currentProgramId).then(response => {
         response ? this.videoUrl = response : null;
       })
     };
 
     this.isLoading = false;
+    console.log(this.currentProgram)
   }
 
   public toggleFavoriteProgram(program: MoviesResultType | SeriesResultType) {

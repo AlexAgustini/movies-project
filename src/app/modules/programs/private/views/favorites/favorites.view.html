@@ -1,17 +1,25 @@
 
 <ng-container *ngIf="!isLoading else loadingTemplate">
 
-  <div class="d-flex items-center gap-2 justify-end">
-    <mat-icon *ngIf="currentPage > 1" (click)="navigatePages(false)" [ngStyle]="{'color': 'white'}" class="d-flex items-center justify-center p-4 cursor-pointer overflow-visible rounded-full transition-all hover:bg-[#0F2027]">arrow_back</mat-icon>
-    <mat-icon *ngIf="currentPage === 1" [ngStyle]="{'color': 'rgba(255,255,255, .3)'}" class="d-flex items-center justify-center p-4 cursor-pointer overflow-visible rounded-full transition-all hover:bg-[#0F2027]">arrow_back</mat-icon>
-    <mat-icon *ngIf="displayNextPageCondition" (click)="navigatePages(true)" [ngStyle]="{'color': 'white'}" class="d-flex items-center justify-center p-4 cursor-pointer overflow-visible rounded-full transition-all hover:bg-[#0F2027]">arrow_forward</mat-icon>
-    <mat-icon *ngIf="!displayNextPageCondition" [ngStyle]="{'color': 'rgba(255,255,255, .3)'}" class="d-flex items-center justify-center p-4 cursor-pointer overflow-visible rounded-full transition-all hover:bg-[#0F2027]">arrow_forward</mat-icon>
+  <div class="flex justify-between items-center">
+    <div>
+      <h1 class="text-white m-0">Your favorite movies</h1>
+    </div>
+
+    <div class="d-flex items-center gap-2">
+      <mat-icon *ngIf="currentPage > 1" (click)="navigatePages(false)" [ngStyle]="{'color': 'white'}" class="d-flex items-center justify-center p-4 cursor-pointer overflow-visible rounded-full transition-all hover:bg-[#0F2027]">arrow_back</mat-icon>
+      <mat-icon *ngIf="currentPage === 1" [ngStyle]="{'color': 'rgba(255,255,255, .3)'}" class="d-flex items-center justify-center p-4 cursor-pointer overflow-visible rounded-full transition-all hover:bg-[#0F2027]">arrow_back</mat-icon>
+      <mat-icon *ngIf="displayNextPageCondition" (click)="navigatePages(true)" [ngStyle]="{'color': 'white'}" class="d-flex items-center justify-center p-4 cursor-pointer overflow-visible rounded-full transition-all hover:bg-[#0F2027]">arrow_forward</mat-icon>
+      <mat-icon *ngIf="!displayNextPageCondition" [ngStyle]="{'color': 'rgba(255,255,255, .3)'}" class="d-flex items-center justify-center p-4 cursor-pointer overflow-visible rounded-full transition-all hover:bg-[#0F2027]">arrow_forward</mat-icon>
+    </div>
   </div>
 
-  <program-shelf
+  <program-shelf *ngIf="programData.length else popcornTemplate"
     [programData]="programData"
+    title="Your favorite movies"
     (programFavorited)="removeFavorite($event)"
-    mode="static">
+    mode="static"
+    >
   </program-shelf>
 </ng-container>
 
@@ -23,5 +31,12 @@
       <div class="animate-pulse w-[90%] mx-auto bg-[#0F2027] mb-1 h-[5px]"></div>
       <div class="animate-pulse w-[90%] mx-auto bg-[#0F2027] mb-1 h-[5px]"></div>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #popcornTemplate>
+  <div class="bg-[#0F2027] max-w-full d-flex flex-col p-12 rounded-[10px] justify-center items-center ">
+    <h4 class="text-white text-2xl">You haven't favorited any movies yet!</h4>
+    <img class="max-w-[200px]" src="../../../../../../assets/popcorn-black.png">
   </div>
 </ng-template>
