@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MoviesService } from '../../services/movies.service';
 import { SeriesService } from '../../services/series.service';
-import { ISeriesResult, ProgramResultType, ProgramType } from '../../types/program-fetch-result.type';
+import { SeriesResultType, MoviesResultType, ProgramType } from '../../types/program-fetch-result.type';
+import { FavoritesService } from '../../services/favorites.service';
 
 @Component({
   selector: 'app-movie-detail',
@@ -11,10 +12,14 @@ import { ISeriesResult, ProgramResultType, ProgramType } from '../../types/progr
 })
 export class ProgramDetailView implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute, private moviesService: MoviesService, private seriesService: SeriesService) {};
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private moviesService: MoviesService,
+    private seriesService: SeriesService,
+    private favoritesService: FavoritesService
+  ) {};
 
-  moviesType!: ProgramResultType
-  public currentProgram!: ProgramResultType | ISeriesResult;
+  public currentProgram!: MoviesResultType | SeriesResultType;
   public currentProgramId!: number;
   public currentProgramType!: ProgramType;
   public videoUrl!: string | null;
@@ -29,6 +34,7 @@ export class ProgramDetailView implements OnInit {
       this.currentProgramType = url[0].path as ProgramType;
       this.currentProgramId = Number(url[1].path);
       this.fetchProgramData();
+      this.checkFavorited();
     })
   }
 
@@ -42,12 +48,32 @@ export class ProgramDetailView implements OnInit {
       })
     } else {
       await this.seriesService.getSeriesById(this.currentProgramId).then(result=> this.currentProgram = result)
-      console.log(this.currentProgram)
       await this.seriesService.getSeriesTrailer(this.currentProgramId).then(response => {
         response ? this.videoUrl = response : null;
       })
     };
 
     this.isLoading = false;
+  }
+
+  public toggleFavoriteProgram(program: MoviesResultType | SeriesResultType) {
+    if (!program.programFavorited) {
+      this.favoritesService.addFavoriteProgram(program.id, this.currentProgramType)
+      program.programFavorited = true;
+    } else {
+      this.favoritesService.removeFavoriteProgram(program.id, this.currentProgramType)
+      program.programFavorited = false;
+    }
+  }
+
+  private async checkFavorited() {
+    const userFavoritedPrograms = await this.favoritesService.getFavoritePrograms();
+    if (!userFavoritedPrograms) return;
+    if (!Object.hasOwn(this.currentProgram, "id")) return
+    for (let program of userFavoritedPrograms) {
+      if (program.id === this.currentProgram.id) {
+        this.currentProgram.programFavorited = true;
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
 <div>
   <ngb-carousel [interval]="10000" #ngbCarousel class="banner-container" [showNavigationIndicators]="false" [showNavigationArrows]="false">
-    <ng-template ngbSlide *ngFor="let movie of movies; let i = index">
+    <ng-template ngbSlide *ngFor="let program of programsData; let i = index">
       <div class="picsum-img-wrapper">
         <div class="arrows-wrapper">
           <mat-icon (click)="previousSlide()">arrow_circle_left</mat-icon>
@@ -8,29 +8,29 @@
         </div>
         <img
           class="banner-img ml-auto rounded overflow-hidden"
-          [src]="'https://image.tmdb.org/t/p/w1280/' + movie.backdrop_path"
-          alt="{{ movie.title }}"
+          [src]="'https://image.tmdb.org/t/p/w1280/' + program.backdrop_path"
+          [alt]="program.media_type === 'movies' ? program.title : program.original_name"
           [class.sidenav-active]="($sidenavStatus | async) === 'open'"
         />
-      <button class="watch-button" [routerLink]="['/movie', movie.id]">Watch</button>
+      <button class="watch-button" [routerLink]="['/programs', program.media_type === 'movies' ? 'movies' : 'tv', program.id]">Watch</button>
       </div>
       <div class="carousel-caption">
         <div>
           <div class="text-template">
-            <h3 class="banner-title">{{movie.original_title}}</h3>
-            <p class="banner-description">{{movie.overview}}</p>
+            <h3 class="banner-title">{{program.media_type=== 'movies' ? program.title : program.original_name}}</h3>
+            <p class="banner-description">{{program.overview}}</p>
           </div>
           <div class="info flex gap-4 items-center mt-[1em]">
             <img src="../../../../assets/imdb.svg" class="w-[45px] h-[30px] object-cover" alt="">
-            <p>{{movie.vote_average}}</p>
+            <p>{{program.vote_average}}</p>
             <div class="separator w-[1px] h-[30px] bg-white"></div>
-            <img [src]="getFlagImage(movie.original_language)" alt="" class="w-[40px] h-[30px]">
-            <p>{{getLanguage(movie.original_language)}}</p>
+            <img [src]="getFlagImage(program.original_language)" alt="" class="w-[40px] h-[30px]">
+            <p>{{getLanguage(program.original_language)}}</p>
           </div>
         </div>
         <div class="cast-slider">
           <div class="cast-slider-inner">
-            <div class="cast-slider-inner-wrapper"  *ngFor="let actor of movie.cast" [class.sidenav-active]="($sidenavStatus | async) === 'open'">
+            <div class="cast-slider-inner-wrapper"  *ngFor="let actor of program.cast" [class.sidenav-active]="($sidenavStatus | async) === 'open'">
               <img *ngIf="actor.profile_path" [src]="'https://image.tmdb.org/t/p/w500/' + actor.profile_path" class="rounded-md max-h-[250px]">
               <img *ngIf="!actor.profile_path" src="../../../../assets/profile.png" class="max-h-[250px]">
             </div>

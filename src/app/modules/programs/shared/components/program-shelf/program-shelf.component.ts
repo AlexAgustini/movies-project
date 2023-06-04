@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {  Router } from '@angular/router';
 import { FavoritesService } from '../../../private/services/favorites.service';
-import { ProgramResultType, ProgramType } from '../../../private/types/program-fetch-result.type';
+import { MoviesResultType, ProgramType, SeriesResultType } from '../../../private/types/program-fetch-result.type';
 import { SliderImages } from '../../../private/types/slider-images.type';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { SidenavService } from 'src/app/common/services/sidenav.service';
@@ -23,7 +23,7 @@ export class ProgramShelfComponent implements OnInit{
   constructor(private router: Router, private favoritesService: FavoritesService, private sidenavService: SidenavService) {};
 
   @Input()
-  public programData!: Array<ProgramResultType>;
+  public programData!: Array<MoviesResultType | SeriesResultType>;
 
   @Input()
   public typeOfProgram?: ProgramType;
@@ -48,11 +48,14 @@ export class ProgramShelfComponent implements OnInit{
   async ngOnInit() {
     await this.checkForFavoritePrograms();
     if (this.mode === "carousel") this.assembleCarrouselData();
+    console.log(this.programData)
   };
 
   private assembleCarrouselData() {
     if (!this.programData) return;
     this.programData.forEach(program=> {
+      Object.hasOwn(program, "poster_path") ? program.media_type = 'movies' : program.media_type = 'tv';
+
       this.carouselImages.push({
         id: program.id,
         image: `https://image.tmdb.org/t/p/w500${program.poster_path}`,
@@ -66,12 +69,12 @@ export class ProgramShelfComponent implements OnInit{
     this.router.navigate([`/programs/${this.typeOfProgram}`, movieId])
   }
 
-  public toggleFavoriteProgram(program: ProgramResultType) {
+  public toggleFavoriteProgram(program: MoviesResultType | SeriesResultType) {
     if (!program.programFavorited) {
-      this.favoritesService.addFavoriteProgram(program.id)
+      this.favoritesService.addFavoriteProgram(program.id, program.media_type)
       program.programFavorited = true;
     } else {
-      this.favoritesService.removeFavoriteProgram(program.id)
+      this.favoritesService.removeFavoriteProgram(program.id, program.media_type)
       program.programFavorited = false;
     }
 
@@ -82,7 +85,7 @@ export class ProgramShelfComponent implements OnInit{
     const userFavoritedMovies = await this.favoritesService.getFavoritePrograms()
     if (!userFavoritedMovies) return;
     this.programData.forEach(program=> {
-      if (userFavoritedMovies.some(favoritedProgram => favoritedProgram === program.id)) {
+      if (userFavoritedMovies.some(favoritedProgram => favoritedProgram.id === program.id)) {
         program.programFavorited = true;
       }
     })

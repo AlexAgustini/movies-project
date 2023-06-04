@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MoviesService } from '../../../private/services/movies.service';
 import { SeriesService } from '../../../private/services/series.service';
-import { ProgramResultType, ProgramType } from '../../../private/types/program-fetch-result.type';
+import { MoviesResultType, ProgramType, SeriesResultType } from '../../../private/types/program-fetch-result.type';
 
 @Component({
   selector: 'similar-movies-shelf',
@@ -12,12 +11,12 @@ import { ProgramResultType, ProgramType } from '../../../private/types/program-f
 
 export class SimilarProgramsShelfComponent implements OnInit{
 
-  constructor(private router: Router, private moviesService: MoviesService, private seriesService: SeriesService) {};
+  constructor(private moviesService: MoviesService, private seriesService: SeriesService) {};
 
   @Input() public programId!: string | number;
   @Input() public programType!: ProgramType
 
-  public programsData!: Array<ProgramResultType>
+  public programsData!: (SeriesResultType | MoviesResultType)[];
   public isLoading!: boolean;
 
   ngOnInit() {
@@ -31,10 +30,15 @@ export class SimilarProgramsShelfComponent implements OnInit{
   private async assembleSimilarMoviesData() {
     this.isLoading = true;
     if (this.programType === "movies") {
-      await this.moviesService.getSimilarMovies(this.programId).then(result=> this.programsData = result);
+      this.programsData = (await this.moviesService.getSimilarMovies(this.programId)).splice(0, 10);
+      this.programsData.forEach(program => {
+        program.media_type = 'movies'
+      });
     } else {
-      this.programsData = await this.seriesService.getSimilarSeries(this.programId)
-      console.log(this.programsData)
+      this.programsData = (await this.seriesService.getSimilarSeries(this.programId)).splice(0, 10)
+      this.programsData.forEach(program => {
+        program.media_type = 'tv'
+      });
     }
     this.isLoading = false;
   }

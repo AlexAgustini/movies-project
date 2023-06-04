@@ -45,3 +45,30 @@ mat-icon {
     background-color: #203a4300;
   }
 }
+
+.favorite-wrapper {
+  position: absolute;
+  background-color: white;
+  border-radius: 100%;
+  padding: .5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 4px;
+  top: 4px;
+  cursor: pointer;
+
+  &:hover {
+    mat-icon {
+      color: #8B0000;
+    }
+  }
+
+  mat-icon {
+    transition: .4s ease;
+    color: black;
+    &.favorited {
+      color: red;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-export interface ProgramResultType {
+export interface MoviesResultType {
   adult: boolean,
   name: string,
   original_name: string,
@@ -33,15 +33,21 @@ export interface ProgramResultType {
   vote_average: number,
   vote_count: number,
   programFavorited?: boolean;
+  media_type: 'movies'
 }
 
-export interface ISeriesResult {
+export interface SeriesResultType {
+  poster_path: string;
+  id: number;
   adult: boolean;
   backdrop_path: string;
   created_by: [{id: string, name: string}],
   episode_run_time: Array<number>,
   first_air_date: string,
-  genres: [{id: string, name: string}]
+  genres: [{id: string, name: string}];
+  cast: Array<{
+    profile_path: string
+  }>
   homepage: string,
   seasons: [{}];
   tagline: string,
@@ -52,14 +58,25 @@ export interface ISeriesResult {
   number_of_episodes: number
   original_name: string,
   name: string,
+  programFavorited: boolean;
+  original_language: "string";
+  media_type: "tv"
 }
 
-export interface ProgramsFetchResult {
+export interface MoviesFetchResult {
   page: number,
-  results: ProgramResultType[],
+  results: MoviesResultType[],
   total_results: number,
   total_pages: number
 }
+export interface SeriesFetchResult {
+  page: number,
+  results: SeriesResultType[],
+  total_results: number,
+  total_pages: number
+}
+
+export type ProgramResultType = MoviesResultType | SeriesResultType
 
 export type MovieCategories = "popular" | "upcoming" | "top_rated" | "now_playing";
 export type SeriesCategories = "airing_today" | "on_the_air" | "popular" | "top_rated";

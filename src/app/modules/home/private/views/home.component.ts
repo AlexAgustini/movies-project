@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MoviesService } from 'src/app/modules/programs/private/services/movies.service';
 import { SeriesService } from 'src/app/modules/programs/private/services/series.service';
-import { ProgramResultType } from 'src/app/modules/programs/private/types/program-fetch-result.type';
+import { MoviesResultType, SeriesResultType } from 'src/app/modules/programs/private/types/program-fetch-result.type';
 
 @Component({
   templateUrl: "./home.component.html",
@@ -14,10 +14,10 @@ export class HomeView {
 
   public dataFetched: boolean = false;
 
-  public popularMoviesList!: Array<ProgramResultType>
-  public popularSeriesList!: Array<ProgramResultType>
-  public topRatedMoviesList!: Array<ProgramResultType>
-  public upcomingMoviesList!: Array<ProgramResultType>
+  public popularMoviesList!: Array<MoviesResultType>
+  public popularSeriesList!: Array<SeriesResultType>
+  public topRatedMoviesList!: Array<MoviesResultType>
+  public upcomingMoviesList!: Array<MoviesResultType>
 
   ngOnInit() {
     this.fetchShelvesData()

@@ -23,8 +23,11 @@
         </div>
 
         <div class="image-info-container flex gap-4">
-          <div class="image-container min-w-[300px] overflow-hidden rounded-lg">
+          <div class="image-container min-w-[300px] overflow-hidden rounded-lg relative">
             <img class="object-cover max-w-[300px]" src="https://image.tmdb.org/t/p/w500//{{$any(currentProgram).poster_path}}" alt="">
+            <div (click)="toggleFavoriteProgram(currentProgram)" class="favorite-wrapper">
+              <mat-icon [ngClass]="{'favorited' : currentProgram.programFavorited}">favorite</mat-icon>
+            </div>
           </div>
 
           <div class="info-container flex flex-col gap-2">
@@ -92,8 +95,11 @@
         </div>
 
         <div class="image-info-container flex gap-4">
-          <div class="image-container min-w-[300px] overflow-hidden rounded-lg">
+          <div class="image-container min-w-[300px] overflow-hidden rounded-lg relative">
             <img class="object-cover max-w-[300px]" src="https://image.tmdb.org/t/p/w500//{{$any(currentProgram).poster_path}}" alt="">
+            <div (click)="toggleFavoriteProgram(currentProgram)" class="favorite-wrapper">
+              <mat-icon [ngClass]="{'favorited' : currentProgram.programFavorited}">favorite</mat-icon>
+            </div>
           </div>
 
           <div class="info-container flex flex-col gap-2">
