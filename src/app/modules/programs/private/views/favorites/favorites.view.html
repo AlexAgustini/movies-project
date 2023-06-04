@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <program-shelf *ngIf="programData.length else popcornTemplate"
+  <program-shelf *ngIf="programData && programData.length else popcornTemplate"
     [programData]="programData"
     title="Your favorite movies"
     (programFavorited)="removeFavorite($event)"
@@ -36,7 +36,7 @@
 
 <ng-template #popcornTemplate>
   <div class="bg-[#0F2027] max-w-full d-flex flex-col p-12 rounded-[10px] justify-center items-center ">
-    <h4 class="text-white text-2xl">You haven't favorited any movies yet!</h4>
+    <h4 class="text-white text-2xl">You don't have any favorite movies yet!</h4>
     <img class="max-w-[200px]" src="../../../../../../assets/popcorn-black.png">
   </div>
 </ng-template>

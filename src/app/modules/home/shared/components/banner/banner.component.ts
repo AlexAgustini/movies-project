@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { SidenavService } from 'src/app/common/services/sidenav.service';
@@ -14,7 +14,13 @@ import { ProgramResultType } from 'src/app/modules/programs/private/types/progra
 })
 export class BannerComponent {
 
-  @ViewChild('ngbCarousel', { static: true }) carousel!: NgbCarousel;
+  private ngbCarousel!: NgbCarousel;
+
+ @ViewChild('ngbCarousel') set content(content: NgbCarousel) {
+    if(content) {
+        this.ngbCarousel = content;
+    }
+ }
 
   constructor(private moviesService: MoviesService, private sidenavService: SidenavService, private seriesService: SeriesService) {};
 
@@ -30,7 +36,6 @@ export class BannerComponent {
   private async getPrograms() {
     this.isLoading = true;
     let moviesList = await this.moviesService.getMoviesByCategory("popular");
-    console.log(moviesList)
     moviesList = await Promise.all(moviesList.map(async (movie) => {
       movie.media_type = 'movies';
       const movieCast = await this.moviesService.getMoviesCast(movie.id);
@@ -46,6 +51,7 @@ export class BannerComponent {
 
     const programsData = this.shuffleArray([...moviesList, ...seriesList]);
     this.programsData = programsData;
+    this.isLoading = false;
   };
 
   public getFlagImage(language: string): string {
@@ -65,12 +71,12 @@ export class BannerComponent {
   }
 
   public nextSlide() {
-    console.log(this.carousel)
-    this.carousel.next();
+    console.log(this.ngbCarousel)
+    this.ngbCarousel.next();
   }
 
   public previousSlide() {
-    this.carousel.prev();
+    this.ngbCarousel.prev();
   }
 
   private shuffleArray(array: Array<any>) {

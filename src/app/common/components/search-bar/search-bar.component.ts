@@ -1,7 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { MoviesResultType } from '../../../modules/programs/private/types/program-fetch-result.type';
-import { MoviesService } from '../../../modules/programs/private/services/movies.service';
 
 @Component({
   selector: 'search-bar',
@@ -10,15 +8,18 @@ import { MoviesService } from '../../../modules/programs/private/services/movies
 })
 export class SearchBarComponent{
 
-  @Input() label = '';
-
-  moviesReturned!: MoviesResultType[];
+  public searchValue!: string;
 
   constructor(private router: Router) {}
 
   search(value: string): void {
+    this.searchValue = value;
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([`programs/search`], {queryParams: {q: value}}));
+  }
+
+  setValue(value: string) {
+    this.searchValue = value;
   }
 
 }

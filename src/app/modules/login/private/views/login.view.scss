@@ -21,16 +21,7 @@
       display: flex;
       flex-direction: column;
 
-      mat-form-field {
-        background-color: transparent;
-        box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px !important;
-        width: 100%;
-        color: white !important;
 
-        mat-label, h1, input {
-          color: #E6E6E6 !important;
-        }
-      }
 
       span {
         color: red !important;
@@ -39,7 +30,7 @@
     }
 
     button {
-      background-color: #3A6073 !important;
+      background-color: #203A43 !important;
       color: #E6E6E6;
       font-weight: 500;
       letter-spacing: .4px;
@@ -59,13 +50,9 @@
 
 }
 
-
-
-
 :host ::ng-deep mat-form-field .mdc-text-field--filled{
   background-color: transparent !important;
 }
-
 
 .actions {
   display: flex;
@@ -84,7 +71,17 @@
   }
 }
 
+mat-form-field {
+  background-color: transparent;
+  box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px !important;
+  width: 100%;
+  color: white !important;
 
+  mat-label, h1, input {
+    color: #E6E6E6 !important;
+  }
+}
 
-
-
+.mat-spinner::ng-deep circle {
+  stroke: #fff;
+}

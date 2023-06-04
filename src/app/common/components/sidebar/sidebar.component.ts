@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
 import { AuthService } from '../../../modules/login/shared/services/auth.service';
 import { SidenavService } from '../../services/sidenav.service';
-import { UserData } from '../../../modules/login/shared/types/user.type';
 
 @Component({
   selector: 'app-sidebar',

@@ -1,6 +1,12 @@
-<div class="flex items-center mr-2">
-  <input class="w-full text-[16px] flex justify-center items-center" type="text" placeholder="Search" #searchbar (keyup.enter)="search(searchbar.value)">
-  <button mat-icon-button *ngIf="searchbar.value" (click)="searchbar.value = ''">
+<div class="flex items-center mr-2 shadow-lg justify-between">
+  <input
+    class="w-full text-[16px] flex justify-center items-center"
+    type="text"
+    placeholder="Search" #searchbar
+    (keyup.enter)="search(searchbar.value)"
+    (keydown)="setValue(searchbar.value)"
+    >
+  <button class="z-50" mat-icon-button *ngIf="searchValue" (click)="searchbar.value= ''; setValue('')">
     <mat-icon [ngStyle]="{'color':'white'}">close</mat-icon>
   </button>
 </div>

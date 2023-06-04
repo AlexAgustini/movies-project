@@ -1,9 +1,23 @@
-<ng-container *ngIf="!isLoading">
-  <div class="alert alert-danger" *ngIf="hasError">Ocorreu um erro na busca</div>
-
-  <program-shelf
+<ng-container *ngIf="!isLoading else loadingTemplate">
+  <h5 class="text-white text-xl">Search result for: {{queryMade}}</h5>
+  <program-shelf *ngIf="moviesData.length else popcornTemplate"
     [programData]="moviesData"
     mode="static"
   >
   </program-shelf>
 </ng-container>
+
+
+<ng-template #loadingTemplate>
+  <div class="bg-[#0F2027] loading-template max-w-full mt-12 grid place-items-center grid-cols-5 p-8 rounded-[10px] gap-8">
+    <div class="bg-[#203A43] rounded-xl skeleton-card d-flex justify-end animate-pulse w-full flex-col gap-[2px] h-[450px]" *ngFor="let card of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #popcornTemplate>
+  <div class="bg-[#0F2027] max-w-full d-flex flex-col p-12 rounded-[10px] justify-center items-center ">
+    <h4 class="text-white text-2xl">No movies were found, try again with another parameters</h4>
+    <img class="max-w-[200px]" src="../../../../../../assets/popcorn-black.png">
+  </div>
+</ng-template>

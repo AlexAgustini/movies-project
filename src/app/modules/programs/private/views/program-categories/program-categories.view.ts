@@ -40,10 +40,10 @@ export class ProgramCategoriesView {
     this.isLoading = true;
     if (this.programCategory) {
       if (this.typeOfProgram === "movies") {
+        this.programCategory === 'airing_today' ? this.programCategory = 'now_playing' : null;
+        this.programCategory === 'on_the_air' ? this.programCategory = 'upcoming' : null;
         this.programData = await this.moviesService.getMoviesByCategory(this.programCategory as MovieCategories, Number(this.currentPage));
         this.programData.forEach(program=> {
-          this.programCategory === 'airing_today' ? this.programCategory = 'now_playing' : null;
-          this.programCategory === 'on_the_air' ? this.programCategory = 'upcoming' : null;
           program.media_type = 'movies'
         })
       } else {

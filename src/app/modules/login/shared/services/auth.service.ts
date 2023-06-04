@@ -90,6 +90,19 @@ export class AuthService {
     }
   }
 
+  public sendPasswordResetEmail(email: string): Promise<any> {
+    return this.afAuth.sendPasswordResetEmail(email)
+      .catch(error=> {
+        if (error.code === FirebaseErrorEnum.EMAIL_INVALID) {
+          return {hasError: true, error: 'The email is invalid. Please try again.'}
+        } else if (error.code === FirebaseErrorEnum.USER_NOT_FOUND) {
+          return {hasError: true, error: 'User not found. Please try again.'}
+        } else {
+          return {hasError: false}
+        }
+      })
+  }
+
   public setCurrentUser(userToken: string) {
     this.currentUser$.next({...this.currentUser$.getValue() as UserData, id: userToken});
   }
