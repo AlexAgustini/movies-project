@@ -33,5 +33,14 @@ body {
   }
 }
 
+simple-snack-bar {
+  background-color: #0F2027 !important;
+  text-align: center;
+}
+
+mat-snack-bar-container.custom-snackbar .mdc-snackbar__surface {
+  background-color: #0F2027 !important;
+}
+
 // endregion
 

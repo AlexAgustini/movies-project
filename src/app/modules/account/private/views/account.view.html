@@ -1,1 +1,39 @@
-<p>account works!</p>
+<div class="max-w-full mt-4 rounded-[10px] bg-[#0F2027] p-4" *ngIf="!isLoading">
+
+  <form [formGroup]="userForm" class="w-5/12">
+    <div class="field-wrapper">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input type="text" matInput formControlName="name" (input)="userForm.controls['name']" #pass>
+        <!-- <mat-error>{{passwordErrors}}</mat-error> -->
+      </mat-form-field>
+    </div>
+
+    <div class="field-wrapper">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email" (input)="userForm.controls['email']" #pass>
+        <mat-error>Email invalid</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="field-wrapper">
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password" (input)="userForm.controls['password']" #pass>
+        <!-- <mat-error>{{passwordErrors}}</mat-error> -->
+      </mat-form-field>
+    </div>
+
+    <div class="mt-6 flex justify-between items-center">
+      <button routerLink="/home" class="bg-[#c6c6c6] transition-all hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+        Cancel
+      </button>
+
+      <button (click)="save()" class="bg-white gap-3 d-flex hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+        Save
+      </button>
+
+    </div>
+  </form>
+</div>

@@ -4,12 +4,17 @@ import { arrayUnion, arrayRemove } from "firebase/firestore";
 import { firstValueFrom } from 'rxjs';
 import { AuthService } from 'src/app/modules/login/shared/services/auth.service';
 import { ProgramType } from '../types/program-fetch-result.type';
+import { getAuth } from 'firebase/auth'
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class FavoritesService {
+
+  private userUid!: string;
+  private usersCollectionRef= this.db.collection("users");
+
   constructor(private db: AngularFirestore, private authService: AuthService) {
     this.authService.currentUser$.subscribe(userData=> {
       if (userData?.id) {
@@ -18,12 +23,9 @@ export class FavoritesService {
     });
   }
 
-  private userUid!: string;
-  private usersCollectionRef= this.db.collection("users");
-
   public addFavoriteProgram(programId: number, programType: ProgramType) {
-    console.log(programId, programType)
-    if (this.usersCollectionRef.doc(this.userUid))
+    const loggedUser = getAuth();
+    const userId = loggedUser.currentUser?.uid;
 
     this.usersCollectionRef.doc(this.userUid).update({
       favoritePrograms: arrayUnion({
