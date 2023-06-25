@@ -1,7 +1,9 @@
 <ngb-carousel #ngbCarousel
   class="banner-container"
+  [class.is-mobile]="(isMobile$ | async)?.matches"
   [showNavigationIndicators]="false"
   [showNavigationArrows]="false"
+  [interval]="500000"
   *ngIf="!isLoading else loadingTemplate"
   >
   <ng-template ngbSlide *ngFor="let program of programsData; let i = index">
@@ -15,10 +17,11 @@
         [src]="'https://image.tmdb.org/t/p/w1280/' + program.backdrop_path"
         [alt]="program.media_type === 'movies' ? program.title : program.original_name"
         [class.sidenav-active]="($sidenavStatus | async) === 'open'"
+        [class.is-mobile]="(isMobile$ | async)?.matches"
       />
     <button class="watch-button" [routerLink]="['/programs', program.media_type === 'movies' ? 'movies' : 'tv', program.id]">Watch</button>
     </div>
-    <div class="carousel-caption py-0 max-h-full">
+    <div *ngIf="!(isMobile$ | async)?.matches" class="carousel-caption py-0 max-h-full">
       <div>
         <div class="text-template">
           <h3 class="banner-title">{{program.media_type=== 'movies' ? program.title : program.original_name}}</h3>

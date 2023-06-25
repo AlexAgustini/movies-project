@@ -1,0 +1,58 @@
+<mat-sidenav-container
+  *ngIf="currentUser$ | async as currentUser"
+  class="sidenav-container"
+  [class.active]="(sidenavStatus | async) === 'open'"
+  [class.is-mobile]="(isMobile$ | async)?.matches"
+  >
+  <mat-sidenav-content class="flex flex-col">
+    <mat-icon (click)="closeSidenav() " class="close-icon">close</mat-icon>
+
+    <div class="user-info-wrapper">
+      <mat-icon>person</mat-icon>
+
+      <span class="text-[16px] text-center text-white" *ngIf="currentUser">Hey {{currentUser.displayName}}!</span>
+    </div>
+
+    <ul class="options-list">
+
+      <li class="li" routerLinkActive="link-active" routerLink="/account">
+        <mat-icon>person</mat-icon>
+        <span>My Profile</span>
+      </li>
+
+      <li class="li" routerLink="/programs/favorites/1" routerLinkActive="link-active">
+        <mat-icon>favorite</mat-icon>
+        <span>Favorite Movies</span>
+      </li>
+
+      <ng-container *ngIf="(isMobile$ | async)?.matches">
+        <li (click)="navigate('popular')" class="li" routerLink="/programs/{{currentCategory}}/popular/1" routerLinkActive="link-active">
+          <mat-icon>whatshot</mat-icon>
+          <span>Popular Movies</span>
+        </li>
+
+        <li (click)="navigate('top_rated')" class="li" routerLink="/programs/{{currentCategory}}/top_rated/1" routerLinkActive="link-active">
+          <mat-icon>stars</mat-icon>
+          <span>Top Rated Movies</span>
+        </li>
+
+        <li (click)="navigate('upcoming')" class="li" routerLink="/programs/{{currentCategory}}/upcoming/1" routerLinkActive="link-active">
+          <mat-icon>timelapse</mat-icon>
+          <span>Upcoming Movies</span>
+        </li>
+
+        <li (click)="navigate('now_playing')" class="li" routerLink="/programs/{{currentCategory}}/now_playing/1" routerLinkActive="link-active">
+          <mat-icon>movies</mat-icon>
+          <span>Now Playing Movies</span>
+        </li>
+      </ng-container>
+    </ul>
+
+
+    <div (click)="logout()" class="hover:-translate-y-[0.1rem] transition-all d-flex mt-auto mb-2 gap-2 cursor-pointer" >
+      <mat-icon [ngStyle]="{'color': 'white'}" >keyboard_return</mat-icon>
+      <span class="text-white ">Logout</span>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

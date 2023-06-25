@@ -1,4 +1,6 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
+import { tap, distinctUntilChanged } from 'rxjs';
 import { MoviesService } from 'src/app/modules/programs/private/services/movies.service';
 import { SeriesService } from 'src/app/modules/programs/private/services/series.service';
 import { MoviesResultType, SeriesResultType } from 'src/app/modules/programs/private/types/program-fetch-result.type';
@@ -10,7 +12,7 @@ import { MoviesResultType, SeriesResultType } from 'src/app/modules/programs/pri
 })
 export class HomeView {
 
-  constructor(private moviesService: MoviesService, private seriesService: SeriesService) {}
+  constructor(private moviesService: MoviesService, private seriesService: SeriesService, private breakpointObserver: BreakpointObserver) {}
 
   public dataFetched: boolean = false;
 

@@ -1,6 +1,8 @@
 <ng-container *ngIf="currentUser$ | async">
 
-  <mat-toolbar class="dashboard"  [class.sidenav-active]="($sidenavStatus | async) === 'open'">
+  <mat-toolbar
+    class="dashboard"
+    [class.sidenav-active]="($sidenavStatus | async) === 'open' && !(isMobile$ | async)?.matches">
     <div class="dashboard-inner">
       <div class="dashboard-left">
         <button (click)="openSidenav()" matTooltip="Menu" mat-icon-button>
@@ -13,7 +15,7 @@
 
       <search-bar class="w-full"></search-bar>
 
-      <div class="dashboard-right">
+      <div class="dashboard-right" *ngIf="!(isMobile$ | async)?.matches">
         <button
           (click)="navigate('popular')"
           mat-flat-button class="bg-transparent text-white"

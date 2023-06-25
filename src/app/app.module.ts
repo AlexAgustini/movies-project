@@ -12,9 +12,10 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getDatabase } from 'firebase/database';
 import { AngularFireModule } from '@angular/fire/compat';
 
-import { SidebarModule } from './common/components/sidebar/sidebar.module';
+import { SidebarModule } from './common/components/sidebar/sidenav.module';
 import { FooterModule } from './common/components/footer/footer.module';
 import { HeaderModule } from './common/components/header/header.module';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { HeaderModule } from './common/components/header/header.module';
     HeaderModule,
     provideFirebaseApp(()=> initializeApp(environment.firebase)),
     provideDatabase(()=> getDatabase()),
+    provideAuth(()=> getAuth()),
     AngularFireModule.initializeApp(environment.firebase)
   ],
   providers: [],

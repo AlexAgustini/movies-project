@@ -1,3 +1,7 @@
+.app-container.linear-bg {
+  background: linear-gradient(to bottom, #0e1111, #16222A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
 .content-container {
   max-width: 95vw;
   padding: 0;
@@ -6,8 +10,13 @@
   transition: .4s ease;
   margin-inline: auto;
 
+
   &.sidenav-open {
     padding-left: 10vw;
     max-width: 90vw;
+  }
+
+  &.login-view {
+    margin-top: 0;
   }
 }

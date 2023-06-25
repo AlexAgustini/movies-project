@@ -7,13 +7,13 @@
 @import 'bootstrap/scss/bootstrap';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
 
-html, body { height: 100%; }
+html { height: 100%; }
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background: #16222A;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #3A6073, #16222A);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #3A6073, #16222A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: -webkit-linear-gradient(to bottom, #0e1111, #16222A);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #0e1111, #16222A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-attachment: scroll !important
 }
 
 * {
@@ -22,16 +22,26 @@ body {
 
 // region main carousel styling
 
-.carousel-item {
-  padding: 1em 4em;
+.banner-container {
+  .carousel-item {
+    padding: 1em 4em;
 
-  &.active {
-    position: relative;
-    flex-direction: row-reverse;
-    display: flex;
-    gap: 4em;
+    &.active {
+      position: relative;
+      flex-direction: row-reverse;
+      display: flex;
+      gap: 4em;
+    }
+  }
+
+  &.is-mobile {
+    .carousel-item {
+      padding: 0;
+    }
   }
 }
+
+
 
 simple-snack-bar {
   background-color: #0F2027 !important;

@@ -5,6 +5,8 @@ import { MoviesResultType, ProgramType, SeriesResultType } from '../../../privat
 import { SliderImages } from '../../../private/types/slider-images.type';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { SidenavService } from 'src/app/common/services/sidenav.service';
+import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'program-shelf',
@@ -20,7 +22,12 @@ import { SidenavService } from 'src/app/common/services/sidenav.service';
 
 export class ProgramShelfComponent implements OnInit{
 
-  constructor(private router: Router, private favoritesService: FavoritesService, private sidenavService: SidenavService) {};
+  constructor(
+    private router: Router,
+    private favoritesService: FavoritesService,
+    private sidenavService: SidenavService,
+    private breakpointObserver: BreakpointObserver
+  ) {};
 
   @Input()
   public programData!: Array<MoviesResultType | SeriesResultType>;
@@ -37,15 +44,16 @@ export class ProgramShelfComponent implements OnInit{
   @Output()
   public programFavorited = new EventEmitter();
 
-
   public isLoading: boolean = false;
   public hasError: boolean = false;
   public carouselImages: SliderImages[] = [];
   public currentPage!: number;
   public favoritedMovies!: Array<number>
   public sidenavStatus$ = this.sidenavService.$sidenavStatus;
+  public isMobile$: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
 
   async ngOnInit() {
+
     await this.checkForFavoritePrograms();
     if (this.mode === "carousel") this.assembleCarrouselData();
   };

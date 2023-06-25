@@ -17,8 +17,8 @@ export class FavoritesService {
 
   constructor(private db: AngularFirestore, private authService: AuthService) {
     this.authService.currentUser$.subscribe(userData=> {
-      if (userData?.id) {
-        this.userUid = userData.id
+      if (userData?.uid) {
+        this.userUid = userData.uid
       }
     });
   }

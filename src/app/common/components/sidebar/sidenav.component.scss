@@ -11,6 +11,10 @@
   &.active {
     padding: 1em;
     width: 10vw;
+
+    &.is-mobile {
+      width: 50vw;
+    }
   }
 
   .close-icon {

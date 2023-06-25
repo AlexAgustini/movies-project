@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../../modules/login/shared/services/auth.service';
 import { SidenavService } from '../../services/sidenav.service';
-import { UserData } from 'src/app/modules/login/shared/types/user.type';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-header',
@@ -14,10 +14,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class HeaderComponent {
 
   public $sidenavStatus!: Observable<"closed" | "open">
-  public currentUser$: Observable<UserData | null> = this.authService.currentUser$;
+  public currentUser$: Observable<firebase.default.User | null> = this.authService.currentUser$;
   public currentCategory: string = 'movies';
+  public isMobile$: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
 
-  constructor(private authService: AuthService, private sidenavService: SidenavService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private sidenavService: SidenavService,
+    private router: Router,
+    private breakpointObserver: BreakpointObserver
+  ) {}
 
 
   ngOnInit() {

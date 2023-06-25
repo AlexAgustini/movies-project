@@ -1,82 +1,96 @@
-<div class="login-container" *ngIf="!forgotPasswordTemplate else forgotPassword">
+<div class="login-container">
+  <div *ngIf="!(isMobile$ | async)?.matches" class="poster-wrapper">
+    <img src="../../../../../assets/poster-login.jpg" alt="">
+  </div>
 
-  <h1 class="text-center text-white">Sign in</h1>
+  <div class="form-wrapper" *ngIf="!forgotPasswordTemplate else forgotPassword">
+    <div class="wrapper h-full" [@slideIn]="formState">
+        <form [formGroup]="form" novalidate>
+          <h1 class="text-white">Sign in</h1>
 
-  <form [formGroup]="form" novalidate>
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
 
-    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+          <div class="field-wrapper">
+            <mat-form-field>
+              <mat-label class="text-base">Your Email</mat-label>
+              <input matInput formControlName="email" (input)="emailErrors = ''">
+              <mat-error>{{emailErrors}}</mat-error>
+            </mat-form-field>
+          </div>
 
-    <div class="field-wrapper">
-      <mat-form-field>
-        <mat-label>Your Email</mat-label>
-        <input matInput formControlName="email" (input)="emailErrors = ''">
-        <mat-error>{{emailErrors}}</mat-error>
-      </mat-form-field>
+          <div [@slideIn]="formState" *ngIf="formState == 'register'" class="field-wrapper mt-3">
+            <mat-form-field>
+                <mat-label class="text-base">Your name</mat-label>
+              <input matInput formControlName="name">
+              <mat-error *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched">You must type a name</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="field-wrapper mt-3">
+            <mat-form-field>
+              <mat-label class="text-base">Your password</mat-label>
+              <input type="password" matInput formControlName="password" (input)="form.controls['password']" #pass>
+              <mat-error>{{passwordErrors}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <span class="mt-2 text-white text-xs self-start w-fit cursor-pointer hover:underline" (click)="setForgotPasswordTemplate()">Forgot your Password?</span>
+          <div class="actions">
+            <button
+              class="d-flex items-center justify-center gap-4 transition-all"
+              *ngIf="formState == 'login'"
+              (click)="login()"
+              >
+              <mat-spinner class="w-6 h-6 mat-spinner" *ngIf="isLoading"></mat-spinner>
+
+              Login</button>
+                <button
+                  class="d-flex items-center justify-center gap-4 transition-all"
+                  *ngIf="formState == 'register'"
+                  (click)="register()"
+                  >
+                  <mat-spinner class="w-6 h-6 mat-spinner" *ngIf="isLoading"></mat-spinner>
+                  Sign up</button>
+                <span class="text-center" *ngIf="formState == 'login'">Not a member? <a  class="cursor-pointer underline" (click)="changeFormState()">Sign Up</a></span>
+                <span class="text-center" *ngIf="formState == 'register'">Already have an account? <a class="cursor-pointer underline" (click)="changeFormState()">Sign in</a></span>
+            </div>
+
+          <mat-error *ngIf="genericErrors">{{genericErrors}}</mat-error>
+        </form>
     </div>
-
-    <div *ngIf="formState == 'register'" class="field-wrapper">
-      <mat-form-field>
-         <mat-label>Your name</mat-label>
-        <input matInput formControlName="name">
-        <mat-error *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched">You must type a name</mat-error>
-      </mat-form-field>
-      <p></p>
-    </div>
-
-    <div class="field-wrapper">
-      <mat-form-field>
-        <mat-label>Your password</mat-label>
-        <input type="password" matInput formControlName="password" (input)="form.controls['password']" #pass>
-        <mat-error>{{passwordErrors}}</mat-error>
-      </mat-form-field>
-    </div>
-
-    <div class="actions">
-      <span class="w-fit cursor-pointer hover:underline" (click)="setForgotPasswordTemplate()">Forgot your Password?</span>
-      <button
-        class="d-flex items-center justify-center gap-4 transition-all"
-        *ngIf="formState == 'login'"
-        (click)="login()"
-        >
-        <mat-spinner class="w-6 h-6 mat-spinner" *ngIf="isLoading"></mat-spinner>
-
-        Login</button>
-      <button
-        class="d-flex items-center justify-center gap-4 transition-all"
-        *ngIf="formState == 'register'"
-        (click)="register()"
-        >
-        <mat-spinner class="w-6 h-6 mat-spinner" *ngIf="isLoading"></mat-spinner>
-        Sign up</button>
-      <span *ngIf="formState == 'login'">Not a member? <a  class="cursor-pointer underline" (click)="changeFormState()">Sign Up</a></span>
-      <span *ngIf="formState == 'register'">Already have an account? <a  class="cursor-pointer underline" (click)="changeFormState()">Sign in</a></span>
-    </div>
-
-    <mat-error>{{genericErrors}}</mat-error>
-
-  </form>
+  </div>
 </div>
 
 <ng-template #forgotPassword>
-  <div class="login-container pt-8">
-    <h1 class="text-white mt-2">Forgot your password?</h1>
-    <h4 class="text-white text-sm">Enter your email and we'll send you an link to reset your password</h4>
+  <div class="form-wrapper" >
+    <div class="wrapper h-full" [@slideIn]="formState">
+      <div class="forgot-password-wrapper relative h-full d-flex flex-col">
+        <div>
+          <h1 class="text-white mt-2 mb-2">Forgot your password?</h1>
+          <h4 class="text-white text-[13px]">Enter your email and we'll send you an link to reset your password</h4>
+        </div>
 
-    <mat-form-field>
-      <mat-label>Your email</mat-label>
-      <input type="text" matInput [formControl]="forgotPasswordControl">
-      <mat-error>{{forgotPasswordEmailErrors}}</mat-error>
-    </mat-form-field>
-    <span *ngIf="emailSent" class="text-white text-[14px]">We sent you an email, check your inbox to reset your password</span>
-    <button
-      [disabled]="isLoading"
-      *ngIf="!emailSent"
-      class="mt-4 bg-[#203A43] transition-all w-[80%] mx-auto py-3 gap-4 rounded-[30px] text-xl text-white flex items-center justify-center"
-      (click)="sendPasswordEmail()"
-      >
-      <mat-spinner class="w-6 h-6 mat-spinner" *ngIf="isLoading"></mat-spinner>
-      Send email
-    </button>
-    <span class="mt-4 text-white">Already have an account? <a class="text-[#3A6073] cursor-pointer underline" (click)="forgotPasswordTemplate = false">Sign in</a></span>
-  </div>
+        <mat-form-field>
+          <mat-label>Your email</mat-label>
+          <input type="text" matInput [formControl]="forgotPasswordControl">
+          <mat-error>{{forgotPasswordEmailErrors}}</mat-error>
+        </mat-form-field>
+        <span *ngIf="emailSent" class="text-white text-[14px]">We sent you an email, check your inbox to reset your password</span>
+
+        <div class="d-flex flex-col gap-6 items-center mt-auto">
+          <button
+            [disabled]="isLoading"
+            *ngIf="!emailSent"
+            class="mt-4 bg-[#203A43] transition-all w-[80%] mx-auto py-3 gap-4 rounded-[30px] text-xl text-white flex items-center justify-center"
+            (click)="sendPasswordEmail()"
+            >
+            <mat-spinner class="w-6 h-6 mat-spinner" *ngIf="isLoading"></mat-spinner>
+            Send email
+          </button>
+          <span class="text-white">Already have an account? <a class="text-[#3A6073] cursor-pointer underline" (click)="forgotPasswordTemplate = false">Sign in</a></span>
+        </div>
+      </div>
+    </div>
+    </div>
+
 </ng-template>

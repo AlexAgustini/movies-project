@@ -31,6 +31,11 @@
       &.sidenav-active {
         width: 45vw;
       }
+
+      &.is-mobile {
+        width: auto;
+        height: auto !important;
+      }
     }
 
     .watch-button {
@@ -46,6 +51,11 @@
       background: linear-gradient(to right, #0F2027, #203A43, #0F2027);
       color: white;
       z-index: 100;
+
+      @media (max-width: 500px) {
+        padding: .8em 2em;
+        font-size: 1rem;
+      }
     }
   }
 

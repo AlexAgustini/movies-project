@@ -3,15 +3,39 @@ import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/services/auth.service';
 import { UserForm } from '../../shared/types/user.type';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.view.html',
-  styleUrls: ['./login.view.scss']
+  styleUrls: ['./login.view.scss'],
+  animations: [
+    trigger('slideIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('.3s ease-out',
+                style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate('.3s ease-out',
+                style({ opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class LoginView implements OnInit{
 
-  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router,
+    private matSnackBarController: MatSnackBar,
+    private breakpointObserver: BreakpointObserver
+  ) {}
 
   public isLoading!: boolean;
   public form!: FormGroup;
@@ -23,6 +47,7 @@ export class LoginView implements OnInit{
   public forgotPasswordControl!: FormControl
   public forgotPasswordEmailErrors!: string;
   public emailSent!: boolean
+  public isMobile$: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
 
   ngOnInit(): void {
 
@@ -37,7 +62,7 @@ export class LoginView implements OnInit{
 
   public changeFormState(): void {
     this.formState === 'register' ? this.formState = "login" : this.formState = "register";
-    this.clearFormValues();
+    this.form.reset();
   }
 
   public async login() {
@@ -49,6 +74,7 @@ export class LoginView implements OnInit{
       this.treatErrors(authResult.errorType, authResult.message)
 
     } else if (authResult.user){
+      this.matSnackBarController.open('Logged in succesfully', '', { duration: 1500, panelClass: 'custom-snackbar' })
       this.router.navigate(["/home"]);
     }
 
@@ -64,12 +90,13 @@ export class LoginView implements OnInit{
       return;
     }
 
-    const authResult = await this.authService.registerUser(this.getUserData())
+    const authResult = await this.authService.registerUser(this.getUserData());
 
     if ("errorType" in authResult) {
       this.treatErrors(authResult.errorType, authResult.message)
     } else {
-      this.formState = "login";
+      this.router.navigate(['home'])
+      this.matSnackBarController.open('Account created succesfully', '', { duration: 1500, panelClass: 'custom-snackbar'})
     }
     this.isLoading = false;
   }
@@ -80,12 +107,6 @@ export class LoginView implements OnInit{
     const password = this.form.get('password')?.value;
 
     return { name, email, password }
-  }
-
-  private clearFormValues() {
-    Object.keys(this.form.controls).forEach(key => {
-      this.form.controls[key].setValue("");
-    });
   }
 
   private clearFormErrors() {

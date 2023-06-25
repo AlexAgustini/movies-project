@@ -11,6 +11,48 @@ mat-icon {
   color: white;
 }
 
+.content-container {
+
+  @media (max-width: 500px) {
+    flex-direction: column !important;
+
+    .container-movie {
+      width: auto !important;
+      padding-top: 0 !important;
+
+      .genres-release-date-container {
+        flex-wrap: wrap;
+
+        .genres-container {
+          flex-wrap: wrap;
+        }
+      }
+
+
+      .image-info-container {
+        flex-direction: column !important;
+
+        .image-container {
+          min-width: auto !important;
+
+          img {
+            max-width: 100% !important;
+          }
+
+        }
+
+      }
+
+      iframe {
+        margin-top: unset !important;
+        width: auto !important;
+        height: auto !important;
+      }
+    }
+
+  }
+}
+
 .skeleton {
   .skeleton-title {
     width: 300px;
@@ -28,6 +70,10 @@ mat-icon {
     height: 450px;
     width: 300px;
     animation: skeleton-loading infinite linear alternate 1s;
+
+    @media (max-width: 500px) {
+      width: 90vw;
+    }
   }
 
   .skeleton-description {

@@ -2,7 +2,7 @@
   <div *ngIf="mode == 'static' && !isLoading else carousel">
     <div class="max-w-full mt-4 container-movies grid content-center grid-cols-5 p-8 rounded-[10px] gap-8">
       <div @fadeAnimation *ngFor="let program of programData" class="movie-item-container flex flex-col items-stretch min-h-[260px] rounded-[10px] overflow-hidden">
-        <div (click)="toggleFavoriteProgram(program)" class="favorite-wrapper">
+        <div [matTooltip]="program.programFavorited ? 'Remove from favorites' : 'Mark as favorite'" (click)="toggleFavoriteProgram(program)" class="favorite-wrapper">
           <mat-icon [ngClass]="{'favorited' : program.programFavorited}">favorite</mat-icon>
         </div>
           <img
@@ -25,18 +25,33 @@
   </div>
 
   <ng-template #carousel>
-    <div  class="carousel-container mt-4" *ngIf="mode == 'carousel'">
-      <h1 class="shelf-title mb-4">{{title}}</h1>
-      <ng-image-slider
-        (imageClick)="goToMovieDetail($event)"
-        [slideImage]="7"
-        [images]="carouselImages"
-        [imageSize]="{width:  '16.6%', height: '400px'}"
-        (cdkAutofill)="true"
+    <ng-container  *ngIf="(isMobile$ | async)?.matches">
+      <div  class="carousel-container mt-4" *ngIf="mode == 'carousel'">
+        <h1 class="shelf-title mb-4">{{title}}</h1>
+        <ng-image-slider
+          (imageClick)="goToMovieDetail($event)"
+          [slideImage]="1"
+          [images]="carouselImages"
+          [imageSize]="{width:  '33%', height: '230px'}"
 
-        >
-      </ng-image-slider>
-    </div>
+          >
+        </ng-image-slider>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!(isMobile$ | async)?.matches">
+
+      <div  class="carousel-container mt-4" *ngIf="mode == 'carousel'">
+        <h1 class="shelf-title mb-4">{{title}}</h1>
+        <ng-image-slider
+          (imageClick)="goToMovieDetail($event)"
+          [slideImage]="7"
+          [images]="carouselImages"
+          [imageSize]="{width:  '16.6%', height: '400px'}"
+          (cdkAutofill)="true"
+          >
+        </ng-image-slider>
+      </div>
+    </ng-container>
   </ng-template>
-
 </ng-container>

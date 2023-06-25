@@ -20,7 +20,7 @@ mat-form-field {
   color: white !important;
 
   mat-label, h1, input {
-    color: #E6E6E6 !important;
+    color: #fff !important;
   }
 }
 
@@ -32,5 +32,16 @@ mat-spinner {
     circle {
       stroke: #203A43 !important;
     }
+  }
+}
+
+@media (max-width: 500px) {
+  .container {
+    padding: 1rem !important;
+
+    form {
+      width: auto !important;
+    }
+
   }
 }

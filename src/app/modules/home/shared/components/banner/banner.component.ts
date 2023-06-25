@@ -1,3 +1,4 @@
+import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
@@ -22,11 +23,17 @@ export class BannerComponent {
     }
  }
 
-  constructor(private moviesService: MoviesService, private sidenavService: SidenavService, private seriesService: SeriesService) {};
+  constructor(
+    private moviesService: MoviesService,
+    private sidenavService: SidenavService,
+    private seriesService: SeriesService,
+    private breakpointObserver: BreakpointObserver
+  ) {};
 
   public $sidenavStatus!: Observable<"closed" | "open">
   public programsData!: (ProgramResultType | SeriesResultType)[];
   public isLoading: boolean = false;
+  public isMobile$: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
 
   ngOnInit() {
     this.getPrograms();
@@ -71,7 +78,6 @@ export class BannerComponent {
   }
 
   public nextSlide() {
-    console.log(this.ngbCarousel)
     this.ngbCarousel.next();
   }
 

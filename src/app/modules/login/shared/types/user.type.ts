@@ -5,7 +5,6 @@ export interface UserForm {
 }
 
 export interface UserData {
-  email: string,
-  name: string,
-  id?: string
+  firebaseCredentials: firebase.default.User;
+  name: string
 }

@@ -1,7 +1,11 @@
-<div class="app-container">
-  <app-sidebar></app-sidebar>
+<div class="app-container" [class.linear-bg]="($userStatus | async)">
+  <app-sidenav></app-sidenav>
 
-  <div class="content-container" [class.sidenav-open]="($sidenavStatus | async) === 'open'">
+  <div
+    class="content-container"
+    [class.login-view]="!($userStatus | async)"
+    [class.sidenav-open]="($sidenavStatus | async) === 'open' && !(isMobile$ | async)?.matches"
+    >
     <app-header></app-header>
     <router-outlet></router-outlet>
   </div>

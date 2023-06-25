@@ -4,6 +4,8 @@ import { MoviesService } from '../../services/movies.service';
 import { SeriesService } from '../../services/series.service';
 import { SeriesResultType, MoviesResultType, ProgramType } from '../../types/program-fetch-result.type';
 import { FavoritesService } from '../../services/favorites.service';
+import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-movie-detail',
@@ -16,7 +18,8 @@ export class ProgramDetailView implements OnInit {
     private activatedRoute: ActivatedRoute,
     private moviesService: MoviesService,
     private seriesService: SeriesService,
-    private favoritesService: FavoritesService
+    private favoritesService: FavoritesService,
+    private breakpointObserver: BreakpointObserver
   ) {};
 
   public currentProgram!: MoviesResultType | SeriesResultType;
@@ -24,6 +27,8 @@ export class ProgramDetailView implements OnInit {
   public currentProgramType!: ProgramType;
   public videoUrl!: string | null;
   public isLoading!: boolean;
+  public isMobile$: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
+
 
   ngOnInit() {
     this.getUrlParams();
@@ -48,6 +53,7 @@ export class ProgramDetailView implements OnInit {
       })
       await this.moviesService.getMovieTrailer(this.currentProgramId).then(response => {
         response ? this.videoUrl = response : null;
+
       })
     } else {
       await this.seriesService.getSeriesById(this.currentProgramId).then(result=> {
@@ -60,7 +66,6 @@ export class ProgramDetailView implements OnInit {
     };
 
     this.isLoading = false;
-    console.log(this.currentProgram)
   }
 
   public toggleFavoriteProgram(program: MoviesResultType | SeriesResultType) {

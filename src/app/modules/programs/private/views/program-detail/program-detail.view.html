@@ -1,5 +1,6 @@
 <ng-container *ngIf="!isLoading else loadingTemplate">
-  <div class=" rounded-xl flex gap-4" *ngIf="currentProgramType === 'movies'">
+  <div class="content-container rounded-xl flex gap-4" *ngIf="currentProgramType === 'movies'">
+
     <div class="container-movie shadow-2xl p-4 flex flex-col w-3/4">
 
       <div class="movie-title-container">
@@ -25,7 +26,7 @@
         <div class="image-info-container flex gap-4">
           <div class="image-container min-w-[300px] overflow-hidden rounded-lg relative">
             <img class="object-cover max-w-[300px]" src="https://image.tmdb.org/t/p/w500//{{$any(currentProgram).poster_path}}" alt="">
-            <div (click)="toggleFavoriteProgram(currentProgram)" class="favorite-wrapper">
+            <div [matTooltip]="currentProgram.programFavorited ? 'Remove from favorites' : 'Mark as favorite'" (click)="toggleFavoriteProgram(currentProgram)" class="favorite-wrapper">
               <mat-icon [ngClass]="{'favorited' : currentProgram.programFavorited}">favorite</mat-icon>
             </div>
           </div>
@@ -66,7 +67,7 @@
     <similar-movies-shelf [programType]="currentProgramType" [programId]="currentProgramId"></similar-movies-shelf>
   </div>
 
-  <div class="flex gap-4" *ngIf="currentProgramType === 'tv'">
+  <div class="content-container flex gap-4" *ngIf="currentProgramType === 'tv'">
     <div class="container-movie shadow-2xl p-4 flex flex-col w-3/4">
 
       <div class="movie-title-container">
@@ -92,7 +93,7 @@
         <div class="image-info-container flex gap-4">
           <div class="image-container min-w-[300px] overflow-hidden rounded-lg relative">
             <img class="object-cover max-w-[300px]" src="https://image.tmdb.org/t/p/w500//{{$any(currentProgram).poster_path}}" alt="">
-            <div (click)="toggleFavoriteProgram(currentProgram)" class="favorite-wrapper">
+            <div [matTooltip]="currentProgram.programFavorited ? 'Remove from favorites' : 'Mark as favorite'" (click)="toggleFavoriteProgram(currentProgram)" class="favorite-wrapper">
               <mat-icon [ngClass]="{'favorited' : currentProgram.programFavorited}">favorite</mat-icon>
             </div>
           </div>
@@ -142,31 +143,46 @@
 
 
 <ng-template #loadingTemplate>
-  <div class="container-movie shadow-2xl p-4 flex flex-col w-3/4">
-    <div class="skeleton">
-      <div class="skeleton-title mb-3"></div>
-      <div class="skeleton-text mb-3"></div>
+  <ng-container *ngIf="!(isMobile$ | async)?.matches">
+    <div class="container-movie shadow-2xl p-4 flex flex-col w-3/4">
+      <div class="skeleton">
+        <div class="skeleton-title mb-3"></div>
+        <div class="skeleton-text mb-3"></div>
 
-      <div class="flex gap-4">
-        <div class="skeleton-img"></div>
-        <div class="flex flex-col gap-8">
-          <div class="skeleton-text"></div>
-          <div class="skeleton-text"></div>
-          <div class="skeleton-text"></div>
-          <div class="skeleton-text"></div>
-          <div class="flex flex-col gap-1">
-            <div class="skeleton-description"></div>
-            <div class="skeleton-description"></div>
-            <div class="skeleton-description"></div>
-            <div class="skeleton-description"></div>
-            <div class="skeleton-description"></div>
-            <div class="skeleton-description"></div>
-            <div class="skeleton-description"></div>
-            <div class="skeleton-description"></div>
-            <div class="skeleton-description"></div>
+        <div class="flex gap-4">
+          <div class="skeleton-img"></div>
+          <div class="flex flex-col gap-8">
+            <div class="skeleton-text"></div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-text"></div>
+            <div class="flex flex-col gap-1">
+              <div class="skeleton-description"></div>
+              <div class="skeleton-description"></div>
+              <div class="skeleton-description"></div>
+              <div class="skeleton-description"></div>
+              <div class="skeleton-description"></div>
+              <div class="skeleton-description"></div>
+              <div class="skeleton-description"></div>
+              <div class="skeleton-description"></div>
+              <div class="skeleton-description"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </ng-container>
+
+  <ng-container *ngIf="(isMobile$ | async)?.matches">
+    <div class="skeleton">
+      <div class="skeleton-title mb-3"></div>
+      <div class="skeleton-text mb-3"></div>
+      <div class="skeleton-img"></div>
+      <div class="skeleton-title mt-3 mb-3"></div>
+      <div class="skeleton-title mb-3"></div>
+      <div class="skeleton-title mb-3"></div>
+
+    </div>
+
+  </ng-container>
 </ng-template>

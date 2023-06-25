@@ -1,27 +1,27 @@
-<div class="max-w-full mt-4 rounded-[10px] bg-[#0F2027] p-4" *ngIf="!isLoading">
+<div class="max-w-full mt-4 rounded-[10px] bg-[#0F2027] p-4 container" *ngIf="!isLoading">
 
   <form [formGroup]="userForm" class="w-5/12">
     <div class="field-wrapper">
       <mat-form-field>
         <mat-label>Name</mat-label>
-        <input type="text" matInput formControlName="name" (input)="userForm.controls['name']" #pass>
-        <!-- <mat-error>{{passwordErrors}}</mat-error> -->
+        <input type="text" matInput formControlName="name" (input)="userForm.controls['name']">
+        <mat-error *ngIf="userForm.controls['name'].touched && userForm.controls['name'].invalid">You must type a name</mat-error>
       </mat-form-field>
     </div>
 
     <div class="field-wrapper">
       <mat-form-field>
         <mat-label>Email</mat-label>
-        <input type="email" matInput formControlName="email" (input)="userForm.controls['email']" #pass>
-        <mat-error>Email invalid</mat-error>
+        <input type="email" matInput formControlName="email" (input)="userForm.controls['email']">
+        <mat-error *ngIf="userForm.controls['email'].touched && userForm.controls['email'].invalid">Please type in a valid email</mat-error>
       </mat-form-field>
     </div>
 
     <div class="field-wrapper">
       <mat-form-field>
         <mat-label>Password</mat-label>
-        <input type="password" matInput formControlName="password" (input)="userForm.controls['password']" #pass>
-        <!-- <mat-error>{{passwordErrors}}</mat-error> -->
+        <input type="password" matInput formControlName="password" (input)="userForm.controls['password']">
+        <mat-error *ngIf="userForm.controls['password'].touched && userForm.controls['password'].invalid">Minimum password length is 6 characters.</mat-error>
       </mat-form-field>
     </div>
 
@@ -30,10 +30,10 @@
         Cancel
       </button>
 
-      <button (click)="save()" class="bg-white gap-3 d-flex hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+      <button [disabled]="  isSaving" (click)="save()" class="bg-white gap-3 d-flex hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+        <mat-spinner *ngIf="isSaving"></mat-spinner>
         Save
       </button>
-
     </div>
   </form>
 </div>
