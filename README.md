@@ -1,5 +1,9 @@
 # MoviesProject
 
+Movies website developed with Angular, integrating with Firebase back-end for user authentication and Firestore Database. Consumes the public 
+API from the "themoviedb.org". 
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.2.
 
 ## Development server
